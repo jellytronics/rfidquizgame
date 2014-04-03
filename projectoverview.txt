@@ -1,0 +1,150 @@
+Webfrontend
+	Admin Page
+	Index (Contestants) Page
+	Reveal.js + highlight.js + node.js (creates webpage)
+Client frontend
+	View Quiz
+	Use Reveal.Js
+Quizmaster frontend
+	Team Creator
+	Tag Editor
+	Question Editor
+		tinymce
+	Preview Quiz
+	Conduct Quiz
+	Other requirements
+		Check clock synchronisation -> use webrtc!
+Hostbackend
+	node.js
+	python
+	sql database
+		teams (teammembers id by uid)
+		teamans (create new row at the end of every question)
+		qnans (qn no, qn, time allocated, no of ans, ans1, ans2, ...., ans n, correct ans)
+Clientbackend
+	node.js
+	python
+	probe host once every 0.1 sec
+	status (qn no, time remaining, )
+	pushstatus (qn no, )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Proposed Developments
+
+Phase I: Off the shelf implementation (POC Construct)
+Beaglebone (3.3V TTL)
+OS: Probably Angstrom/ Gentoo/ Arch
+Fast Boot (~ 30 Secs)
+No Login, instant sudo
+Simple Password
+Needs to be SD corrupt resistant
+BBB on-board memory
+Raspberry Pi SD card is crash prone
+PN532 Mifare Development Board
+Board provides close to full implementation of Mifare functionality
+Limited Mutli-card interrogation support but doable
+http://forums.adafruit.com/viewtopic.php?f=31&t=35050
+Mifare RFID cards
+One of the cheapest, most proliferated card platforms.
+Collision Avoidance on Mifare
+Multiple Card Interrogation
+Wireless Interfaces
+WiFi Router with DDWRT and WiFi dongles
+Long Range
+High gain ext. ant for field deployment
+Reliable Connection -> all error handling done in backend, easy debug
+Low Latency
+Debug Interfaces
+LCDs / OLEDs to display debug information
+Successful Read, New Qn, Time’s up Feedback, Misc Indicators
+Buzzer
+LEDs
+Power
+5V Power Supply
+LiPo for field deployment
+Single Charge lifespan
+5 hours, 5V @ 500 mA
+at 7.4V, 1700 mAh @ 100% efficiency
+External charger for Lipo
+Phase II: IT Development
+Front End
+Question Interface
+Dropping support for Powerpoint (It is not a good platform for configurability and functionality)
+Quiz platform on HTML5, javascript
+All questions and answers will be implemented with SQL functions and queries
+Quizmaster Interface accessible via password, Contestants/Public Interface
+Server Interface
+Node.js ++ SQL ++ Java
+Database will store Team -> Card IDs
+Back End
+Card Interface
+Javascript, Java Classes (Interfaces for C++ Libraries)
+C+, python for library constructs
+Collision Avoidance and Multi-card Interrogation should be handled at this level or below
+Phase III: Delivery
+Back End Tests
+Quickboot (~30 Secs)
+TBD
+Front End Tests
+TBD
+Platform Enclosure Implementation
+3D model design using Solidworks
+3D Printer to RP case design
+Able to fit 6 in (aluminum) carry case
+Open-Sourced Design/ Implementation
+Project to be publicized on github
+Future-proofs the design and implementation
+Easy handover of code/product
+
+Possible Future Developments
+
+Card Printing Interface
+Provides for customization of cards
+increased novelty value???
+Mifare cards should already be blank and therefore printable
+Smartphone NFC integration
+HTML Answering Platform
+Minimization of Prototype
+Development of a “shield” / Cape
+Incorporating external elements using Altium or Eagle
+Provision of more I/O ports, uCs eg. arduino
+Power Supply
+Integrated Power Supply and LiPo battery management
+Physical Switch
+Increased awareness and motivation through post-event activities
+Take-home labs with own nfc-enabled handphone and novelty card
+After event activities such as RFID/ BeagleBone workshop
