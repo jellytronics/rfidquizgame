@@ -23,6 +23,7 @@ else
 	sudo apt-get update
 	sudo apt-get upgrade
 	sudo apt-get install qemu arm-linux-gnueabi-gcc
+	sudo apt-get install libvert qemu-launcher qtemu
 fi
 
 
@@ -45,6 +46,8 @@ else
 
 	echo "qemu-system-arm is installed"
 	echo "Read more: http://www.cnx-software.com/2012/03/08/how-to-build-qemu-system-arm-in-linux/#ixzz2wwJCilq0"
+
+
 
 fi
 

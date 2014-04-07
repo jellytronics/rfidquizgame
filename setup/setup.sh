@@ -1,5 +1,92 @@
 #!/bin/bash
 
+
+
+chmod +x ~/rfidquizgame/setup/startup.sh
+chmod +x ~/rfidquizgame/setup/git_update.sh
+chmod +x ~/rfidquizgame/embedded_linux/install_em_linux.sh
+chmod +x ~/rfidquizgame/mifare/setup_mifare.sh
+chmod +x ~/rfidquizgame/website/setup_website.sh
+chmod +x ~/rfidquizgame/linux/setup_linux.sh
+
+
+
+#Run init scripts
+
+~/rfidquizgame/setup/startup.sh
+
+
+### Mac Setup Environment
+
+if [[ $(sw_vers -productName) == *Mac* ]]
+	then
+	echo "Hi mac"'!'" Gonna setup development environment"
+
+	if hash brew 2>/dev/null
+		then
+		echo "brew installed"
+	else
+
+		if hash ruby -v 2>/dev/null
+			then
+			echo "Ruby is installed"
+			ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
+		else
+			echo "Gotta install ruby first yoz. how come your mac doesn't come with ruby?"
+		fi
+
+	fi
+
+	echo "Brew is installed, updating applications"
+	brew doctor
+	brew update
+
+	echo "inspecting BASH_RC for homebrew github token"
+
+	if cat ~/.bashrc | grep "export HOMEBREW_GITHUB_API_TOKEN"
+		then
+		echo "token installed"
+	else
+		echo 'export HOMEBREW_GITHUB_API_TOKEN=9eeef0eb8e3d167d168deca07d2cfd98c1048353' >> ~/.bashrc
+		source ~/.bashrc
+	fi
+
+	echo "Homebrew token installed"
+	echo "Installing applications on brew"
+
+	brew install coreutils subversion python3 sshfs ttytter python3-setuptools python3-pip wireshark nmap autoconf libtool tmux
+
+	#	Notes
+	##	for tmux on mac, if you are using iterm, it has integrated mouse support, else, visit https://gist.github.com/simme/1297707
+
+
+	if watch --help 2>/dev/null
+		then
+		echo "watch installed"
+	else
+		echo "Installing watch command on mac"
+		curl -O http://ktwit.net/code/watch-0.2-macosx/watch
+		chmod +x watch
+		sudo mv watch /usr/local/bin/
+	fi
+	echo "Watch command installed"
+
+	## End of setup on development environment
+
+	brew update
+	brew tap jlhonora/lsusb
+	brew install lsusb
+
+	~/rfidquizgame/embedded_linux/install_em_linux.sh
+
+	exit
+
+fi
+
+
+
+
+
 #Presetup (Run Once)
 
 function addtofile {
@@ -24,58 +111,48 @@ echo "This script assumes that the BBB is installed with ArchLinux (ARM) OS"
 ##ifconfig
 ##ping -c 3 www.google.com
 
+#systemctl restart sshd
+
+
+
 #######################################################
 #git stash -> all git clones are stashed at this folder
 #cd ~/rfidquizstash
 
-systemctl restart sshd
-
-#STARTUP
-
-##SSHBANNER
-if cat /etc/ssh/sshd_config | grep "Banner ~/rfidquizgame/network/banner"
-	then
-	echo "Banner installed"
-else
-	echo "Installing banner"
-	cat "Banner ~/rfidquizgame/network/banner" >> /etc/ssh/sshd_config
-	systemctl start sshd
-fi
-##BASHMOTD
-if cat ~/.bashrc | grep "command cowsay $(fortune)"
-	then
-	echo "Banner installed"
-else
-	echo "Installing banner"
-	cat "command cowsay $(fortune)" >> ~/.bashrc
-	#cat "#auto cd into dir" >> ~/.bashrc
-	#cat "shopt -s autocd" >> ~/.bashrc
-fi
+#Time updating
+timedatectl set-ntp 1
 
 
+
+## Installation commences
+
+#Core Updates
+pacman -Syu
 #BASE DEVEL
 pacman -S base-devel
 ##wifi
 pacman -S iw wpa_supplicant dialog wpa_actiond
-
 #SSH
 pacman -S git
 
 
 
 #Softwares
-pacman -S sudo alsa-utils ttf-dejavu fortune-mod cowsay ponysay vim nano tmux autoconf
+pacman -S sudo alsa-utils ttf-dejavu fortune-mod cowsay ponysay vim 
+nano tmux autoconf
 
 ##Rest of setup scripts
 ##mifare
 #~/rfidquizgame/mifare/setup_mifare.sh
 ##network
 #~/rfidquizgame/website/setup_website.sh
-##tmux
-#~/rfidquizgame/setup/tmux_setup.sh
+##linux system
+~/rfidquizgame/linux/setup_linux.sh
+
 
 
 #Run init scripts
 
+~/rfidquizgame/setup/startup.sh
 
 

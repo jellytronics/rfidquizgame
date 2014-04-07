@@ -4,26 +4,31 @@ echo "This is the setup script for BeagleBone Black Based RFID Quiz System!"
 
 echo "This script assumes that the BBB is installed with ArchLinux (ARM) OS"
 
+chmod +x ~/rfidquizgame/setup/motd.sh
+chmod +x ~/rfidquizgame/setup/git_update.sh
+chmod +x ~/rfidquizgame/setup/tmux_commander.sh
+chmod +x ~/rfidquizgame/setup/tmux_config.sh
+chmod +x ~/rfidquizgame/setup/tmux_startup.sh
+chmod +x ~/rfidquizgame/embedded_linux/install_em_linux.sh
+chmod +x ~/rfidquizgame/linux/setup_linux.sh
+chmod +x ~/rfidquizgame/mifare/setup_mifare.sh
+chmod +x ~/rfidquizgame/mifare/tmux_mifare.sh
+chmod +x ~/rfidquizgame/network/config_hostname.sh
+chmod +x ~/rfidquizgame/network/network_init.sh
+
+
 ##System Environment
 
-export EDITOR=vim
 dhcpcd
 ln -s /usr/share/zoneinfo/Asia/Singapore /etc/localtime
 hwclock --systohc --utc
 
-echo "Editing ssh config"
-if cat /etc/ssh/sshd_config | grep "Banner ~/rfidquizgame/network/banner"
-	then
-	echo "Banner installed"
-else
-	echo "Installing banner"
-	cat "Banner ~/rfidquizgame/network/banner" >> /etc/ssh/sshd_config
-	systemctl start sshd
-fi
+#CONFIG SSH
+cp /etc/ssh/sshd_config /etc/ssh/sshd_config.backup
+cp ~/rfidquizgame/network/sshd_config.config /etc/ssh/sshd_config
+systemctl restart sshd
 
-#echo "Upgrading system"
-#pacman -Syu
-#time consuming
+echo "Starting Quiz System"
 
 echo "Starting Debug"
 #~/rfidquizgame/setup/tmux_startup.sh
@@ -33,7 +38,9 @@ echo "Starting Services"
 
 echo "Starting Mifare Controller"
 
-echo "Starting Quiz System"
+
 #if jumper1 is high: tgt is host, else tgt is cilent
+
+
 
 
