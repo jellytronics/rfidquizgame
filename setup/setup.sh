@@ -10,7 +10,6 @@ chmod +x ~/rfidquizgame/website/setup_website.sh
 chmod +x ~/rfidquizgame/linux/setup_linux.sh
 
 
-
 #Run init scripts
 
 ~/rfidquizgame/setup/startup.sh
@@ -76,7 +75,10 @@ if [[ $(sw_vers -productName) == *Mac* ]]
 	brew update
 	brew tap jlhonora/lsusb
 	brew install lsusb
+	brew install node
+	brew install mongodb
 
+	~/rfidquizgame/website/mongo_db_mac.sh
 	~/rfidquizgame/embedded_linux/install_em_linux.sh
 
 	exit

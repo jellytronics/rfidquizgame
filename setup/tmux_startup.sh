@@ -7,6 +7,8 @@
 		#Pane 3 - GPIO
 	#Window 2 - Quiz Interface
 	#Window 3 - Server Interface
+		#Pane 1 - startup_website.sh
+		#Pane 2 - mongo
 	#Window 4 - Development Interface
 		#Pane 1 - Git
 
@@ -20,6 +22,7 @@ tmux split-window -v -t controller
 tmux split-window -h -t controller
 tmux new-window -n quiz_interface -t controller
 tmux new-window -n server_interface -t controller
+tmux split-window -h -t controller
 tmux new-window -n dev -t controller
 
 tmux send-keys -t controller:1.1 'top' C-m

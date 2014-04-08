@@ -13,6 +13,14 @@ pacman -S python python2 nodejs
 ######### NODEJS PACKAGES #############
 ##https://www.npmjs.org/package
 
+cd ~/rfidquizstash
+
+npm install mongodb
+pacman -S mongodb
+npm install mongoosem
+npm install mongoskin
+
+
 #Reveal.js
 ##refer to http://www.sitepoint.com/create-multi-user-presentation-reveal-js/
 ##https://github.com/slara/generator-reveal
