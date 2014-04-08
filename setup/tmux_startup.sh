@@ -33,17 +33,23 @@ tmux split-window -h -t controller
 tmux split-window -v -t controller
 tmux new-window -n dev -t controller
 
-tmux send-keys -t controller:1.1 'top' C-m
-tmux send-keys -t controller:1.2 '' C-m
-tmux send-keys -t controller:1.3 '' C-m
+tmux send-keys -t controller:1.1 'cd ~/rfidquizgame' C-m
+tmux send-keys -t controller:1.2 'cd ~/rfidquizgame' C-m
+tmux send-keys -t controller:1.3 'cd ~/rfidquizgame' C-m
 tmux send-keys -t controller:2.1 'cd ~/rfidquizgame' C-m
 tmux send-keys -t controller:3.1 'cd ~/rfidquizgame' C-m
 tmux send-keys -t controller:3.2 'cd ~/rfidquizgame' C-m
+tmux send-keys -t controller:3.3 'cd ~/rfidquizgame' C-m
+tmux send-keys -t controller:3.4 'cd ~/rfidquizgame' C-m
+tmux send-keys -t controller:4.1 'cd ~/rfidquizgame' C-m
+
+tmux send-keys -t controller:1.1 'top' C-m
+tmux send-keys -t controller:1.2 'sleep 1' C-m
+tmux send-keys -t controller:1.3 'sleep 1' C-m
 tmux send-keys -t controller:3.1 'website/startup_website.sh' C-m
+tmux send-keys -t controller:3.2 'sleep 5; mongo' C-m
 tmux send-keys -t controller:3.3 'mongod -f ~/rfidquizstash/website/mongodb.conf --dbpath ~/rfidquizstash/mongodb/db --logpath ~/rfidquizstash/mongodb/mongodb_log_$NOW.log -vvvvv' C-m
 tmux send-keys -t controller:3.4 'watch tail -n 40 ~/rfidquizstash/website/mongodb_log_.log' C-m
-tmux send-keys -t controller:3.2 'sleep 5; mongo' C-m
-tmux send-keys -t controller:4.1 'cd ~/rfidquizgame' C-m
 tmux send-keys -t controller:4.1 'setup/git_update.sh' C-m
 
 fi
