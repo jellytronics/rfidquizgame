@@ -15,9 +15,8 @@ NOW=$(date +"%m-%d-%Y %T")
 
 systemctl enable mongodb
 systemctl start mongodb
-cd ~/rfidquizstash
-cp ~/rfidquizgame/network/mongodb.conf ~/rfidquizstash/network/mongodb.conf
-mongod -f ~/rfidquizstash/network/mongodb.conf --fork
+
+
 
 #create mongo shell (done through tmux script)
 
@@ -32,6 +31,6 @@ mongod -f ~/rfidquizstash/network/mongodb.conf --fork
 ##ELSE
 # run server-side script
 cd ~/rfidquizstash
-cp ~/rfidquizgame/network/server.js ~/rfidquizstash/network/server.js
-node ~/rfidquizstash/network/server.js 2> ~/rfidquizstash/network/server/error_$NOW.log | tee ~/rfidquizstash/network/server/info_$NOW.log
+cp ~/rfidquizgame/website/server.js ~/rfidquizstash/website/server.js
+node ~/rfidquizstash/website/server.js 2> ~/rfidquizstash/website/server/error_$NOW.log | tee ~/rfidquizstash/website/server/info_$NOW.log
 
