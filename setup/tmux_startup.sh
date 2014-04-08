@@ -7,12 +7,14 @@
 		#Pane 3 - GPIO
 	#Window 2 - Quiz Interface
 	#Window 3 - Server Interface
-		#Pane 1 - startup_website.sh
+		#Pane 1 - startup_website.sh --> Node script
 		#Pane 2 - mongo
 	#Window 4 - Development Interface
 		#Pane 1 - Git
 
 chmod +x ~/rfidquizgame/website/startup_website.sh
+
+#script starts here yoz
 
 tmux has-session -t controller | if [ $? != 0 ]
 then
@@ -28,13 +30,17 @@ tmux new-window -n dev -t controller
 tmux send-keys -t controller:1.1 'top' C-m
 tmux send-keys -t controller:1.2 '' C-m
 tmux send-keys -t controller:1.3 '' C-m
-tmux send-keys -t controller:2 'cd ~/rfidquizgame' C-m
-tmux send-keys -t controller:3 'cd ~/rfidquizgame' C-m
-tmux send-keys -t controller:3 'website/startup_website.sh' C-m
+tmux send-keys -t controller:2.1 'cd ~/rfidquizgame' C-m
+tmux send-keys -t controller:3.1 'cd ~/rfidquizgame' C-m
+tmux send-keys -t controller:3.2 'cd ~/rfidquizgame' C-m
+tmux send-keys -t controller:3.1 'website/startup_website.sh' C-m
+tmux send-keys -t controller:3.2 'mongo' C-m
 tmux send-keys -t controller:4.1 'cd ~/rfidquizgame' C-m
+tmux send-keys -t controller:4.1 'setup/git_update.sh' C-m
 
 fi
 
+tmux attach -t controller
 
 
 
