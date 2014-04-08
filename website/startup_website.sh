@@ -3,7 +3,9 @@
 #restart services
 #systemctl restart httpd.service
 
-##Conduct all website functions in ~/rfidquizstash/
+### NOTES
+## Assumes that network settings is completed
+## Conduct all website functions in ~/rfidquizstash/
 
 
 
@@ -17,7 +19,7 @@ cd ~/rfidquizstash
 cp ~/rfidquizgame/network/mongodb.conf ~/rfidquizstash/network/mongodb.conf
 mongod -f ~/rfidquizstash/network/mongodb.conf --fork
 
-#create mongo shell
+#create mongo shell (done through tmux script)
 
 
 
@@ -31,5 +33,5 @@ mongod -f ~/rfidquizstash/network/mongodb.conf --fork
 # run server-side script
 cd ~/rfidquizstash
 cp ~/rfidquizgame/network/server.js ~/rfidquizstash/network/server.js
-node ~/rfidquizstash/network/server.js 2> ~/rfidquizstash/network/server/error-$NOW.log | tee ~/rfidquizstash/network/server/info-$NOW.log
+node ~/rfidquizstash/network/server.js 2> ~/rfidquizstash/network/server/error_$NOW.log | tee ~/rfidquizstash/network/server/info_$NOW.log
 
