@@ -45,7 +45,7 @@ if hash tmuxinator 2>/dev/null
 	echo "tmuxinator is installed"
 else
 	git clone https://github.com/tmuxinator/tmuxinator.git ~/rfidquizstash/linux/tmuxinator
-	gem install tmuxinator
+	sudo gem install tmuxinator
 	echo "tmuxinator installed"
 fi
 
