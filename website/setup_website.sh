@@ -33,6 +33,9 @@ npm install bower
 npm install gulp
 npm install machina
 
+##UML 2 and state machines
+npm install ignite
+
 ## HTTP Sever Dependencies
 npm install http-server
 npm install http-server -g ## global install
