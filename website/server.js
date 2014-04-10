@@ -11,7 +11,16 @@ http.createServer(function (request, response) {
 console.log('Server running at http://127.0.0.1:8124/');
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/test');
+options.server.socketOptions = options.replset.socketOptions = { keepAlive: 1 };
+var options = {
+  db: { native_parser: true },
+  server: { poolSize: 5 },
+  replset: { rs_name: 'myReplicaSetName' },
+  user: 'myUserName',
+  pass: 'myPassword'
+}
+var uri = 'mongodb://localhost/test';
+mongoose.connect(uri, options);
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
