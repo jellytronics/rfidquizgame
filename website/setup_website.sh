@@ -5,9 +5,17 @@
 #LAMP Linux, Apache, MySQL/MariaDB, and PHP.
 #pacman -S apache php php-apache mariadb openssl
 
+mkdir ~/rfidquizstash/
+mkdir ~/rfidquizstash/website/
+mkdir ~/rfidquizstash/website/server
 
 #Python
-pacman -S python python2 nodejs
+if [[ $(sw_vers -productName) == *Mac* ]]
+	then
+	echo "Hi Mac"
+else
+	pacman -S python python2 nodejs
+fi
 
 
 ######### NODEJS PACKAGES #############
@@ -21,15 +29,19 @@ npm install mongoosem
 npm install mongoskin
 
 
+<<TEST
+
 #Reveal.js
 ##refer to http://www.sitepoint.com/create-multi-user-presentation-reveal-js/
 ##https://github.com/slara/generator-reveal
-npm install -g grunt-cli
-npm install highlight.js
-npm install –g generator-express
-yo express
-grunt
-bower install reveal.js --save
+
+#npm install -g grunt-cli
+#npm install highlight.js
+#npm install –g generator-express
+#yo express
+#grunt
+#bower install reveal.js --save
+
 ##git clone https://github.com/hakimel/reveal.js.git ~/rfidquizstash/reveal.js
 ##cd ~/rfidquizstash/reveal.js
 ##npm install
@@ -39,14 +51,11 @@ bower install reveal.js --save
 #https://github.com/hakimel/reveal.js
 
 
-npm install async
-npm install request
-npm install underscore
-npm install commander
-npm install easyrtc
-
-
-
+#npm install async
+#npm install request
+#npm install underscore
+#npm install commander
+#npm install easyrtc
 
 
 ##FrontEnd and Backend Softwares
@@ -93,3 +102,5 @@ fi
 
 #restart services
 systemctl restart httpd.service
+
+TEST

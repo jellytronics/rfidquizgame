@@ -9,12 +9,16 @@
 
 
 
-NOW=$(date +"%m-%d-%Y %T")
+NOW=$(date +"%m-%d-%Y-%T")
 
 #create mongo db
-
-systemctl enable mongodb
-systemctl start mongodb
+if [[ $(sw_vers -productName) == *Mac* ]]
+	then
+	echo "Hi Mac"
+else
+	systemctl enable mongodb
+	systemctl start mongodb
+fi
 
 
 
@@ -32,5 +36,6 @@ systemctl start mongodb
 # run server-side script
 cd ~/rfidquizstash
 cp ~/rfidquizgame/website/server.js ~/rfidquizstash/website/server.js
+echo " " >> ~/rfidquizstash/website/server/error_$NOW.log
 node ~/rfidquizstash/website/server.js 2> ~/rfidquizstash/website/server/error_$NOW.log | tee ~/rfidquizstash/website/server/info_$NOW.log
 
