@@ -28,6 +28,27 @@ pacman -S mongodb
 npm install mongoosem
 npm install mongoskin
 
+## State machines dependencies
+npm install bower
+npm install gulp
+npm install machina
+
+## HTTP Sever Dependencies
+npm install http-server
+npm install http-server -g ## global install
+
+if cat ~/rfidquizstash/games/untrusted/README.md 2> /dev/null
+	then
+	echo "game installed"
+	echo "Check this out! https://github.com/AlexNisnevich/untrusted"
+else
+	git clone https://github.com/AlexNisnevich/untrusted.git ~/rfidquizstash/games/untrusted
+	cd ~/rfidquizstash/games/untrusted
+	make
+	make release
+	make runlocal
+fi
+
 
 <<TEST
 
