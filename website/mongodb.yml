@@ -2,7 +2,17 @@
 
 systemLog:
 	destination: file
-	path: "logpath= ~/rfidquizstash/website/mongodb_log_$NOW.log"
+	path: "~/rfidquizstash/mongodb/mongodb.log"
+	quiet: false
+	logAppend: true
+
+processManagement:
+	fork: true
+	pidFilePath: "~/rfidquizstash/mongodb/mongodb.log"
+net:
+   bindIp: 127.0.0.1
+   port: 27017
+
 
 
 
