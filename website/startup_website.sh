@@ -8,6 +8,9 @@
 ## Conduct all website functions in ~/rfidquizstash/
 
 
+###CHECK THIS OUT
+##http://scotch.io/tutorials/javascript/creating-a-single-page-todo-app-with-node-and-angular
+
 
 NOW=$(date +"%m-%d-%Y-%T")
 

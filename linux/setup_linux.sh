@@ -15,7 +15,6 @@ else
 	else
 		apt-get install zsh
 	fi
-	
 fi
 
 if cat ~/rfidquizstash/linux/zsh/oh-my-zsh/templates/zshrc.zsh-template 2>/dev/null | grep "arch"
@@ -47,6 +46,7 @@ else
 	git clone https://github.com/tmuxinator/tmuxinator.git ~/rfidquizstash/linux/tmuxinator
 	sudo gem install tmuxinator
 	echo "tmuxinator installed"
+	sudo gem install bundler
 fi
 
 #Setup all evnironment

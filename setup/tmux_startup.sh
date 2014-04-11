@@ -10,13 +10,19 @@
 		#Pane 1 - startup_website.sh --> Node script
 		#Pane 2 - mongod
 		#Pane 3 - mongo
-	#Window 4 - Development Interface
+	#Window 4 - Server Interface 2
+		#Pane 1 - node.js file server at ~/ with http-server
+	#Window 5 - Development Interface
 		#Pane 1 - Git
 
 cd ~/rfidquizstash
 cp ~/rfidquizgame/website/mongodb.conf ~/rfidquizstash/website/mongodb.conf
 
 chmod +x ~/rfidquizgame/website/startup_website.sh
+
+#Tmuxinator option
+cp ~/rfidquizgame/linux/
+tmuxinator start 
 
 #script starts here yoz
 
