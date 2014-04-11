@@ -50,7 +50,7 @@ else
 	cd ~/rfidquizstash/games/untrusted
 	make
 	make release
-	make runlocal
+	make runlocal #port 9001
 fi
 
 

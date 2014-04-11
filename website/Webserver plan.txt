@@ -30,7 +30,7 @@ http_main.js
 	Port 80
 
 http_debug.js
-	Port 8081
+	Port 8080
 
 http_admin.js
 	Port 8085
@@ -38,7 +38,7 @@ http_admin.js
 Both Server and Client Specific
 
 http-server (fileserver)
-	Port 8080
+	Port 8081
 
 mongoose.js
 	Port 27017
