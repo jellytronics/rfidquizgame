@@ -37,6 +37,9 @@ http_admin.js
 
 Both Server and Client Specific
 
+http-server (fileserver)
+	Port 8080
+
 mongoose.js
 	Port 27017
 
