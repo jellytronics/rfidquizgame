@@ -15,4 +15,4 @@ else
 fi
 
 echo ""
-echo "Start expressworks to learn more about"
+echo "Start expressworks to learn more about expressjs"

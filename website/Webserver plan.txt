@@ -40,8 +40,9 @@ Both Server and Client Specific
 http-server (fileserver)
 	Port 8081
 
-mongoose.js
-	Port 27017
+mongodb
+	Port 27017 (interface)
+	Port 27018 (debug)
 
 state.js (FSM)
 	init.js

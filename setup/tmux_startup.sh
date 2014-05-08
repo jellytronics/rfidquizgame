@@ -18,6 +18,7 @@
 
 cd ~/rfidquizstash
 cp ~/rfidquizgame/website/mongodb.conf ~/rfidquizstash/website/mongodb.conf
+cp ~/rfidquizgame/website/mongodb.yml ~/rfidquizstash/website/mongodb.yml
 
 chmod +x ~/rfidquizgame/website/startup_website.sh
 chmod +x ~/rfidquizgame/website/start_mongod.sh
