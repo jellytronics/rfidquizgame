@@ -19,27 +19,11 @@ chmod +x ~/rfidquizgame/network/network_init.sh
 
 ##System Environment
 
-dhcpcd
-ln -s /usr/share/zoneinfo/Asia/Singapore /etc/localtime
+#Time updating
+timedatectl set-timezone Asia/Singapore
+timedatectl set-ntp 1 #sets ntp
+/usr/bin/ntpdate -b -s -u pool.ntp.org
 hwclock --systohc --utc
-
-#CONFIG SSH
-cp /etc/ssh/sshd_config /etc/ssh/sshd_config.backup
-cp ~/rfidquizgame/network/sshd_config.config /etc/ssh/sshd_config
-systemctl restart sshd
-
-echo "Starting Quiz System"
-
-echo "Starting Debug"
-#~/rfidquizgame/setup/tmux_startup.sh
-
-echo "Starting Services"
-#Apache, PHP, SQL, MongoDB, whatever
-
-echo "Starting Mifare Controller"
-
-
-#if jumper1 is high: tgt is host, else tgt is cilent
 
 
 

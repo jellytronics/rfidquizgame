@@ -9,6 +9,14 @@ tO be updated
 ## Installation
 
 
+- Enable system services
+  ```sh
+  systemctl start dhcpcd
+  systemctl enable dhcpcd
+  systemctl start sshd
+  systemctl enable sshd
+  ```
+
 - Install the base system using the insturctions from the link below
   ```html
   http://archlinuxarm.org/platforms/armv7/ti/beaglebone-black
@@ -33,7 +41,6 @@ tO be updated
   ```sh
   systemctl start sshd
   systemctl enable sshd
-  systemctl is-enabled sshd
   if cat 2> /dev/null
     then
     echo "ssh keys available"

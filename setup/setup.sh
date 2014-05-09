@@ -123,8 +123,16 @@ echo "This script assumes that the BBB is installed with ArchLinux (ARM) OS"
 #cd ~/rfidquizstash
 
 #Time updating
-timedatectl set-ntp 1
+timedatectl set-timezone Asia/Singapore
+timedatectl set-ntp 1 #sets ntp
+/usr/bin/ntpdate -b -s -u pool.ntp.org
+hwclock --systohc --utc
 
+
+#CONFIG SSH
+cp /etc/ssh/sshd_config /etc/ssh/sshd_config.backup
+cp ~/rfidquizgame/network/sshd_config.config /etc/ssh/sshd_config
+systemctl restart sshd
 
 
 ## Installation commences
@@ -135,8 +143,6 @@ pacman -Syu
 pacman -S base-devel
 ##wifi
 ##pacman -S iw wpa_supplicant dialog wpa_actiond
-#SSH
-pacman -S git
 
 
 
