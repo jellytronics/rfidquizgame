@@ -8,7 +8,7 @@ chmod +x ~/rfidquizgame/embedded_linux/install_em_linux.sh
 chmod +x ~/rfidquizgame/mifare/setup_mifare.sh
 chmod +x ~/rfidquizgame/website/setup_website.sh
 chmod +x ~/rfidquizgame/linux/setup_linux.sh
-chmod +x ~/rfidquizgame/envvars.sh
+chmod +x ~/rfidquizgame/setup/envvars.sh
 
 
 #Run init scripts

@@ -16,10 +16,11 @@ tO be updated
   Note that extracting tar files to FAT volumes will incur an error due to permissions write failure on FAT systems. use --no-same-permissions
 
 - Set up environment
+  From this point onwards, you shld be ssh-ed into the plafform
 
   ```sh
   pacman -Syu
-  pacman -S git udisks udevil
+  pacman -S git udisks udevil ssh
   #echo "formatting sdcard"
   #mkfs.ext4 /dev/mmcblk0p1
   echo "mounting sdcard @ /media/sdcard"
@@ -27,7 +28,7 @@ tO be updated
   ```
 
 
-- Set up ssh
+- Set up ssh 
 
   ```sh
   systemctl start sshd
