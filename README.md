@@ -10,26 +10,26 @@ tO be updated
 
 
 - Install the base system using the insturctions from the link below
-  '''html
+  ```html
   http://archlinuxarm.org/platforms/armv7/ti/beaglebone-black
-  '''
+  ```
   Note that extracting tar files to FAT volumes will incur an error due to permissions write failure on FAT systems. use --no-same-permissions
 
 - Set up environment
 
-  '''sh
+  ```sh
   pacman -Syu
   pacman -S git udisks udevil
   #echo "formatting sdcard"
   #mkfs.ext4 /dev/mmcblk0p1
   echo "mounting sdcard @ /media/sdcard"
   udevil mount -o ro,noatime /dev/mmcblk0p1 /media/sdcard
-  '''
+  ```
 
 
 - Set up ssh
 
-  '''sh
+  ```sh
   systemctl start sshd
   systemctl enable sshd
   systemctl is-enabled sshd
@@ -51,7 +51,7 @@ tO be updated
   ssh-add ~/.ssh/id_rsa.pub
   echo "copy what you are about to see into the ssh-keys of your github account"
   cat ~/.ssh/id_rsa.pub
-  '''
+  ```
 
 - Git clone this
   ```sh
