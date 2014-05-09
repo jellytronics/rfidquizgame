@@ -133,8 +133,8 @@ timedatectl set-ntp 1
 pacman -Syu
 #BASE DEVEL
 pacman -S base-devel
-##wif
-pacman -S iw wpa_supplicant dialog wpa_actiond
+##wifi
+##pacman -S iw wpa_supplicant dialog wpa_actiond
 #SSH
 pacman -S git
 

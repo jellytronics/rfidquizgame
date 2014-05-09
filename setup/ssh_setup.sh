@@ -12,6 +12,7 @@ else
 	cp ~/.ssh/id_rsa ~/.ssh/id_rsa.bu
 	cp ~/.ssh/id_rsa.pub ~/.ssh/id_rsa.pub.bu
 	ssh-keygen -q -f ~/.ssh/id_rsa -P ""
+fi
 
 echo "Bringing ssh-agent to sys env"
 eval $(ssh-agent)
