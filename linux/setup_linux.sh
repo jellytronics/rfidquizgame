@@ -17,6 +17,8 @@ else
 	fi
 fi
 
+chsh -s /usr/bin/zsh
+
 if cat ~/rfidquizstash/linux/zsh/oh-my-zsh/templates/zshrc.zsh-template 2>/dev/null | grep "arch"
 	then
 	cp ~/.zshrc ~/.zshrc.backup
@@ -34,7 +36,7 @@ else
 	#chsh -s $(which zsh)
 
 	## Method 2, my prefered method yoz
-	cp ~/rfidquizgame/linux/zshrc.zsh-template ~/.zshrc
+	cp ~/rfidquizgame/linux/zshrc.config ~/.zshrc
 
 	echo "oh-my-zsh is installed, for more info, look at https://github.com/robbyrussell/oh-my-zsh\nhave a nice day!"
 fi
@@ -44,10 +46,12 @@ if hash tmuxinator 2>/dev/null
 	echo "tmuxinator is installed"
 else
 	pacman -S --needed ruby
+	PATH="`ruby -e 'puts Gem.user_dir'`/bin:$PATH"
 	git clone https://github.com/tmuxinator/tmuxinator.git ~/rfidquizstash/linux/tmuxinator
-	sudo gem install tmuxinator
+	sudo gem install tmuxinator --no-document
 	echo "tmuxinator installed"
-	sudo gem install bundler
+	sudo gem install bundler --no-document
+	#gem update --no-document ##test this first
 fi
 
 #Setup all evnironment
@@ -127,4 +131,7 @@ cp ~/rfidquizgame/linux/vimrc.config ~/.vimrc
 #create sym link to tmux config file
 cp ~/.tmux.conf ~/.tmux.conf.backup
 cp ~/rfidquizgame/linux/tmux_config.conf ~/.tmux.conf
+
+echo "-->\nExit now and execute \nsource .zshrc"
+
 
