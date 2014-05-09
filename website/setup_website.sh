@@ -41,6 +41,8 @@ npm install ignite
 npm install http-server
 npm install http-server -g ## global install
 
+
+<<GAME
 if cat ~/rfidquizstash/games/untrusted/README.md 2> /dev/null
 	then
 	echo "game installed"
@@ -52,7 +54,7 @@ else
 	make release
 	make runlocal #port 9001
 fi
-
+GAME
 
 <<TEST
 

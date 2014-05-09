@@ -8,6 +8,7 @@ chmod +x ~/rfidquizgame/embedded_linux/install_em_linux.sh
 chmod +x ~/rfidquizgame/mifare/setup_mifare.sh
 chmod +x ~/rfidquizgame/website/setup_website.sh
 chmod +x ~/rfidquizgame/linux/setup_linux.sh
+chmod +x ~/rfidquizgame/envvars.sh
 
 
 #Run init scripts
@@ -132,7 +133,7 @@ timedatectl set-ntp 1
 pacman -Syu
 #BASE DEVEL
 pacman -S base-devel
-##wifi
+##wif
 pacman -S iw wpa_supplicant dialog wpa_actiond
 #SSH
 pacman -S git

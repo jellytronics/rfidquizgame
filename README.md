@@ -11,7 +11,7 @@ This is a project that involves
 - Git clone this
   ```sh
   cd ~
-  git clone git@bitbucket.org:jellyjellyrobot/rfidquizgame.git
+  git clone git@github.com:jellyjellyrobot/rfidquizgame.git
   ```
 
 - Start install script
