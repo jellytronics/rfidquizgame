@@ -28,7 +28,7 @@ tO be updated
 
   ```sh
   pacman -Syu
-  pacman -S git udisks udevil ssh
+  pacman -S --needed git udisks udevil ssh
   #echo "formatting sdcard"
   #mkfs.ext4 /dev/mmcblk0p1
   echo "mounting sdcard @ /media/sdcard"

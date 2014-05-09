@@ -140,15 +140,14 @@ systemctl restart sshd
 #Core Updates
 pacman -Syu
 #BASE DEVEL
-pacman -S base-devel
+pacman -S --needed base-devel
 ##wifi
 ##pacman -S iw wpa_supplicant dialog wpa_actiond
 
 
 
 #Softwares
-pacman -S sudo alsa-utils ttf-dejavu fortune-mod cowsay ponysay vim 
-nano tmux autoconf
+pacman -S --needed sudo fortune-mod cowsay ponysay vim nano tmux autoconf
 
 ##Rest of setup scripts
 ##mifare
