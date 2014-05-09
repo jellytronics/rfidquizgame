@@ -13,7 +13,7 @@ else
 		then
 		echo "zsh is already installed"
 	else
-		apt-get install zsh
+		pacman -S --needed zsh
 	fi
 fi
 
@@ -43,6 +43,7 @@ if hash tmuxinator 2>/dev/null
 	then
 	echo "tmuxinator is installed"
 else
+	pacman -S --needed ruby
 	git clone https://github.com/tmuxinator/tmuxinator.git ~/rfidquizstash/linux/tmuxinator
 	sudo gem install tmuxinator
 	echo "tmuxinator installed"

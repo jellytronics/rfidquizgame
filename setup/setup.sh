@@ -161,6 +161,6 @@ pacman -S --needed sudo fortune-mod cowsay ponysay vim nano tmux autoconf
 
 #Run init scripts
 
-~/rfidquizgame/setup/startup.sh
+~/rfidquizgame/setup/startup_apps.sh
 
 
