@@ -54,6 +54,13 @@ tO be updated
   cat ~/.ssh/id_rsa.pub
   ```
 
+- Configure Git
+
+  ```sh
+  git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"
+  ```
+
 - Git clone this
   ```sh
   cd ~
