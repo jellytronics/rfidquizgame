@@ -14,7 +14,8 @@ if [[ $(sw_vers -productName) == *Mac* ]]
 	then
 	echo "Hi Mac"
 else
-	pacman -S python python2 nodejs
+	pacman -S --needed python nodejs mongodb 
+	#python2 
 fi
 
 
@@ -24,11 +25,12 @@ fi
 
 cd ~/rfidquizstash
 
-npm install mongodb
-pacman -S mongodb
-npm install mongoosem
-npm install mongoskin
+npm install mongodb -g
+npm install mongoose -g
+npm install mongoskin -g
+npm install bonescript -g
 
+<<PENDING_SPACE
 ## State machines dependencies
 npm install bower
 npm install gulp
@@ -36,9 +38,9 @@ npm install machina
 
 ##UML 2 and state machines
 npm install ignite
+PENDING_SPACE
 
 ## HTTP Sever Dependencies
-npm install http-server
 npm install http-server -g ## global install
 
 

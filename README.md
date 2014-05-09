@@ -10,6 +10,16 @@ tO be updated
 
 
 - Enable system services
+
+  Add nameserver to dns lookup table, then set write protection to it
+
+  ```sh
+  echo "nameserver 8.8.8.8" >> /etc/resolv.conf
+  chattr +i /etc/resolv.conf
+  ```
+
+  start daemons
+
   ```sh
   systemctl start dhcpcd
   systemctl enable dhcpcd
@@ -18,12 +28,15 @@ tO be updated
   ```
 
 - Install the base system using the insturctions from the link below
+
   ```html
   http://archlinuxarm.org/platforms/armv7/ti/beaglebone-black
   ```
+
   Note that extracting tar files to FAT volumes will incur an error due to permissions write failure on FAT systems. use --no-same-permissions
 
 - Set up environment
+
   From this point onwards, you shld be ssh-ed into the plafform
 
   ```sh

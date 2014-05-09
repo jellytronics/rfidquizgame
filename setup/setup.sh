@@ -1,6 +1,6 @@
 #!/bin/bash
 
-
+source ~/rfidquizgame/setup/envvars.sh
 
 chmod +x ~/rfidquizgame/setup/startup.sh
 chmod +x ~/rfidquizgame/setup/git_update.sh
@@ -151,9 +151,9 @@ pacman -S --needed sudo fortune-mod cowsay ponysay vim nano tmux autoconf
 
 ##Rest of setup scripts
 ##mifare
-#~/rfidquizgame/mifare/setup_mifare.sh
+~/rfidquizgame/mifare/setup_mifare.sh
 ##network
-#~/rfidquizgame/website/setup_website.sh
+~/rfidquizgame/website/setup_website.sh
 ##linux system
 ~/rfidquizgame/linux/setup_linux.sh
 

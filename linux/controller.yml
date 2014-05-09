@@ -21,8 +21,9 @@ root: ~/
 #Creates 1 tmux session with
 	#Window 1 - Overral System Attributes | I/O Statistics | Mifare Statistics
 		#Pane 1 - Top (Command)
-		#Pane 2 - Mifare daemon
-		#Pane 3 - GPIO
+		#Pane 2 - watch disk space
+		#Pane 3 - Mifare daemon
+		#Pane 4 - GPIO
 	#Window 2 - Quiz Interface
 	#Window 3 - Server Interface
 		#Pane 1 - startup_website.sh --> Node script

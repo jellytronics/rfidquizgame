@@ -132,6 +132,6 @@ cp ~/rfidquizgame/linux/vimrc.config ~/.vimrc
 cp ~/.tmux.conf ~/.tmux.conf.backup
 cp ~/rfidquizgame/linux/tmux_config.conf ~/.tmux.conf
 
-echo "-->\nExit now and execute \nsource .zshrc"
+echo "-->\nExit this shell session now, relogin and execute\nsource .zshrc"
 
 

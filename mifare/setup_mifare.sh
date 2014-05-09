@@ -1,6 +1,5 @@
 #!/bin/bash#!/bin/bash
 
-
 echo "Installing Libnfc and Mifare Tools"
 
 if [[ $(sw_vers -productName) == *Mac* ]]
@@ -27,13 +26,15 @@ if [[ $(sw_vers -productName) == *Mac* ]]
 
 elif uname -a | grep "ARCH"
 	then
-	pacman -S libusb libusb-compat
+	pacman -S --needed libusb libusb-compat doxygen
 else
 	echo "Installing Libnfc with apt-get"
 	sudo apt-get install libusb-dev libpcsclite-dev -y
 	sudo apt-get install libusb-0.1-4 libpcsclite1 libccid pcscd libftdi1 -y
 
 fi
+
+export PKG_CONFIG_PATH=$(which pkg-config):/usr/local/lib/pkgconfig
 
 if hash libnfc 2>/dev/null
 then
@@ -59,7 +60,7 @@ then
 else
 	#https://code.google.com/p/libfreefare/
 	#git submodule add https://code.google.com/p/libfreefare/ ~/jellythings/Experiments/Mifare/libfreefare
-	git clone submodule add https://code.google.com/p/libfreefare/ ~/rfidquizstash/mifare/libfreefare
+	git clone https://code.google.com/p/libfreefare/ ~/rfidquizstash/mifare/libfreefare
 	echo "Installing libfreefare"
 	cd ~/rfidquizstash/mifare/libfreefare
 	autoreconf -vis
@@ -69,6 +70,10 @@ else
 	make clean all
 	sudo make install
 fi
+
+
+
+<<OBSOLETE
 
 echo "From here on out, these projects are not longer FEATURED"
 
@@ -148,6 +153,7 @@ else
 	sudo python ./setup.py install
 fi
 
+OBSOLETE
 
 <<COMMON_ERRORS
 
