@@ -158,9 +158,17 @@ pacman -S --needed sudo fortune-mod cowsay ponysay vim nano tmux autoconf
 ~/rfidquizgame/linux/setup_linux.sh
 
 
+#setup cron
+#write out current crontab
+if crontab -l | grep '@reboot /rfidquizgame/setup/startup.sh'
+	then
+	echo "crontab startupscript installed"
+else
+	echo "installing crontab startup script"
+	crontab -l | { cat; echo "@reboot /rfidquizgame/setup/startup.sh"; } | crontab -
+fi
 
 #Run init scripts
-
-~/rfidquizgame/setup/startup_apps.sh
+#~/rfidquizgame/setup/startup_apps.sh
 
 

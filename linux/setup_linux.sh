@@ -123,6 +123,13 @@ cp ~/rfidquizgame/linux/bashprofile.config ~/.bash_profile
 ##zsh
 cp ~/.zshrc ~/.zshrc.backup
 cp ~/rfidquizgame/linux/zshrc.config ~/.zshrc
+#zshenv
+if cat ~/.zshenv 2>/dev/null | grep "source ~/rfidquizgame/setup/envvars.sh"
+	then
+	echo "zshenv set up liao"
+else
+	echo "source ~/rfidquizgame/setup/envvars.sh" >> ~/.zshenv
+fi
 #PROGS
 ##vim
 cp ~/.vimrc ~/.vimrc.backup
