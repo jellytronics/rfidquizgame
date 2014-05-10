@@ -17,6 +17,16 @@ else
 	fi
 fi
 
+if cat ~/.vim/bundle/Vundle.vim/README.md 2> /dev/null
+	then
+	echo "vundle installed"
+else
+	echo "installing vundle"
+	git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+	vim +PluginInstall +qall
+	#https://github.com/gmarik/Vundle.vim
+fi
+
 chsh -s /usr/bin/zsh
 
 if cat ~/rfidquizstash/linux/zsh/oh-my-zsh/templates/zshrc.zsh-template 2>/dev/null | grep "arch"
