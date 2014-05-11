@@ -17,16 +17,6 @@ else
 	fi
 fi
 
-if cat ~/.vim/bundle/Vundle.vim/README.md 2> /dev/null
-	then
-	echo "vundle installed"
-else
-	echo "installing vundle"
-	git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-	vim +PluginInstall +qall
-	#https://github.com/gmarik/Vundle.vim
-fi
-
 chsh -s /usr/bin/zsh
 
 if cat ~/rfidquizstash/linux/zsh/oh-my-zsh/templates/zshrc.zsh-template 2>/dev/null | grep "arch"
@@ -136,14 +126,26 @@ cp ~/rfidquizgame/linux/zshrc.config ~/.zshrc
 #zshenv
 if cat ~/.zshenv 2>/dev/null | grep "source ~/rfidquizgame/setup/envvars.sh"
 	then
-	echo "zshenv set up liao"
+	echo "zshenv done"
 else
 	echo "source ~/rfidquizgame/setup/envvars.sh" >> ~/.zshenv
 fi
+
+
 #PROGS
 ##vim
 cp ~/.vimrc ~/.vimrc.backup
 cp ~/rfidquizgame/linux/vimrc.config ~/.vimrc
+if cat ~/.vim/bundle/Vundle.vim/README.md >> /dev/null  2> /dev/null
+	then
+	echo "vundle installed"
+else
+	echo "installing vundle"
+	git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+	#https://github.com/gmarik/Vundle.vim
+fi
+#install plugins
+vim +PluginInstall +qall
 ##tmux
 #create sym link to tmux config file
 cp ~/.tmux.conf ~/.tmux.conf.backup
