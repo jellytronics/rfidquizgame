@@ -19,30 +19,54 @@ root: ~/
 # tmux_command: byobu
 
 #Creates 1 tmux session with
-	#Window 1 - Overral System Attributes | I/O Statistics | Mifare Statistics
-		#Pane 1 - Top (Command)
-		#Pane 2 - watch disk space
-		#Pane 3 - Mifare daemon
-		#Pane 4 - GPIO
-	#Window 2 - Quiz Interface
-	#Window 3 - Server Interface
-		#Pane 1 - startup_website.sh --> Node script
-		#Pane 2 - mongod
-		#Pane 3 - mongo
-	#Window 4 - Server Interface 2
-		#Pane 1 - node.js file server at ~/ with http-server
-	#Window 5 - Development Interface
-		#Pane 1 - Git
+#	#Window 1 - Overral System Attributes | I/O Statistics | Mifare Statistics
+#		#Pane 1 - Top (Command)
+#		#Pane 2 - watch disk space
+#		#Pane 3 - Mifare daemon
+#		#Pane 4 - GPIO
+#	#Window 2 - Quiz Interface
+#	#Window 3 - Server Interface
+#		#Pane 1 - startup_website.sh --> Node script
+#		#Pane 2 - mongod
+#		#Pane 3 - mongo
+#	#Window 4 - Server Interface 2
+#		#Pane 1 - node.js file server at ~/ with http-server
+#	#Window 5 - Development Interface
+#		#Pane 1 - Git
 
 windows:
-  - stats:
-    - ssh stats@example.com
-    - tail -f /var/log/stats.log
-  - logs:
-    layout: main-vertical
-    panes:
-      - logs:
-        - ssh logs@example.com
-        - cd /var/logs
-        - tail -f development.log
+  - sys_att:
+      layout: main-vertical
+      panes:
+        - top
+        - df -h
+        - sleep 1
+        - sleep 1
+  - quiz: 
+      layout: main-vertical
+      panes:
+        - sleep 1
+        - sleep 1
+  - serv1:
+      layout: main-vertical
+      panes:
+        - cd ~/rfidquizgame; website/startup_website.sh
+        - cd ~/rfidquizgame; sleep 5; mongo
+        - cd ~/rfidquizgame; website/start_mongod.sh
+  - serv2:
+      layout: main-vertical
+      panes:
+        - cd ~; node_modules/http-server/bin/http-server -p 8081
+  - dev:
+      layout: main-vertical
+      panes:
+        - cd ~/rfidquizgame; setup/git_update.sh
+
+
+
+
+
+
+
+
 
