@@ -88,8 +88,6 @@ fi
 
 
 
-
-
 #Presetup (Run Once)
 
 function addtofile {
@@ -141,21 +139,23 @@ systemctl restart sshd
 pacman -Syu
 #BASE DEVEL
 pacman -S --needed base-devel
-##wifi
-##pacman -S iw wpa_supplicant dialog wpa_actiond
-
+##	wifi
+#pacman -S --needed iw wpa_supplicant dialog wpa_actiond
+##	pc
+#pacman -S --needed python ttytter nmap tmux zsh autoconf coreutils wireshark-cli openssh mongodb
 
 
 #Softwares
 pacman -S --needed sudo fortune-mod cowsay ponysay vim nano tmux autoconf
 
 ##Rest of setup scripts
+##linux system
+~/rfidquizgame/linux/setup_linux.sh
 ##mifare
 ~/rfidquizgame/mifare/setup_mifare.sh
 ##network
 ~/rfidquizgame/website/setup_website.sh
-##linux system
-~/rfidquizgame/linux/setup_linux.sh
+
 
 
 #setup cron

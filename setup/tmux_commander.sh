@@ -1,5 +1,10 @@
 #!/bin/bash
 
+
+
+cp rfidquizgame/linux/controller.yml ~/.tmuxinator/controller.yml
+
+
 echo "Entering TMUX Command Mode"
 
 echo "Setting Permissions"

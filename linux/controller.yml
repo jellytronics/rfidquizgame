@@ -35,38 +35,14 @@ root: ~/
 		#Pane 1 - Git
 
 windows:
-	- sys_att:
-		layout: main-vertical
-		panes:
-			- cd ~/rfidquizgame; top
-			- cd ~/rfidquizgame; sleep 1
-			- cd ~/rfidquizgame; sleep 1
-	- quiz: 
-		layout: main-vertical
-		panes:
-			- cd ~/rfidquizgame; sleep 1
-			- cd ~/rfidquizgame; sleep 1
-	- serv1:
-		layout: main-vertical
-		panes:
-			- cd ~/rfidquizgame; website/startup_website.sh
-			- cd ~/rfidquizgame; sleep 5; mongo;
-			- cd ~/rfidquizgame; website/start_mongod.sh
-	- serv2:
-		layout: main-vertical
-		panes:
-			- cd ~; node_modules/http-server/bin/http-server -p 8081
-			- cd ~/rfidquizgame; sleep 1
-	- dev:
-		layout: main-vertical
-		panes:
-			- cd ~/rfidquizgame; setup/git_update.sh
-
-
-
-
-
-
-
-
+  - stats:
+    - ssh stats@example.com
+    - tail -f /var/log/stats.log
+  - logs:
+    layout: main-vertical
+    panes:
+      - logs:
+        - ssh logs@example.com
+        - cd /var/logs
+        - tail -f development.log
 
