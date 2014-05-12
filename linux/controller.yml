@@ -38,15 +38,15 @@ windows:
   - sys_att:
       layout: main-vertical
       panes:
-        - top
-        - df -h
-        - sleep 1
-        - sleep 1
+        - cd ~/rfidquizgame; top
+        - cd ~/rfidquizgame; df -h
+        - cd ~/rfidquizgame; sleep 1
+        - cd ~/rfidquizgame; sleep 1
   - quiz: 
       layout: main-vertical
       panes:
-        - sleep 1
-        - sleep 1
+        - cd ~/rfidquizgame; sleep 1
+        - cd ~/rfidquizgame; sleep 1
   - serv1:
       layout: main-vertical
       panes:
