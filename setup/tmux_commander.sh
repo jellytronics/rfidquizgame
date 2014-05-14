@@ -3,7 +3,9 @@
 
 
 cp rfidquizgame/linux/controller.yml ~/.tmuxinator/controller.yml
+tmuxinator start controller
 
+<<DEPRECIATED
 
 echo "Entering TMUX Command Mode"
 
@@ -34,3 +36,5 @@ select choice in "Mifare Project" "Software Defined Radio Project" "System I/O U
 		"Exit" ) break;;
     esac
 done
+
+DEPRECIATED
