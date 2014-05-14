@@ -25,10 +25,12 @@ chmod +x ~/rfidquizgame/website/start_mongod.sh
 
 ##Tmuxinator option
 
-#cp ~/rfidquizgame/linux/
-#tmuxinator start 
+cp rfidquizgame/linux/controller.yml ~/.tmuxinator/controller.yml
+tmuxinator start controller
 
 
+
+<<DEPRECIATED
 
 #script starts here yoz
 
@@ -72,7 +74,7 @@ fi
 
 tmux attach -t controller
 
-
+DEPRECIATED
 
 
 

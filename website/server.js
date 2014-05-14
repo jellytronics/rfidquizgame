@@ -1,5 +1,5 @@
 console.log(__filename);
-console.time('Start time');
+console.time('Start server.js');
 
 var http = require('http');
 

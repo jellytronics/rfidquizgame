@@ -56,7 +56,7 @@ windows:
   - serv2:
       layout: main-vertical
       panes:
-        - cd ~; node_modules/http-server/bin/http-server -p 8081
+        - cd ~/rfidquizstash; node_modules/http-server/bin/http-server -p 8081
   - dev:
       layout: main-vertical
       panes:
