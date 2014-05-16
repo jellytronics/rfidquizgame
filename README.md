@@ -121,3 +121,5 @@ tO be updated
 I will try my best to work on the codes and iron out all the kinks (I'm a student btw)
 
 I will port/fork whatever sub project within Experiments when the code matures and gains suitable applications externally.
+
+This program contains at least one easter egg.

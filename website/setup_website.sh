@@ -25,14 +25,37 @@ fi
 
 cd ~/rfidquizstash
 
-npm install mongodb -g
-npm install mongoose -g
-npm install mongoskin -g
-npm install bonescript -g
+##installation
+
+npm install -g mongodb
+npm install -g mongoose
+npm install -g mongoskin
+npm install -g bonescript
+npm install -g grunt
+npm install -g grunt-cli
+npm install -g http-server
+##Linking
+
+npm link mongodb
+npm link mongoose
+npm link mongoskin
+npm link bonescript
+npm link grunt
+npm link grunt-cli
+npm link http-server
+
+##Reveal installation
+git clone https://github.com/hakimel/reveal.js.git ~/rfidquizstash/website/reveal.js
+cd ~/rfidquizstash/website/reveal.js
+npm install
+
+##Run Server
+#grunt serve --port=9000
+
 
 <<PENDING_SPACE
 ## State machines dependencies
-npm install bower
+
 npm install gulp
 npm install machina
 
@@ -40,8 +63,6 @@ npm install machina
 npm install ignite
 PENDING_SPACE
 
-## HTTP Sever Dependencies
-npm install http-server -g ## global install
 
 
 <<GAME

@@ -39,7 +39,7 @@ windows:
       layout: main-vertical
       panes:
         - cd ~/rfidquizgame; top
-        - cd ~/rfidquizgame; df -h
+        - cd ~/rfidquizgame; while true; do df -h; sleep 2; clear; done
         - cd ~/rfidquizgame; sleep 1
         - cd ~/rfidquizgame; sleep 1
   - quiz: 
