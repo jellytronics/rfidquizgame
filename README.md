@@ -37,9 +37,9 @@ tO be updated
 
   ```sh
   cd ~/test
-  mkfs.vfat -F 16 /dev/sdX1
-  pacman -Syu wget dosfstools
-  mkfs.ext4 /dev/sdX2
+  mkfs.vfat -F 16 /dev/mmcblk1p1
+  pacman -Syu --needed wget dosfstools
+  mkfs.ext4 /dev/mmcblk1p2
   mkdir boot
   mount /dev/mmcblk1p1 boot
   tar -xvf BeagleBone-bootloader.tar.gz -C boot --no-same-permissions --no-same-owner --touch
