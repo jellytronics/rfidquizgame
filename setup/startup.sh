@@ -8,7 +8,6 @@ echo "This script assumes that the BBB is installed with ArchLinux (ARM) OS"
 chmod +x ~/rfidquizgame/setup/motd.sh
 chmod +x ~/rfidquizgame/setup/git_update.sh
 chmod +x ~/rfidquizgame/setup/tmux_commander.sh
-chmod +x ~/rfidquizgame/setup/tmux_config.sh
 chmod +x ~/rfidquizgame/setup/tmux_startup.sh
 chmod +x ~/rfidquizgame/embedded_linux/install_em_linux.sh
 chmod +x ~/rfidquizgame/linux/setup_linux.sh
