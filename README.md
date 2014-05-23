@@ -27,13 +27,31 @@ tO be updated
   systemctl enable sshd
   ```
 
-- Install the base system using the insturctions from the link below
+- Install the base system using the instructions from the link below
 
   ```html
   http://archlinuxarm.org/platforms/armv7/ti/beaglebone-black
   ```
 
-  Note that extracting tar files to FAT volumes will incur an error due to permissions write failure on FAT systems. use --no-same-permissions
+  For example, if you are using the supplied sd card...
+
+  ```sh
+  cd ~/test
+  mkfs.vfat -F 16 /dev/sdX1
+  pacman -Syu wget dosfstools
+  mkfs.ext4 /dev/sdX2
+  mkdir boot
+  mount /dev/mmcblk1p1 boot
+  tar -xvf BeagleBone-bootloader.tar.gz -C boot --no-same-permissions --no-same-owner --touch
+  umount boot
+  mkdir root
+  mount /dev/mmcblk1p2 root
+  tar -xf ArchLinuxARM-am33x-latest.tar.gz -C root
+  umount root
+  poweroff
+  ```
+
+  Note that extracting tar files to FAT volumes will incur an error due to permissions write failure on FAT systems. use --no-same-owner and -m
 
 - Set up environment
 

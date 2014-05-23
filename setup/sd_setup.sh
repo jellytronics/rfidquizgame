@@ -26,7 +26,7 @@ mkfs.ext4 /dev/sdX2
 wget http://archlinuxarm.org/os/omap/BeagleBone-bootloader.tar.gz
 mkdir boot
 mount /dev/sdX1 boot
-tar -xvf BeagleBone-bootloader.tar.gz -C boot --no-same-permissions #--no-same-owner
+tar -xvf BeagleBone-bootloader.tar.gz -C boot --no-same-permissions --no-same-owner
 umount boot
 #Download the root filesystem tarball and extract it (as root, not via sudo) to the ext3 partition on either the SD card or the USB drive. It is important to do this as root, as special files need to be created as part of the filesystem that can only be created by root.
 wget http://archlinuxarm.org/os/ArchLinuxARM-am33x-latest.tar.gz
