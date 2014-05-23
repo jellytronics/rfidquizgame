@@ -63,7 +63,11 @@ tO be updated
 
   ```sh
   pacman -Syu
-  pacman -S --needed git udisks udevil ssh
+  pacman -S --needed git udisks udevil ssh ntp
+  timedatectl set-timezone Asia/Singapore
+  timedatectl set-ntp 1 #sets ntp
+  /usr/bin/ntpdate -b -s -u pool.ntp.org
+  hwclock --systohc --utc
   #echo "formatting sdcard"
   #mkfs.ext4 /dev/mmcblk0p1
   echo "mounting sdcard @ /media/sdcard"
