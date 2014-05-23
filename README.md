@@ -36,6 +36,12 @@ tO be updated
   For example, if you are using the supplied sd card...
 
   ```sh
+  cd ~
+  rm -r test
+  mkdir test
+  cd test
+  wget http://archlinuxarm.org/os/omap/BeagleBone-bootloader.tar.gz
+  wget http://archlinuxarm.org/os/ArchLinuxARM-am33x-latest.tar.gz
   pacman -Syu --needed wget dosfstools ntp
   timedatectl set-timezone Asia/Singapore
   timedatectl set-ntp 1 #sets ntp
@@ -55,6 +61,40 @@ tO be updated
   poweroff
   ```
 
+  If all else fails, you can try this fundamental install script adapted from http://archlinuxarm.org/forum/viewtopic.php?f=48&t=5852
+
+  ```sh
+  pacman -Syu --needed wget dosfstools ntp
+  timedatectl set-timezone Asia/Singapore
+  timedatectl set-ntp 1 #sets ntp
+  /usr/bin/ntpdate -b -s -u pool.ntp.org
+  hwclock --systohc --utc
+  cd ~/test
+  mount /dev/mmcblk0p1 /mnt
+  mkdir /mnt-boot
+  mount /dev/mmcblk1p1 /mnt-boot
+  cp /mnt/* /mnt-boot
+  umount /mnt
+  umount /mnt-boot
+  pacman -S arch-install-scripts
+  mkfs.ext4 /dev/mmcblk1p2
+  mount /dev/mmcblk1p2 /mnt
+  pacstrap /mnt base
+  arch-chroot /mnt
+  echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
+  locale-gen
+  pacman -Syu --needed ntp openssh
+  pacman -S --needed base-devel
+  pacman -R linux-armv7
+  pacman -S linux-am33x
+  systemctl enable dhcpcd@eth0
+  systemctl enable sshd
+  passwd
+  exit
+  umount /mnt
+  poweroff
+  ```
+
   Note that extracting tar files to FAT volumes will incur an error due to permissions write failure on FAT systems. use --no-same-owner and -m
 
 - Set up environment
@@ -63,7 +103,7 @@ tO be updated
 
   ```sh
   pacman -Syu
-  pacman -S --needed git udisks udevil ssh ntp
+  pacman -S --needed git udisks udevil openssh ntp
   timedatectl set-timezone Asia/Singapore
   timedatectl set-ntp 1 #sets ntp
   /usr/bin/ntpdate -b -s -u pool.ntp.org
@@ -80,11 +120,12 @@ tO be updated
   ```sh
   systemctl start sshd
   systemctl enable sshd
-  if cat 2> /dev/null
+  if cat .ssh/id_rsa 2> /dev/null
     then
     echo "ssh keys available"
   else
     echo "ssh keys unavailable. making one now"
+    mkdir ~/.ssh
     cp ~/.ssh/id_rsa ~/.ssh/id_rsa.bu
     cp ~/.ssh/id_rsa.pub ~/.ssh/id_rsa.pub.bu
     ssh-keygen -q -f ~/.ssh/id_rsa -P ""
