@@ -36,9 +36,13 @@ tO be updated
   For example, if you are using the supplied sd card...
 
   ```sh
+  pacman -Syu --needed wget dosfstools ntp
+  timedatectl set-timezone Asia/Singapore
+  timedatectl set-ntp 1 #sets ntp
+  /usr/bin/ntpdate -b -s -u pool.ntp.org
+  hwclock --systohc --utc
   cd ~/test
   mkfs.vfat -F 16 /dev/mmcblk1p1
-  pacman -Syu --needed wget dosfstools
   mkfs.ext4 /dev/mmcblk1p2
   mkdir boot
   mount /dev/mmcblk1p1 boot
