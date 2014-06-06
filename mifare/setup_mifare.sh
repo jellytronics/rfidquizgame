@@ -1,5 +1,92 @@
 #!/bin/bash#!/bin/bash
 
+
+
+#!/bin/bash#!/bin/bash
+
+echo "Installing Libnfc and Mifare Tools"
+
+if [[ $(sw_vers -productName) == *Mac* ]]
+	then
+
+elif uname -a | grep "ARCH"
+	then
+	pacman -S --needed libusb libusb-compat doxygen
+else
+	echo "Installing Libnfc with apt-get"
+	sudo apt-get install libusb-dev libpcsclite-dev -y
+	sudo apt-get install libusb-0.1-4 libpcsclite1 libccid pcscd libftdi1 -y
+
+fi
+
+export PKG_CONFIG_PATH=$(which pkg-config):/usr/local/lib/pkgconfig
+
+#Past code below under mac_obsolete
+
+##http://www.jerome-bernard.com/blog/2013/04/15/how-to-connect-adafruit-nfc-shield-to-a-mac-via-libnfc/
+##http://commy.dk/post/50418110584/pn532-libnfc-mfoc-with-osx
+
+
+###LIBNFC
+mkdir ~/rfidquizstash
+mkdir ~/rfidquizstash/Mifare
+
+cd ~/rfidquizstash/Mifare
+git clone https://code.google.com/p/libnfc/ ~/rfidquizstash/Mifare/libnfc
+cd ~/rfidquizstash/Mifare/libnfc
+autoreconf -vis
+./configure --enable-doc --with-drivers=pn532_uart --enable-serial-autoprobe
+vi utils/nfc-mfclassic.c
+
+##TO_DO use sed to automate this part!
+echo "Comment out following two lines"
+echo "if (uiBlock == 0 && ! write_block_zero && ! magic2)"
+echo "\tcontinue;"
+vim utils/nfc-mfclassic.c
+echo "installing software"
+make
+sudo make install
+make doc
+
+ls -la /dev/tty.usbserial*
+sudo vim /usr/local/etc/nfc/devices.d/pn532_uart.conf
+mkdir /usr/local/etc/nfc/devices.d/
+sudo echo "name = \"PN532 board via UART\"" > /usr/local/etc/nfc/devices.d/pn532_uart.conf
+sudo echo "connstring = pn532_uart:/dev/"$(ls /dev | grep tty.usbserial) >> /usr/local/etc/nfc/devices.d/pn532_uart.conf
+
+
+###LIBFREEFARE
+cd ~/rfidquizstash/Mifare
+git clone https://code.google.com/p/libfreefare/ ~/rfidquizstash/Mifare/libfreefare
+cd ~/rfidquizstash/Mifare/libfreefare
+autoreconf -vis
+./configure --prefix=/usr
+make
+sudo make install
+
+
+###MFOC
+cd ~/rfidquizstash/Mifare
+#git clone https://code.google.com/p/mfoc/ ~/rfidquizstash/Mifare/mfoc
+wget https://mfoc.googlecode.com/files/mfoc-0.10.7.tar.bz2
+tar xzvf mfoc-0.10.7.tar.bz2
+cd ~/rfidquizstash/Mifare/mfoc-0.10.7/
+./configure LDFLAGS=-L/usr/local/lib PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
+vim src/nfc-utils.c
+make
+sudo make install
+
+
+cd ~/rfidquizstash
+npm install rfid-pn532
+#npm install -g rfid-pn532
+#npm link rfid-pn532
+
+
+
+<<OBSOLETE
+
+
 echo "Installing Libnfc and Mifare Tools"
 
 if [[ $(sw_vers -productName) == *Mac* ]]
@@ -73,7 +160,6 @@ fi
 
 
 
-<<OBSOLETE
 
 echo "From here on out, these projects are not longer FEATURED"
 
@@ -154,15 +240,6 @@ else
 fi
 
 OBSOLETE
-
-<<COMMON_ERRORS
-
-
-	#insert here
-
-
-COMMON_ERRORS
-
 
 
 
