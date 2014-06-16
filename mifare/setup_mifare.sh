@@ -34,9 +34,10 @@ mkdir ~/rfidquizstash/Mifare
 cd ~/rfidquizstash/Mifare
 git clone https://code.google.com/p/libnfc/ ~/rfidquizstash/Mifare/libnfc
 cd ~/rfidquizstash/Mifare/libnfc
+./make_release.sh
 autoreconf -vis
 ./configure --enable-doc --with-drivers=pn532_uart --enable-serial-autoprobe
-vi utils/nfc-mfclassic.c
+##vi utils/nfc-mfclassic.c
 
 ##TO_DO use sed to automate this part!
 echo "Comment out following two lines"
@@ -48,8 +49,8 @@ make
 sudo make install
 make doc
 
-ls -la /dev/tty.usbserial*
-sudo vim /usr/local/etc/nfc/devices.d/pn532_uart.conf
+#ls -la /dev/tty.usbserial*
+#sudo vim /usr/local/etc/nfc/devices.d/pn532_uart.conf
 mkdir /usr/local/etc/nfc/devices.d/
 sudo echo "name = \"PN532 board via UART\"" > /usr/local/etc/nfc/devices.d/pn532_uart.conf
 sudo echo "connstring = pn532_uart:/dev/"$(ls /dev | grep tty.usbserial) >> /usr/local/etc/nfc/devices.d/pn532_uart.conf
