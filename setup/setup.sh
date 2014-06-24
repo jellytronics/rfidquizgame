@@ -54,7 +54,7 @@ if [[ $(sw_vers -productName) == *Mac* ]]
 	echo "Homebrew token installed"
 	echo "Installing applications on brew"
 
-	brew install coreutils subversion python3 sshfs ttytter python3-setuptools python3-pip wireshark nmap autoconf libtool tmux
+	brew install coreutils subversion python3 sshfs ttytter python3-setuptools python3-pip wireshark nmap autoconf libtool tmux cowsay fortune
 
 	#	Notes
 	##	for tmux on mac, if you are using iterm, it has integrated mouse support, else, visit https://gist.github.com/simme/1297707
@@ -79,8 +79,14 @@ if [[ $(sw_vers -productName) == *Mac* ]]
 	brew install node
 	brew install mongodb
 
+	#Install Scripts To be Updated
 	~/rfidquizgame/website/mongo_db_mac.sh
 	~/rfidquizgame/embedded_linux/install_em_linux.sh
+
+	#Install Scripts
+	~/rfidquizgame/linux/setup_linux.sh
+	~/rfidquizgame/mifare/setup_mifare.sh
+	~/rfidquizgame/website/setup_website.sh
 
 	exit
 
