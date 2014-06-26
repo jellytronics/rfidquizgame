@@ -1,1 +1,0 @@
-Smartcard package for Python

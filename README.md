@@ -69,6 +69,8 @@ tO be updated
   timedatectl set-ntp 1 #sets ntp
   /usr/bin/ntpdate -b -s -u pool.ntp.org
   hwclock --systohc --utc
+  fdisk /dev/mmcblk1
+  mkfs.vfat -F 16 /dev/mmcblk1p1
   cd ~/test
   mount /dev/mmcblk0p1 /mnt
   mkdir /mnt-boot
@@ -163,6 +165,19 @@ tO be updated
   ```
 
 - Brew a cuppa coffee, chillout and Enjoy!!!
+
+## Other stuff
+
+- Setup hostname
+
+  ```sh
+  hostnamectl set-hostname myhostname
+  vim /etc/hosts
+
+  passwd
+
+  cat .ssh/id_rsa.pub | ssh root@hostname 'cat >> .ssh/authorized_keys'
+  ```
 
 ## Usage (QuizMaster)
 
