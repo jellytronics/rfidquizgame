@@ -11,7 +11,7 @@ if [[ $(sw_vers -productName) == *Mac* ]]
 
 elif uname -a | grep "ARCH"
 	then
-	pacman -S --needed libusb libusb-compat doxygen
+	pacman -S --needed libusb libusb-compat doxygen pcsclite
 else
 	echo "Installing Libnfc with apt-get"
 	sudo apt-get install libusb-dev libpcsclite-dev -y
@@ -36,7 +36,8 @@ git clone https://code.google.com/p/libnfc/ ~/rfidquizstash/Mifare/libnfc
 cd ~/rfidquizstash/Mifare/libnfc
 ./make_release.sh
 autoreconf -vis
-./configure --enable-doc --with-drivers=pn532_uart --enable-serial-autoprobe
+#./configure --enable-doc --with-drivers=pn532_uart --enable-serial-autoprobe
+./configure --enable-doc --with-drivers=all --enable-serial-autoprobe --sysconfdir=/etc --prefix=/usr
 ##vi utils/nfc-mfclassic.c
 
 ##TO_DO use sed to automate this part!
@@ -49,11 +50,32 @@ make
 sudo make install
 make doc
 
-#ls -la /dev/tty.usbserial*
-#sudo vim /usr/local/etc/nfc/devices.d/pn532_uart.conf
-mkdir /usr/local/etc/nfc/devices.d/
-sudo echo "name = \"PN532 board via UART\"" > /usr/local/etc/nfc/devices.d/pn532_uart.conf
-sudo echo "connstring = pn532_uart:/dev/"$(ls /dev | grep tty.usbserial) >> /usr/local/etc/nfc/devices.d/pn532_uart.conf
+
+## Setting environment variables
+
+if [[ $(sw_vers -productName) == *Mac* ]]
+	then
+	#ls -la /dev/tty.usbserial*
+	#sudo vim /usr/local/etc/nfc/devices.d/pn532_uart.conf
+	mkdir /usr/local/etc/nfc/devices.d/
+	sudo echo "name = \"PN532 board via UART\"" > /usr/local/etc/nfc/devices.d/pn532_uart.conf
+	sudo echo "connstring = pn532_uart:/dev/"$(ls /dev | grep tty.usbserial) >> /usr/local/etc/nfc/devices.d/pn532_uart.conf
+	sudo echo "allow_autoscan = false" > /usr/local/etc/nfc/libnfc.conf
+	sudo echo "allow_intrusive_scan = false" >> /usr/local/etc/nfc/libnfc.conf
+	sudo echo "log_level=1" >> /usr/local/etc/nfc/libnfc.conf
+	sudo cp /etc/nfc/libnfc.conf /etc/nfc/devices.d/pn532_uart.conf
+else
+	sudo mkdir /etc/nfc/
+	sudo echo "allow_autoscan = false" > /etc/nfc/libnfc.conf
+	sudo echo "allow_intrusive_scan = false" >> /etc/nfc/libnfc.conf
+	sudo echo "log_level=1" >> /etc/nfc/libnfc.conf
+	sudo echo "device.name=\"PN532 board via UART\"" >> /etc/nfc/libnfc.conf
+	sudo echo "connstring = pn532_uart:/dev/"$(ls /dev | grep tty.usbserial) >> /etc/nfc/libnfc.conf
+fi
+
+
+
+
 
 
 ###LIBFREEFARE
