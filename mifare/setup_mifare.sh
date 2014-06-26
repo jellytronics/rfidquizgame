@@ -99,12 +99,21 @@ vim src/nfc-utils.c
 make
 sudo make install
 
-
+##install node libraries
 cd ~/rfidquizstash
-npm install rfid-pn532
+npm install -g 
+#npm install -g nfc
+#npm install rfid-pn532
 #npm install -g rfid-pn532
 #npm link rfid-pn532
 
+##My own node js library yoz!
+cd ~/rfidquizstash/Mifare
+git clone git@github.com:jellyjellyrobot/node-nfc.git
+
+
+##install nfc js handler
+cp ~/rfidquizgame/mifare/nfc_handler.js ~/rfidquizstash/Mifare/nfc_handler.js
 
 
 <<OBSOLETE
