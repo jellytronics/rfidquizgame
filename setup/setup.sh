@@ -2,18 +2,12 @@
 
 source ~/rfidquizgame/setup/envvars.sh
 
-chmod +x ~/rfidquizgame/setup/startup.sh
-chmod +x ~/rfidquizgame/setup/git_update.sh
-chmod +x ~/rfidquizgame/embedded_linux/install_em_linux.sh
+chmod +x ~/rfidquizgame/setup/tmux_startup.sh
 chmod +x ~/rfidquizgame/mifare/setup_mifare.sh
 chmod +x ~/rfidquizgame/website/setup_website.sh
 chmod +x ~/rfidquizgame/linux/setup_linux.sh
-chmod +x ~/rfidquizgame/setup/envvars.sh
-
 
 #Run init scripts
-
-~/rfidquizgame/setup/startup.sh
 
 
 ### Mac Setup Environment
@@ -96,35 +90,13 @@ fi
 
 #Presetup (Run Once)
 
-function addtofile {
-	##unstable
-	if cat $1 | grep $2
-		then
-		echo "it is already included"
-	else
-		cat $2 >> $1
-	fi
-}
 
 echo "This is the setup (Run Once) script for BeagleBone Black Based RFID Quiz System!"
 
 echo "This script assumes that the BBB is installed with ArchLinux (ARM) OS"
 
 
-
-#Basic
-##loadkeys us
-##echo "Checking LAN Config"
-##ifconfig
-##ping -c 3 www.google.com
-
-#systemctl restart sshd
-
-
-
-#######################################################
-#git stash -> all git clones are stashed at this folder
-#cd ~/rfidquizstash
+cd ~/rfidquizstash
 
 #Time updating
 timedatectl set-timezone Asia/Singapore
@@ -141,18 +113,10 @@ systemctl restart sshd
 
 ## Installation commences
 
-#Core Updates
-pacman -Syu
-#BASE DEVEL
-pacman -S --needed base-devel
-##	wifi
+##Networking
 #pacman -S --needed iw wpa_supplicant dialog wpa_actiond
-##	pc
-#pacman -S --needed python ttytter nmap tmux zsh autoconf coreutils wireshark-cli openssh mongodb
-
-
-#Softwares
-pacman -S --needed sudo fortune-mod cowsay ponysay vim nano tmux autoconf
+##Softwares
+pacman -S --needed base-devel sudo fortune-mod cowsay ponysay vim nano tmux autoconf i2c-tools python ttytter nmap tmux zsh autoconf coreutils wireshark-cli openssh mongodb
 
 ##Rest of setup scripts
 ##linux system
@@ -176,5 +140,3 @@ fi
 
 #Run init scripts
 #~/rfidquizgame/setup/startup_apps.sh
-
-

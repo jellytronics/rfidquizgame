@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "Check this out! http://nodeschool.io/"
+
 
 if cat ~/rfidquizstash/tutorials/expressworks/README.md 2> /dev/null
 	then

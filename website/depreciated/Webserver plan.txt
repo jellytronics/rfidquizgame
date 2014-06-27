@@ -1,0 +1,108 @@
+Framework
+
+Single Page Application based on AngularJs
+	https://www.youtube.com/watch?v=i9MHigUZKEM
+	https://github.com/angular/angular.js
+Adopting Google MEAN framework
+	https://www.youtube.com/watch?v=XwSFg8nqBFA
+
+login page
+
+Webserver plan
+
+{
+    "$schema": "http://json-schema.org/draft-03/schema#",
+    "name": "Product",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "number",
+            "description": "Product identifier",
+            "required": true
+        },
+        "name": {
+            "type": "string",
+            "description": "Name of the product",
+            "required": true
+        },
+        "price": {
+            "type": "number",
+            "minimum": 0,
+            "required": true
+        },
+        "tags": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "stock": {
+            "type": "object",
+            "properties": {
+                "warehouse": {
+                    "type": "number"
+                },
+                "retail": {
+                    "type": "number"
+                }
+            }
+        }
+    }
+}
+
+
+Dbs
+
+users | user {
+	id : string
+	name : string
+	team_no : int
+	team : string
+}
+
+quiz | question {
+	qn : int
+	html : string
+	ans_arr : string[]
+	ans_correct : int
+	time : int
+}
+
+quiz | answer {
+	team_arr = string[]
+	ans_arr = int[int[]]
+}
+
+Node Servers
+
+Server Specific
+
+http_main.js
+	Port 80
+
+http_debug.js
+	Port 8080
+
+http_admin.js
+	Port 8085
+
+Both Server and Client Specific
+
+http-server (fileserver)
+	Port 8081
+
+mongodb
+	Port 27017 (interface)
+	Port 27018 (debug)
+
+state.js (FSM)
+	init.js
+	send_answer.js
+	recieve_answer.js
+	send_qn.js
+	rcv_qn.js
+
+refer to state diagrams.
+
+fun_game.js
+	https://github.com/AlexNisnevich/untrusted.git
