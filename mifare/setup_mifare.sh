@@ -101,7 +101,10 @@ sudo make install
 
 ##install node libraries
 cd ~/rfidquizstash
-npm install -g 
+npm install -g ndef
+npm install -g mifare-classic
+npm link ndef
+npm link mifare-classic
 #npm install -g nfc
 #npm install rfid-pn532
 #npm install -g rfid-pn532
@@ -109,7 +112,6 @@ npm install -g
 
 ##My own node js library yoz!
 cd ~/rfidquizstash/Mifare
-git clone git@github.com:jellyjellyrobot/node-nfc.git
 
 
 ##install nfc js handler
