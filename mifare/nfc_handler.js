@@ -1,8 +1,16 @@
-var nfc = require('nfc').nfc;
-var n = new nfc();
+var ndef = require('ndef'), mifare = require('mifare-classic'), message, bytes
 
-n.on('uid', function(uid) {
-	    console.log('UID:', uid);
-});
+message = [
+	ndef.textRecord("Hello from nodejs")
+]
 
-n.start();
+bytes = ndef.encodeMessage(message)
+
+mifare.write(bytes, function(err) {
+	if (err) {
+		console.log("Write failed ")
+		console.log(err)
+		return
+	}
+	console.log("OK")
+})
