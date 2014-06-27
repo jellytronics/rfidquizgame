@@ -14,8 +14,8 @@ if [[ $(sw_vers -productName) == *Mac* ]]
 	then
 	echo "Hi Mac"
 else
-	pacman -S --needed python nodejs mongodb 
-	#python2 
+	pacman -S --needed python nodejs mongodb
+	#python2
 fi
 
 
@@ -24,6 +24,43 @@ fi
 ##https://www.npmjs.org/package
 
 cd ~/rfidquizstash
+
+##INSTALLATION
+
+##WEBSITE
+npm install -g mongodb
+
+
+npm install
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<<REDOOOOOO
 
 ##installation
 
@@ -51,7 +88,7 @@ npm install
 
 ##Run Server
 #grunt serve --port=9000
-
+REDOOOOOO
 
 <<PENDING_SPACE
 ## State machines dependencies
