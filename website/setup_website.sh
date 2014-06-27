@@ -14,8 +14,8 @@ if [[ $(sw_vers -productName) == *Mac* ]]
 	then
 	echo "Hi Mac"
 else
-	pacman -S --needed python nodejs mongodb
-	#python2
+	pacman -S --needed python nodejs mongodb jre7-openjdk-headless jdk7-openjdk
+	source /etc/profile
 fi
 
 
@@ -25,43 +25,6 @@ fi
 
 cd ~/rfidquizstash
 
-##INSTALLATION
-
-##WEBSITE
-npm install -g mongodb
-
-
-npm install
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<<REDOOOOOO
-
 ##installation
 
 npm install -g mongodb
@@ -70,6 +33,7 @@ npm install -g mongoskin
 npm install -g bonescript
 npm install -g grunt
 npm install -g grunt-cli
+npm install -g bower
 npm install -g http-server
 ##Linking
 
@@ -79,7 +43,11 @@ npm link mongoskin
 npm link bonescript
 npm link grunt
 npm link grunt-cli
+npm link bower
 npm link http-server
+
+##Bower install
+bower install
 
 ##Reveal installation
 git clone https://github.com/hakimel/reveal.js.git ~/rfidquizstash/website/reveal.js
@@ -88,7 +56,26 @@ npm install
 
 ##Run Server
 #grunt serve --port=9000
-REDOOOOOO
+
+
+#Build Angular JS
+#https://docs.angularjs.org/misc/contribute
+cd ~/rfidquizstash/website/
+
+git clone https://github.com/angular/angular.js
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <<PENDING_SPACE
 ## State machines dependencies
