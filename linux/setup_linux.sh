@@ -48,6 +48,7 @@ else
 	pacman -S --needed ruby
 	PATH="`ruby -e 'puts Gem.user_dir'`/bin:$PATH"
 	git clone https://github.com/tmuxinator/tmuxinator.git ~/rfidquizstash/linux/tmuxinator
+	cd ~/rfidquizstash/linux/tmuxinator
 	sudo gem install tmuxinator --no-document
 	echo "tmuxinator installed"
 	sudo gem install bundler --no-document
@@ -153,5 +154,3 @@ cp ~/rfidquizgame/linux/tmux_config.conf ~/.tmux.conf
 
 echo "-->\nExit this shell session now, relogin and execute\nsource .zshrc"
 echo "also, if you are using a mac with terminal or iterm, change the startup shell to /bin/zsh!"
-
-

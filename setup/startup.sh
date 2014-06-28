@@ -18,3 +18,8 @@ hwclock --systohc --utc
 
 ##Hardware startup
 ~/rfidquizgame/hardware/hw_startup.sh
+
+if i2cdetect -y -r 1 | grep "27"
+    then
+    node ~/rfidquizgame/hardware/startup_lcd.js
+fi
