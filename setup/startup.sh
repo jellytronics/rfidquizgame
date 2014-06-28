@@ -3,6 +3,8 @@
 echo "This is the setup script for BeagleBone Black Based RFID Quiz System!"
 echo "This script assumes that the BBB is installed with ArchLinux (ARM) OS"
 
+mkdir ~/rfidquizstash
+
 ## Check whether all these commands run at startup
 
 chmod +x ~/rfidquizgame/setup/tmux_startup.sh
@@ -21,5 +23,6 @@ hwclock --systohc --utc
 
 if i2cdetect -y -r 1 | grep "27"
     then
-    node ~/rfidquizgame/hardware/startup_lcd.js
+    cp ~/rfidquizgame/hardware/startup_lcd.js ~/rfidquizstash/startup_lcd.js
+    node ~/rfidquizstash/startup_lcd.js
 fi
