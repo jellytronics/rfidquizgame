@@ -130,13 +130,14 @@ pacman -S --needed base-devel sudo fortune-mod cowsay ponysay vim nano tmux auto
 
 #setup cron
 #write out current crontab
-if crontab -l | grep '@reboot /rfidquizgame/setup/startup.sh'
+if crontab -l | grep '@reboot /root/rfidquizgame/setup/startup.sh'
 	then
 	echo "crontab startupscript installed"
 else
 	echo "installing crontab startup script"
-	crontab -l | { cat; echo "@reboot /rfidquizgame/setup/startup.sh"; } | crontab -
+	crontab -l | { cat; echo "@reboot /root/rfidquizgame/setup/startup.sh"; } | crontab -
 fi
 
+#echo "@reboot /root/rfidquizgame/setup/startup.sh" | crontab -
 #Run init scripts
 #~/rfidquizgame/setup/startup_apps.sh
