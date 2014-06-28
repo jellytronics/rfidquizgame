@@ -23,7 +23,7 @@ fi
 ######### NODEJS PACKAGES #############
 ##https://www.npmjs.org/package
 
-cd ~/rfidquizstash
+cd ~/rfidquizstash/website
 
 ##installation
 
@@ -49,6 +49,8 @@ npm link http-server
 ##Bower install
 bower install
 
+cd ~/rfidquizstash/website
+
 ##Reveal installation
 git clone https://github.com/hakimel/reveal.js.git ~/rfidquizstash/website/reveal.js
 cd ~/rfidquizstash/website/reveal.js
@@ -62,7 +64,19 @@ npm install
 #https://docs.angularjs.org/misc/contribute
 cd ~/rfidquizstash/website/
 
-git clone https://github.com/angular/angular.js
+git clone https://github.com/angular/angular.js ~/rfidquizstash/website/angular
+cd ~/rfidquizstash/website/angular
+
+# Install node.js dependencies:
+npm install
+
+# Install bower components:
+bower install --allow-root
+
+# Build AngularJS:
+grunt package
+
+
 
 
 

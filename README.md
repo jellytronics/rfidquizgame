@@ -3,11 +3,18 @@
 
 ## Information
 
-tO be updated
+This project is created as a scalable, networked based quiz game where RFID cards are used to answer questions posted on a locally hosted website.
 
+## Technical Information
+
+The official supported platform is the BeagleBone Black.
+Testing will be conducted on Raspberry Pis and Odriod U3 platforms.
 
 ## Installation
 
+- Quick Disclaimer
+
+  The installation process will take about an hour depending on your internet speed.
 
 - Enable system services
 
@@ -117,7 +124,7 @@ tO be updated
   ```
 
 
-- Set up ssh 
+- Set up ssh
 
   ```sh
   systemctl start sshd
@@ -137,7 +144,7 @@ tO be updated
   eval $(ssh-agent)
 
   chmod 0600 /root/.ssh/id_rsa.pub
-  echo "Please enter "'""'" as passphrase in next line." 
+  echo "Please enter "'""'" as passphrase in next line."
   ssh-add ~/.ssh/id_rsa.pub
   echo "copy what you are about to see into the ssh-keys of your github account"
   cat ~/.ssh/id_rsa.pub
@@ -179,13 +186,9 @@ tO be updated
   cat .ssh/id_rsa.pub | ssh root@hostname 'cat >> .ssh/authorized_keys'
   ```
 
-## Usage (QuizMaster)
+## Usage (QuizMaster and Contestants)
 
-- To be updated
-
-## Usage (Contestants)
-
-- To be updated
+- It should be intuitive.
 
 ## Usage (Unified Bash Interface)
 
@@ -193,14 +196,14 @@ tO be updated
 
   ```sh
   cd ~/rfidquizgame
-  setup/tmux_commander.sh
+  setup/tmux_startup.sh
   ```
 
 
 
 ## Comments
 
-I will try my best to work on the codes and iron out all the kinks (I'm a student btw)
+I will try my best to work on the codes and iron out all the kinks. (I'm a n00b student btw)
 
 I will port/fork whatever sub project within Experiments when the code matures and gains suitable applications externally.
 

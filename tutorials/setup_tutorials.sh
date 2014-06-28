@@ -32,9 +32,14 @@ cd ~/rfidquizstash/tutorials
 
 git clone --depth=14 https://github.com/angular/angular-phonecat.git
 ##The --depth=14 option just tells Git to pull down only the last 14 commits. This makes the download much smaller and faster.
-cd angular-phonecat
+cd ~/rfidquizstash/tutorials/angular-phonecat
 
-echo "visit the webpage @ https://docs.angularjs.org/tutorial"
+npm install
+bower install
+
+echo "Enter npm start at ~/rfidquizstash/tutorials/angular-phonecat and visit your webpage at \n\nWebsite -->\n"$(hostname)":8080/app/index.html\n\n"
+
+echo "Visit the tutorial webpage @ https://docs.angularjs.org/tutorial"
 
 
 <<DEPRECIATED
