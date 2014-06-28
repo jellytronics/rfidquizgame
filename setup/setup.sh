@@ -116,7 +116,11 @@ systemctl restart sshd
 ##Networking
 #pacman -S --needed iw wpa_supplicant dialog wpa_actiond
 ##Softwares
-pacman -S --needed base-devel sudo fortune-mod cowsay ponysay vim nano tmux autoconf i2c-tools python ttytter nmap tmux zsh autoconf coreutils wireshark-cli openssh mongodb
+pacman -S --needed base-devel sudo fortune-mod cowsay ponysay vim nano tmux autoconf i2c-tools python ttytter nmap tmux zsh autoconf coreutils wireshark-cli openssh mongodb cronie
+
+##start and enable cron
+systemctl start cronie
+systemctl enable cronie
 
 ##Rest of setup scripts
 ##linux system

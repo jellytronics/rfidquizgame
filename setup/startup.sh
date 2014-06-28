@@ -7,8 +7,8 @@ mkdir /root/rfidquizstash
 
 ## Check whether all these commands run at startup
 
-chmod +x /root/rfidquizgame/setup/tmux_startup.sh
-chmod +x /root/rfidquizgame/hardware/hw_startup.sh
+#chmod +x /root/rfidquizgame/setup/tmux_startup.sh
+#chmod +x /root/rfidquizgame/hardware/hw_startup.sh
 
 ##System Environment
 
