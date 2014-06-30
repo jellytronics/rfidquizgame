@@ -145,5 +145,8 @@ vim +PluginInstall +qall
 cp ~/.tmux.conf ~/.tmux.conf.backup
 cp ~/rfidquizgame/linux/tmux_config.conf ~/.tmux.conf
 
+##tmuxinator
+cp rfidquizgame/linux/controller.yml ~/.tmuxinator/controller.yml
+
 echo "-->\nExit this shell session now, relogin and execute\nsource .zshrc"
 echo "also, if you are using a mac with terminal or iterm, change the startup shell to /bin/zsh!"

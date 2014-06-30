@@ -42,7 +42,7 @@ windows:
         - cd ~/rfidquizgame; while true; do df -h; sleep 2; clear; done
         - cd ~/rfidquizgame; sleep 1
         - cd ~/rfidquizgame; sleep 1
-  - quiz: 
+  - quiz:
       layout: main-vertical
       panes:
         - cd ~/rfidquizgame; sleep 1
@@ -50,9 +50,9 @@ windows:
   - serv1:
       layout: main-vertical
       panes:
-        - cd ~/rfidquizgame; website/startup_website.sh
-        - cd ~/rfidquizgame; sleep 5; mongo
-        - cd ~/rfidquizgame; website/start_mongod.sh
+        - cd ~/rfidquizgame;
+        - cd ~/rfidquizgame; startup_mongo.sh
+        - cd ~/rfidquizgame; startup_mongod.sh
   - serv2:
       layout: main-vertical
       panes:
@@ -61,12 +61,3 @@ windows:
       layout: main-vertical
       panes:
         - cd ~/rfidquizgame; setup/git_update.sh
-
-
-
-
-
-
-
-
-
