@@ -13,6 +13,9 @@
 
 mkdir ~/rfidquizstash
 mkdir ~/rfidquizstash/mongodb
+mkdir ~/rfidquizstash/mongodb/log
+mkdir ~/rfidquizstash/mongodb/db
+mkdir ~/rfidquizstash/mongodb/pid
 
 sleep 5
 
@@ -22,9 +25,11 @@ NOW=$(date +"%m-%d-%Y-%T")
 if [[ $(sw_vers -productName) == *Mac* ]]
 	then
 	echo "Hi Mac"
+	cd ~
 	mongo --host beagleserver --port 27017
 	exit
 else
 	#don't need but I'll do it anyway.
+	cd ~
 	mongo --host beagleserver --port 27017
 fi
