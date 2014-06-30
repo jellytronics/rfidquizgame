@@ -21,13 +21,7 @@ if [[ $(sw_vers -productName) == *Mac* ]]
 		echo "brew installed"
 	else
 
-		if hash ruby -v 2>/dev/null
-			then
-			echo "Ruby is installed"
-			ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
-		else
-			echo "Gotta install ruby first yoz. how come your mac doesn't come with ruby?"
-		fi
+		ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
 
 	fi
 
@@ -48,7 +42,7 @@ if [[ $(sw_vers -productName) == *Mac* ]]
 	echo "Homebrew token installed"
 	echo "Installing applications on brew"
 
-	brew install coreutils subversion python3 sshfs ttytter python3-setuptools python3-pip wireshark nmap autoconf libtool tmux cowsay fortune
+	brew install coreutils subversion python3 sshfs ttytter wireshark nmap autoconf libtool tmux cowsay fortune
 
 	#	Notes
 	##	for tmux on mac, if you are using iterm, it has integrated mouse support, else, visit https://gist.github.com/simme/1297707
@@ -63,6 +57,7 @@ if [[ $(sw_vers -productName) == *Mac* ]]
 		chmod +x watch
 		sudo mv watch /usr/local/bin/
 	fi
+
 	echo "Watch command installed"
 
 	## End of setup on development environment
@@ -81,6 +76,12 @@ if [[ $(sw_vers -productName) == *Mac* ]]
 	~/rfidquizgame/linux/setup_linux.sh
 	~/rfidquizgame/mifare/setup_mifare.sh
 	~/rfidquizgame/website/setup_website.sh
+
+	echo ""
+
+	echo "channging hostname"
+
+	sudo scutil --set HostName jellymac
 
 	exit
 
