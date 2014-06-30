@@ -35,6 +35,9 @@ npm install -g grunt
 npm install -g grunt-cli
 npm install -g bower
 npm install -g http-server
+npm install -g socket.io
+npm install -g express
+
 ##Linking
 
 npm link mongodb
@@ -45,6 +48,8 @@ npm link grunt
 npm link grunt-cli
 npm link bower
 npm link http-server
+npm link socket.io
+npm link express
 
 ##Bower install
 bower install

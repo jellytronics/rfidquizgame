@@ -51,8 +51,8 @@ windows:
       layout: main-vertical
       panes:
         - cd ~/rfidquizgame;
-        - cd ~/rfidquizgame; startup_mongo.sh
-        - cd ~/rfidquizgame; startup_mongod.sh
+        - cd ~; startup_mongo.sh
+        - cd ~; startup_mongod.sh
   - serv2:
       layout: main-vertical
       panes:

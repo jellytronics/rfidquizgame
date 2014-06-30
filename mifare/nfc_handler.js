@@ -1,4 +1,8 @@
 var ndef = require('ndef'), mifare = require('mifare-classic'), message, bytes
+var os = require('os')
+
+
+console.log(os.hostname())
 
 console.log("noob")
 
