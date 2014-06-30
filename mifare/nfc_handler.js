@@ -12,6 +12,7 @@ console.log("noob2")
 bytes = ndef.encodeMessage(message)
 
 console.log("noob2a")
+
 /*
 mifare.format(function(err) {
 	if (err) {
@@ -53,5 +54,3 @@ mifare.read(function(err, buffer) {
 })
 
 console.log("noob5")
-
-
