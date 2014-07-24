@@ -5,12 +5,19 @@ echo "Installing Libnfc and Mifare Tools"
 if [[ $(sw_vers -productName) == *Mac* ]]
 	then
 	echo "Hi Mac!"
-	brew install autoconf automake doxygen
+	sudo chown -R $USER /usr/local
+	brew install autoconf doxygen
+	brew install automake libtool
 	brew install libusb libusb-compat --universal
 	brew install wget pkgconfig
-	if [[ $ ]]
-	echo "\n\n\nPLEASE INSTALL FTDI DRIVERS TO CONTINUE\n\nGet from http://www.ftdichip.com/Drivers/VCP/MacOSX/FTDIUSBSerialDriver_v2_2_18.dmg"
-	exit
+	xcode-select --install
+	if [[ $1 == "-f" ]]
+		then
+		echo "\nI assume that you have installed FTDI Drivers yeah...\nProceeding with installation\n\n\n"
+	else
+		echo "\n\n\nPLEASE sINSTALL FTDI DRIVERS TO CONTINUE\n\nGet from http://www.ftdichip.com/Drivers/VCP/MacOSX/FTDIUSBSerialDriver_v2_2_18.dmg"
+		exit
+	fi
 else
 	if uname -a | grep "ARCH"
 		then
@@ -90,6 +97,7 @@ if [[ $(sw_vers -productName) == *Mac* ]]
 	then
 	#ls -la /dev/tty.usbserial*
 	#sudo vim /usr/local/etc/nfc/devices.d/pn532_uart.conf
+	mkdir /usr/local/etc/nfc/
 	mkdir /usr/local/etc/nfc/devices.d/
 	sudo mkdir /etc/nfc
 	sudo mkdir /etc/nfc/devices.d
@@ -98,7 +106,7 @@ if [[ $(sw_vers -productName) == *Mac* ]]
 	sudo echo "" > /usr/local/etc/nfc/devices.d/pn532_uart.conf
 	sudo echo "allow_autoscan = false" > /usr/local/etc/nfc/libnfc.conf
 	sudo echo "allow_intrusive_scan = false" >> /usr/local/etc/nfc/libnfc.conf
-	sudo echo "log_level=3" >> /usr/local/etc/nfc/libnfc.conf
+	sudo echo "log_level=1" >> /usr/local/etc/nfc/libnfc.conf
 	sudo echo "device.name = \"PN532 board via UART\"" >> /usr/local/etc/nfc/libnfc.conf
 	sudo echo "device.connstring = \"pn532_uart:/dev/"$(ls /dev | grep tty.usbserial)\" >> /usr/local/etc/nfc/libnfc.conf
 	sudo cp /usr/local/etc/nfc/libnfc.conf /etc/nfc/libnfc.conf
@@ -122,7 +130,7 @@ cd ~/rfidquizstash/Mifare
 git clone https://code.google.com/p/libfreefare/ ~/rfidquizstash/Mifare/libfreefare
 cd ~/rfidquizstash/Mifare/libfreefare
 autoreconf -vis
-./configure --prefix=/usr
+./configure --prefix=/usr/
 make
 sudo make install
 
@@ -133,7 +141,7 @@ cd ~/rfidquizstash/Mifare
 wget https://mfoc.googlecode.com/files/mfoc-0.10.7.tar.bz2
 tar xzvf mfoc-0.10.7.tar.bz2
 cd ~/rfidquizstash/Mifare/mfoc-0.10.7/
-./configure LDFLAGS=-L/usr/include PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
+./configure LDFLAGS=-L/usr/local/lib PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
 #./configure LDFLAGS=-L/usr/local/lib PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
 #echo "vim src/nfc-utils.c"
 make
