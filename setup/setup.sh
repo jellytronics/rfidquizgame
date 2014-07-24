@@ -43,6 +43,9 @@ if [[ $(sw_vers -productName) == *Mac* ]]
 	echo "Installing applications on brew"
 
 	brew install coreutils subversion python3 sshfs ttytter wireshark nmap autoconf libtool tmux cowsay fortune
+	brew install autoconf automake doxygen
+	brew install libusb libusb-compat --universal
+	brew install wget pkgconfig
 
 	#	Notes
 	##	for tmux on mac, if you are using iterm, it has integrated mouse support, else, visit https://gist.github.com/simme/1297707
