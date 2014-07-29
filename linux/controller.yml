@@ -50,9 +50,9 @@ windows:
   - serv1:
       layout: main-vertical
       panes:
-        - cd ~/rfidquizgame;
-        - cd ~; startup_mongo.sh
-        - cd ~; startup_mongod.sh
+        - cd ~; ~/rfidquizgame/mongodb/startup_mongo_rest.sh
+        - cd ~; ~/rfidquizgame/mongodb/startup_mongo.sh
+        - cd ~; ~/rfidquizgame/mongodb/startup_mongod.sh
   - serv2:
       layout: main-vertical
       panes:
