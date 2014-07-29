@@ -38,6 +38,7 @@ function writeMifare(message){
 }
 
 function readCard(answerInstance){
+  if (answerInstance == undefined) { return; };
   var messageRead;
   mifare.read(function(err, buffer) {
     if (err){return}
@@ -53,14 +54,14 @@ function readCard(answerInstance){
     answerInstance.teamNumber = ndef.text.decodePayload(messageRead[1].payload);
     answerInstance.answerNumber = ndef.text.decodePayload(messageRead[2].payload);
     console.log(answerInstance);
-  })
+  });
 }
 
 function writeCard(name, teamNumber, answerNumber){
   message = [
     ndef.textRecord(name),
-    ndef.textRecord(teamNumber),
-    ndef.textRecord(answerNumber)
+    ndef.textRecord(teamNumber.toString()),
+    ndef.textRecord(answerNumber.toString())
   ]
   writeMifare(message);
 }
@@ -77,12 +78,61 @@ var path = require('path');
 var mongoose = require('mongoose');
 var fs = require('fs');
 
-// Mongoose
+// Mongoose Setup
 
 mongoose.connect('mongodb://beagleserver/test');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function callback () {
+  console.log("Success");
+});
+
+var answerSchema = mongoose.Schema({
+  timestamp: Number,
+  name: String,
+  teamNumber: Number,
+  answerNumber: Number
+});
+
+var MessageDB = mongoose.model('MessageToDB', answerSchema);
 
 // Close DB with this
 //mongoose.connection.close()
+
+
+
+
+
+
+// Read till theres no tmr
+
+function readToDB(){
+  mifare.read(function(err, buffer) {
+    if (err){return}
+    var messageRead = ndef.decodeMessage(buffer.toJSON())
+    if (messageRead == undefined || messageRead[0] == undefined) { return; };
+    var answerInstance = {}
+    answerInstance.timestamp = new Date().getTime();
+    answerInstance.name = ndef.text.decodePayload(messageRead[0].payload);
+    answerInstance.teamNumber = ndef.text.decodePayload(messageRead[1].payload);
+    answerInstance.answerNumber = ndef.text.decodePayload(messageRead[2].payload);
+    var messageDB = new MessageDB(answerInstance);
+    messageDB.save(function (err){if (err) {returnconsole.error(err)}});
+  });
+}
+
+
+function readFromDB(){
+  MessageDB.find(function (err, messageDB){
+    if (err) return console.error(err);
+      console.log(messageDB);
+  })
+}
+
+
+
+
+
 
 
 
