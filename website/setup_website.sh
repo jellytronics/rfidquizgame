@@ -37,6 +37,7 @@ npm install -g bower
 npm install -g http-server
 npm install -g socket.io
 npm install -g express
+npm install -g meanio
 
 ##Linking
 

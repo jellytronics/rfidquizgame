@@ -25,7 +25,7 @@ else
         then
         echo "Okay Server, activating mongod"
         cd ~
-        mongod --config ~/rfidquizgame/mongodb/mongodb.yml | tee ~/rfidquizstash/mongodb/log/$NOW.mongod.log
+        mongod --rest --config ~/rfidquizgame/mongodb/mongodb.yml | tee ~/rfidquizstash/mongodb/log/$NOW.mongod.log
     else
         echo "oh this is not the server lol"
     fi
