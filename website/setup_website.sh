@@ -38,7 +38,8 @@ npm install -g http-server
 npm install -g socket.io
 npm install -g express
 npm install -g meanio
-npm install -d daemon
+npm install -g daemon
+npm install -g node-schedule
 
 ##Linking
 
@@ -53,7 +54,7 @@ npm link http-server
 npm link socket.io
 npm link express
 npm link daemon
-
+npm link node-schedule
 
 
 
