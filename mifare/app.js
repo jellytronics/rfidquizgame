@@ -1,14 +1,6 @@
-//Mifare Part
+// Mifare Init
 var ndef = require('ndef'), mifare = require('mifare-classic'), message, bytes
 var os = require('os')
-
-//Server part
-var express = require('express');
-var http = require('http');
-var path = require('path');
-var mongoose = require('mongoose');
-var fs = require('fs');
-
 
 
 // MIFARE STUFF
@@ -77,10 +69,20 @@ function writeCard(name, teamNumber, answerNumber){
 
 
 
+
+//Server part
+var express = require('express');
+var http = require('http');
+var path = require('path');
+var mongoose = require('mongoose');
+var fs = require('fs');
+
 // Mongoose
 
-mongoose.connect('mongodb://beagleserver/noob');
+mongoose.connect('mongodb://beagleserver/test');
 
+// Close DB with this
+//mongoose.connection.close()
 
 
 

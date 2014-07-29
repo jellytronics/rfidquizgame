@@ -38,6 +38,7 @@ npm install -g http-server
 npm install -g socket.io
 npm install -g express
 npm install -g meanio
+npm install -d daemon
 
 ##Linking
 
@@ -51,6 +52,7 @@ npm link bower
 npm link http-server
 npm link socket.io
 npm link express
+npm link daemon
 
 
 
