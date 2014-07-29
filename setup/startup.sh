@@ -30,6 +30,7 @@ echo BB-UART1 > /sys/devices/bone_capemgr*/slots
 if i2cdetect -y -r 1 | grep "27"
     then
     cd ~/rfidquizstash
+    sleep 20
     cp ~/rfidquizgame/hardware/startup_lcd.js ~/rfidquizstash/startup_lcd.js
     node ~/rfidquizstash/startup_lcd.js
 fi
