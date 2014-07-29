@@ -1,0 +1,24 @@
+"""Card"""
+{
+  team: Number,
+  uid: String,
+  answer: Number
+}
+"""Questions"""
+{
+  question: String,
+  answers: [String],
+  correctAnswer: Number,
+}
+"""Answers"""
+{
+  team: Number,
+  dateAnswer: Date,
+  answer: Number
+}
+"""TEAM"""
+{
+  teamName: String
+  teamMember: [String],
+  teamScore: Number
+}

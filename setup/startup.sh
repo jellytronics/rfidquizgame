@@ -19,7 +19,10 @@ mkdir /root/rfidquizstash
 hwclock --systohc --utc
 
 ##Hardware startup
-/root/rfidquizgame/hardware/hw_startup.sh
+~/rfidquizgame/hardware/hw_startup.sh
+
+##Just in case
+echo BB-UART1 > /sys/devices/bone_capemgr*/slots
 
 ##TMUX INIT
 #/root/rfidquizgame/setup/tmux_startup.sh

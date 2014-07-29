@@ -14,7 +14,7 @@ if [[ $(sw_vers -productName) == *Mac* ]]
 	then
 	echo "Hi Mac"
 else
-	pacman -S --needed python nodejs mongodb jre7-openjdk-headless jdk7-openjdk
+	pacman -S --needed python nodejs mongodb jre7-openjdk-headless jdk7-openjdk python-pip
 	source /etc/profile
 fi
 
@@ -38,7 +38,6 @@ npm install -g http-server
 npm install -g socket.io
 npm install -g express
 npm install -g meanio
-npm install -g mongodb-rest
 
 ##Linking
 
@@ -52,7 +51,7 @@ npm link bower
 npm link http-server
 npm link socket.io
 npm link express
-npm link mongodb-rest
+
 
 
 
@@ -80,6 +79,7 @@ npm install
 cd ~/rfidquizstash/website/
 
 git clone https://github.com/angular/angular.js ~/rfidquizstash/website/angular
+
 cd ~/rfidquizstash/website/angular
 
 # Install node.js dependencies:

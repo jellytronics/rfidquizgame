@@ -39,7 +39,7 @@ windows:
       layout: main-vertical
       panes:
         - cd ~/rfidquizgame; top
-        - cd ~/rfidquizgame; while true; do df -h; sleep 2; clear; done
+        - cd ~/rfidquizgame; df -h
         - cd ~/rfidquizgame; sleep 1
         - cd ~/rfidquizgame; sleep 1
   - quiz:
@@ -50,9 +50,9 @@ windows:
   - serv1:
       layout: main-vertical
       panes:
-        - cd ~; ~/rfidquizgame/mongodb/startup_mongo_rest.sh
-        - cd ~; ~/rfidquizgame/mongodb/startup_mongo.sh
-        - cd ~; ~/rfidquizgame/mongodb/startup_mongod.sh
+        - cd ~/rfidquizstash; echo "This place is reserved for mogno rest interface"
+        - cd ~/rfidquizstash; ~/rfidquizgame/mongodb/startup_mongo.sh
+        - cd ~/rfidquizstash; ~/rfidquizgame/mongodb/startup_mongod.sh
   - serv2:
       layout: main-vertical
       panes:
