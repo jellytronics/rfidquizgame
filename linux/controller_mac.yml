@@ -36,30 +36,27 @@ root: ~/
 
 windows:
   - sys_att:
-      layout: main-vertical
+      layout: tiled
       panes:
         - cd ~/rfidquizgame; top
         - cd ~/rfidquizgame; ssh root@beaglenode1
         - cd ~/rfidquizgame; ssh root@beagleserver
         - cd ~/rfidquizgame; ssh root@beaglenode2
   - node1:
-      layout: main-vertical
+      layout: tiled
       panes:
-        - cd ~/rfidquizgame; top
         - cd ~/rfidquizgame; ssh root@beaglenode1
         - cd ~/rfidquizgame; ssh root@beaglenode1
         - cd ~/rfidquizgame; ssh root@beaglenode1
   - node1:
-      layout: main-vertical
+      layout: tiled
       panes:
-        - cd ~/rfidquizgame; top
         - cd ~/rfidquizgame; ssh root@beagleserver
         - cd ~/rfidquizgame; ssh root@beagleserver
         - cd ~/rfidquizgame; ssh root@beagleserver
   - node1:
-      layout: main-vertical
+      layout: tiled
       panes:
-        - cd ~/rfidquizgame; top
         - cd ~/rfidquizgame; ssh root@beaglenode2
         - cd ~/rfidquizgame; ssh root@beaglenode2
         - cd ~/rfidquizgame; ssh root@beaglenode2
