@@ -35,31 +35,25 @@ root: ~/
 #		#Pane 1 - Git
 
 windows:
-  - sys_att:
-      layout: tiled
-      panes:
-        - cd ~/rfidquizgame; top
-        - cd ~/rfidquizgame; ssh root@beaglenode1
-        - cd ~/rfidquizgame; ssh root@beagleserver
-        - cd ~/rfidquizgame; ssh root@beaglenode2
   - node1:
       layout: tiled
       panes:
-        - cd ~/rfidquizgame; ssh root@beaglenode1
-        - cd ~/rfidquizgame; ssh root@beaglenode1
-        - cd ~/rfidquizgame; ssh root@beaglenode1
+        - sleep 10; ssh root@beaglenode1; cd ~/rfidquizstash; echo BB-UART1 > /sys/devices/bone_capemgr*/slots; cp ~/rfidquizgame/mifare/app.js ~/rfidquizstash/app_mifare.js; node app_mifare.js
+        - sleep 10; ssh root@beaglenode1; cd ~/rfidquizstash; ~/rfidquizgame/mongodb/startup_mongo.sh
+        - sleep 10; ssh root@beaglenode1; cd ~/rfidquizgame; git pull
   - node1:
       layout: tiled
       panes:
-        - cd ~/rfidquizgame; ssh root@beagleserver
-        - cd ~/rfidquizgame; ssh root@beagleserver
-        - cd ~/rfidquizgame; ssh root@beagleserver
+        - sleep 10; ssh root@beagleserver; cd ~/rfidquizstash; cp ~/rfidquizgame/mifare/app.js ~/rfidquizstash/app_mifare.js; node app_mifare.js
+        - sleep 10; ssh root@beagleserver; cd ~/rfidquizstash; ~/rfidquizgame/mongodb/startup_mongod.sh
+        - sleep 10; ssh root@beagleserver; cd ~/rfidquizstash; ~/rfidquizgame/mongodb/startup_mongo.sh
+        - sleep 10; ssh root@beagleserver; cd ~/rfidquizgame; git pull
   - node1:
       layout: tiled
       panes:
-        - cd ~/rfidquizgame; ssh root@beaglenode2
-        - cd ~/rfidquizgame; ssh root@beaglenode2
-        - cd ~/rfidquizgame; ssh root@beaglenode2
+        - sleep 10; ssh root@beaglenode2; cd ~/rfidquizstash; echo BB-UART1 > /sys/devices/bone_capemgr*/slots; cp ~/rfidquizgame/mifare/app.js ~/rfidquizstash/app_mifare.js; node app_mifare.js
+        - sleep 10; ssh root@beaglenode2; cd ~/rfidquizstash; ~/rfidquizgame/mongodb/startup_mongo.sh
+        - sleep 10; ssh root@beaglenode2; cd ~/rfidquizgame; git pull
   - serv1:
       layout: main-vertical
       panes:
@@ -67,4 +61,5 @@ windows:
   - dev:
       layout: main-vertical
       panes:
+        - cd ~/rfidquizgame; top
         - cd ~/rfidquizgame; setup/depreciated/git_update.sh
