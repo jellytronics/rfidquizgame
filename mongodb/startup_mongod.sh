@@ -16,6 +16,7 @@ if [[ $(sw_vers -productName) == *Mac* ]]
     #not allowing mac to host DB
     ##mongod --config ~/rfidquizgame/mongodb/mongodb.conf
     echo "Mac don't need to host lol"
+    mongod --rest --config ~/rfidquizgame/mongodb/mongodb.yml | tee ~/rfidquizstash/mongodb/log/$NOW.mongod.log
     exit
 else
     #systemctl enable mongodb

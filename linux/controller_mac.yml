@@ -1,6 +1,6 @@
 # ~/.tmuxinator/controller.yml
 
-name: controller
+name: controller_mac
 root: ~/
 
 # Optional. tmux socket
@@ -39,25 +39,35 @@ windows:
       layout: main-vertical
       panes:
         - cd ~/rfidquizgame; top
-        - cd ~/rfidquizgame; df -h
-        - cd ~/rfidquizgame; sleep 1
-        - cd ~/rfidquizgame; sleep 1
-  - quiz:
+        - cd ~/rfidquizgame; ssh root@beaglenode1
+        - cd ~/rfidquizgame; ssh root@beagleserver
+        - cd ~/rfidquizgame; ssh root@beaglenode2
+  - node1:
       layout: main-vertical
       panes:
-        - cd ~/rfidquizgame; sleep 1
-        - cd ~/rfidquizgame; sleep 1
+        - cd ~/rfidquizgame; top
+        - cd ~/rfidquizgame; ssh root@beaglenode1
+        - cd ~/rfidquizgame; ssh root@beaglenode1
+        - cd ~/rfidquizgame; ssh root@beaglenode1
+  - node1:
+      layout: main-vertical
+      panes:
+        - cd ~/rfidquizgame; top
+        - cd ~/rfidquizgame; ssh root@beagleserver
+        - cd ~/rfidquizgame; ssh root@beagleserver
+        - cd ~/rfidquizgame; ssh root@beagleserver
+  - node1:
+      layout: main-vertical
+      panes:
+        - cd ~/rfidquizgame; top
+        - cd ~/rfidquizgame; ssh root@beaglenode2
+        - cd ~/rfidquizgame; ssh root@beaglenode2
+        - cd ~/rfidquizgame; ssh root@beaglenode2
   - serv1:
       layout: main-vertical
       panes:
-        - cd ~/rfidquizstash; echo "This place is reserved for mogno rest interface"
         - cd ~/rfidquizstash; ~/rfidquizgame/mongodb/startup_mongo.sh
-        - cd ~/rfidquizstash; ~/rfidquizgame/mongodb/startup_mongod.sh
-  - serv2:
-      layout: main-vertical
-      panes:
-        - cd ~/rfidquizstash; node_modules/http-server/bin/http-server -p 8081
   - dev:
       layout: main-vertical
       panes:
-        - cd ~/rfidquizgame; #setup/depreciated/git_update.sh
+        - cd ~/rfidquizgame; setup/depreciated/git_update.sh
