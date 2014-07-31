@@ -47,9 +47,9 @@ Testing will be conducted on Raspberry Pis and Odriod U3 platforms.
   rm -r test
   mkdir test
   cd test
+  pacman -Syu --needed wget dosfstools ntp
   wget http://archlinuxarm.org/os/omap/BeagleBone-bootloader.tar.gz
   wget http://archlinuxarm.org/os/ArchLinuxARM-am33x-latest.tar.gz
-  pacman -Syu --needed wget dosfstools ntp
   timedatectl set-timezone Asia/Singapore
   timedatectl set-ntp 1 #sets ntp
   /usr/bin/ntpdate -b -s -u pool.ntp.org
@@ -112,7 +112,7 @@ Testing will be conducted on Raspberry Pis and Odriod U3 platforms.
 
   ```sh
   pacman -Syu
-  pacman -S --needed git udisks udevil openssh ntp
+  pacman -S --needed git udisks udevil openssh ntp git
   timedatectl set-timezone Asia/Singapore
   timedatectl set-ntp 1 #sets ntp
   /usr/bin/ntpdate -b -s -u pool.ntp.org

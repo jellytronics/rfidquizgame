@@ -1,8 +1,6 @@
 #!/bin/bash
 
-source ~/rfidquizgame/setup/envvars.sh
 
-chmod +x ~/rfidquizgame/setup/tmux_startup.sh
 chmod +x ~/rfidquizgame/mifare/setup_mifare.sh
 chmod +x ~/rfidquizgame/website/setup_website.sh
 chmod +x ~/rfidquizgame/linux/setup_linux.sh
@@ -99,7 +97,7 @@ echo "This is the setup (Run Once) script for BeagleBone Black Based RFID Quiz S
 
 echo "This script assumes that the BBB is installed with ArchLinux (ARM) OS"
 
-
+mkdir ~/rfidquizstash
 cd ~/rfidquizstash
 
 #Time updating

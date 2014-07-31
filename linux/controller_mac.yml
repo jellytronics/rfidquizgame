@@ -38,22 +38,22 @@ windows:
   - node1:
       layout: tiled
       panes:
-        - sleep 10; ssh root@beaglenode1; cd ~/rfidquizstash; echo BB-UART1 > /sys/devices/bone_capemgr*/slots; cp ~/rfidquizgame/mifare/app.js ~/rfidquizstash/app_mifare.js; node app_mifare.js
-        - sleep 10; ssh root@beaglenode1; cd ~/rfidquizstash; ~/rfidquizgame/mongodb/startup_mongo.sh
-        - sleep 10; ssh root@beaglenode1; cd ~/rfidquizgame; git pull
+        - sleep 15; ssh root@beaglenode1 "cd ~/rfidquizstash; echo BB-UART1 > /sys/devices/bone_capemgr*/slots; cp ~/rfidquizgame/mifare/app.js ~/rfidquizstash/app_mifare.js; node app_mifare.js"; ssh root@beaglenode1
+        - sleep 10; ssh root@beaglenode1 "cd ~/rfidquizstash; ~/rfidquizgame/mongodb/startup_mongo.sh"; ssh root@beaglenode1
+        - sleep 5; ssh root@beaglenode1 "cd ~/rfidquizgame; git pull"; ssh root@beaglenode1
   - node1:
       layout: tiled
       panes:
-        - sleep 10; ssh root@beagleserver; cd ~/rfidquizstash; cp ~/rfidquizgame/mifare/app.js ~/rfidquizstash/app_mifare.js; node app_mifare.js
-        - sleep 10; ssh root@beagleserver; cd ~/rfidquizstash; ~/rfidquizgame/mongodb/startup_mongod.sh
-        - sleep 10; ssh root@beagleserver; cd ~/rfidquizstash; ~/rfidquizgame/mongodb/startup_mongo.sh
-        - sleep 10; ssh root@beagleserver; cd ~/rfidquizgame; git pull
+        - sleep 11; ssh root@beagleserver "cd ~/rfidquizstash; cp ~/rfidquizgame/mifare/app.js ~/rfidquizstash/app_mifare.js; node app_mifare.js"; ssh root@beagleserver
+        - sleep 7; ssh root@beagleserver "cd ~/rfidquizstash; ~/rfidquizgame/mongodb/startup_mongod.sh"; ssh root@beagleserver
+        - sleep 9; ssh root@beagleserver "cd ~/rfidquizstash; ~/rfidquizgame/mongodb/startup_mongo.sh"; ssh root@beagleserver
+        - sleep 5; ssh root@beagleserver "cd ~/rfidquizgame; git pull"; ssh root@beagleserver
   - node1:
       layout: tiled
       panes:
-        - sleep 10; ssh root@beaglenode2; cd ~/rfidquizstash; echo BB-UART1 > /sys/devices/bone_capemgr*/slots; cp ~/rfidquizgame/mifare/app.js ~/rfidquizstash/app_mifare.js; node app_mifare.js
-        - sleep 10; ssh root@beaglenode2; cd ~/rfidquizstash; ~/rfidquizgame/mongodb/startup_mongo.sh
-        - sleep 10; ssh root@beaglenode2; cd ~/rfidquizgame; git pull
+        - sleep 10; ssh root@beaglenode2 "cd ~/rfidquizstash; echo BB-UART1 > /sys/devices/bone_capemgr*/slots; cp ~/rfidquizgame/mifare/app.js ~/rfidquizstash/app_mifare.js; node app_mifare.js"; ssh root@beaglenode2
+        - sleep 10; ssh root@beaglenode2 "cd ~/rfidquizstash; ~/rfidquizgame/mongodb/startup_mongo.sh"; ssh root@beaglenode2
+        - sleep 5; ssh root@beaglenode2 "cd ~/rfidquizgame; git pull"; ssh root@beaglenode2
   - serv1:
       layout: main-vertical
       panes:
