@@ -21,7 +21,7 @@ if [[ $(sw_vers -productName) == *Mac* ]]
 else
 	if uname -a | grep "ARCH"
 		then
-		pacman -S --needed libusb libusb-compat doxygen pcsclite
+		pacman -S --needed libusb libusb-compat doxygen pcsclite wget nodejs
 	else
 		echo "Installing Libnfc with apt-get"
 		sudo apt-get install libusb-dev libpcsclite-dev -y
@@ -116,8 +116,8 @@ else
 	sudo echo "allow_autoscan = false" > /etc/nfc/libnfc.conf
 	sudo echo "allow_intrusive_scan = false" >> /etc/nfc/libnfc.conf
 	sudo echo "log_level=1" >> /etc/nfc/libnfc.conf
-	sudo echo "device.name=\"PN532 board via UART\"" >> /etc/nfc/libnfc.conf
-	sudo echo "device.connstring = pn532_uart:/dev/ttyO1 #"$(ls /dev | grep tty.usbserial) >> /etc/nfc/libnfc.conf
+	sudo echo "device.name=\"nfcnode\"" >> /etc/nfc/libnfc.conf
+	sudo echo "device.connstring = \"pn532_uart:/dev/ttyO1\"" >> /etc/nfc/libnfc.conf
 fi
 
 
@@ -139,7 +139,7 @@ sudo make install
 cd ~/rfidquizstash/Mifare
 #git clone https://code.google.com/p/mfoc/ ~/rfidquizstash/Mifare/mfoc
 wget https://mfoc.googlecode.com/files/mfoc-0.10.7.tar.bz2
-tar xzvf mfoc-0.10.7.tar.bz2
+tar xvf mfoc-0.10.7.tar.bz2
 cd ~/rfidquizstash/Mifare/mfoc-0.10.7/
 ./configure LDFLAGS=-L/usr/local/lib PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
 #./configure LDFLAGS=-L/usr/local/lib PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
@@ -159,15 +159,6 @@ npm link mifare-classic
 #npm install rfid-pn532
 #npm install -g rfid-pn532
 #npm link rfid-pn532
-
-##My own node js library yoz!
-cd ~/rfidquizstash/Mifare
-
-
-##install nfc js handler
-cp ~/rfidquizgame/mifare/nfc_handler.js ~/rfidquizstash/Mifare/nfc_handler.js
-
-
 
 
 cd ~

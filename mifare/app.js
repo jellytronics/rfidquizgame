@@ -1,6 +1,11 @@
 // Mifare Init
 var ndef = require('ndef'), mifare = require('mifare-classic'), message, bytes
 var os = require('os')
+var events = require("events");
+var EventEmitter = require("events").EventEmitter;
+
+// Events Tutorial
+// http://code.tutsplus.com/tutorials/using-nodes-event-module--net-35941
 
 
 // MIFARE STUFF
@@ -38,7 +43,7 @@ function writeMifare(message){
 }
 
 function readCard(answerInstance){
-  if (answerInstance == undefined) { return; };
+  if (answerInstance == undefined) { var answerInstance = {} };
   var messageRead;
   mifare.read(function(err, buffer) {
     if (err){return}
@@ -80,13 +85,15 @@ var fs = require('fs');
 
 // Mongoose Setup
 
-//mongoose.connect('mongodb://beagleserver/test');
-mongoose.connect('mongodb://localhost/test');
+mongoose.connect('mongodb://beagleserver/test');
+//mongoose.connect('mongodb://localhost/test');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback () {
   console.log("Success");
 });
+
+// Schema for Mongoose
 
 var answerSchema = mongoose.Schema({
   timestamp: Number,
@@ -107,7 +114,7 @@ var MessageDB = mongoose.model('MessageToDB', answerSchema);
 
 // Read till theres no tmr
 
-function readToDB(){
+function readToDB(callback){
   mifare.read(function(err, buffer) {
     if (err){return}
     var messageRead = ndef.decodeMessage(buffer.toJSON())
@@ -119,6 +126,8 @@ function readToDB(){
     answerInstance.answerNumber = ndef.text.decodePayload(messageRead[2].payload);
     var messageDB = new MessageDB(answerInstance);
     messageDB.save(function (err){if (err) {return console.error(err)}});
+    if (callback == undefined) { return messageDB; };
+    callback(messageDB);
     return messageDB;
   });
 }
@@ -136,7 +145,30 @@ function readFromDB(callback){
   queryObj = MessageDB.find(callback)
 }
 
-var defaultTimeInterval = 30;
+
+
+
+var defaultTimeInterval = 150;
+
+var persistentReadfunction;
+
+var persistentReadEvent = new EventEmitter();
+
+persistentReadEvent.on("state on", function (timeInterval) {
+  if ( typeof timeInterval == 'undefined' ) { timeInterval = defaultTimeInterval; }
+  persistentReadfunction = setInterval(function(err){ readToDB(); }, timeInterval);
+  console.log("persistentReadToDB activated");
+});
+
+persistentReadEvent.on("state off", function () {
+  clearInterval(persistentReadfunction);
+  console.log("persistentReadToDB deactivated");
+});
+
+
+
+
+/*
 
 function persistentReadToDB(timeInterval, stateFunction){
   if ( typeof timeInterval == 'undefined' ) { timeInterval = defaultTimeInterval; }
@@ -150,10 +182,7 @@ function persistentReadToDB(timeInterval, stateFunction){
   return;
 }
 
-function readAllFromDB(){
-
-}
-
+*/
 
 
 
@@ -175,48 +204,60 @@ app.get('/', function(req, res){
 });
 
 
+
+
+
+// Not tested!!!
+
+
+
+app.get('/test/:timeInterval', function(req, res){
+  res.send("OK");
+  console.log("OK");
+  res.send(req.param(timeInterval));
+  console.log(req.param(timeInterval));
+});
+
+
 app.get('/readDB'){
   // dump entire DB into html
   res.send(readFromDB());
 }
 
 var webState = false;
-var defaultTimeInterval = 30;
 
-var webStateFunction = function(){
-  return !webstate
-}
 
-app.get('/persistentReadToDB'){
-  // dump entire DB into html
-  console.log("persistenReadDB accessed.");
-  webState = ! webState;
-  res.send("Persistent reading of tags changed to: "+webState);
-  console.log("Persistent reading of tags changed to: "+webState);
-  if ( webState == true ){
-    if ( typeof req.params.timeInterval == 'undefined' || isNaN(req.params.timeInterval) ) {
-      persistentReadToDB( webStateFunction( defaultTimeInterval, webStateFunction()));
-    }else{
-      persistentReadToDB( webStateFunction( timeInterval, webStateFunction()));
-    }
-  }
-}
 
 // CILENT Side
 
 if (os.hostname() != "beagleserver"){
 
   app.get('/readCard', function(req, res){
-    console.log("Rading Card");
-    res.send(readToDB());
+    console.log("Reading Card");
+    readToDB(function(card){
+      res.send(card);
+      console.log(card);
+    })
   });
 
   app.get('/writeCard', function(req, res){
     res.send(writeCard(req.params.name, req.params.teamNumber, req.params.answerNumber));
   });
 
+  app.get('/persistentReadToDB'){
+    // dump entire DB into html
+    webState = !webState;
+    res.send("Persistent reading of tags changed to: "+webState);
+    console.log("Persistent reading of tags changed to: "+webState);
+    if ( webState == true ){
+      persistentReadEvent.emit("state on");
+    }else{
+      persistentReadEvent.emit("state off");
+    }
+  }
+
 }else{
-  
+
 }
 
 
@@ -225,8 +266,4 @@ if (os.hostname() != "beagleserver"){
 
 
 
-
-
-
-
-persistentReadFromDB(webStateFunction)
+app.listen(3000)

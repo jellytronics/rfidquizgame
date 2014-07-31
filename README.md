@@ -15,6 +15,8 @@ Testing will be conducted on Raspberry Pis and Odriod U3 platforms.
 - Quick Disclaimer
 
   The installation process will take about an hour depending on your internet speed.
+  This code is totally unoptimized.
+  Call me maybe.
 
 - Enable system services
 
@@ -123,6 +125,16 @@ Testing will be conducted on Raspberry Pis and Odriod U3 platforms.
   udevil mount -o ro,noatime /dev/mmcblk0p1 /media/sdcard
   ```
 
+- Setup hostname
+
+  ```sh
+  hostnamectl set-hostname myhostname
+  vim /etc/hosts
+
+  passwd
+
+  cat .ssh/id_rsa.pub | ssh root@hostname 'cat >> .ssh/authorized_keys'
+  ```
 
 - Set up ssh
 
@@ -174,6 +186,13 @@ Testing will be conducted on Raspberry Pis and Odriod U3 platforms.
 - Brew a cuppa coffee, chillout and Enjoy!!!
 
 ## Other stuff
+
+- Enable UART1
+
+  ```sh
+  echo BB-UART1 > /sys/devices/bone_capemgr*/slots
+  ```
+
 
 - Setup hostname
 

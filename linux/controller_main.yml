@@ -1,6 +1,6 @@
 # ~/.tmuxinator/controller.yml
 
-name: controller
+name: controller_mac
 root: ~/
 
 # Optional. tmux socket
@@ -35,29 +35,18 @@ root: ~/
 #		#Pane 1 - Git
 
 windows:
-  - sys_att:
-      layout: main-vertical
+  - node1:
+      layout: tiled
       panes:
-        - cd ~/rfidquizgame; top
-        - cd ~/rfidquizgame; df -h
-        - cd ~/rfidquizgame; sleep 1
-        - cd ~/rfidquizgame; sleep 1
-  - quiz:
-      layout: main-vertical
-      panes:
-        - cd ~/rfidquizgame; sleep 1
-        - cd ~/rfidquizgame; sleep 1
+        - ssh root@beaglenode1
+        - ssh root@beaglenode2
+        - ssh root@beagleserver
   - serv1:
       layout: main-vertical
       panes:
-        - cd ~/rfidquizstash; echo "This place is reserved for mogno rest interface"
         - cd ~/rfidquizstash; ~/rfidquizgame/mongodb/startup_mongo.sh
-        - cd ~/rfidquizstash; ~/rfidquizgame/mongodb/startup_mongod.sh
-  - serv2:
-      layout: main-vertical
-      panes:
-        - cd ~/rfidquizstash; node_modules/http-server/bin/http-server -p 8081
   - dev:
       layout: main-vertical
       panes:
-        - cd ~/rfidquizgame; #setup/depreciated/git_update.sh
+        - cd ~/rfidquizgame; top
+        - cd ~/rfidquizgame; setup/depreciated/git_update.sh

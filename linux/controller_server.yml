@@ -1,0 +1,54 @@
+# ~/.tmuxinator/controller.yml
+
+name: controller_server
+root: ~/
+
+# Optional. tmux socket
+# socket_name: foo
+
+# Runs before everything. Use it to start daemons etc.
+# pre: sudo /etc/rc.d/mysqld start
+
+# Runs in each window and pane before window/pane specific commands. Useful for setting up interpreter versions.
+# pre_window: rbenv shell 2.0.0-p247
+
+# Pass command line options to tmux. Useful for specifying a different tmux.conf.
+# tmux_options: -f ~/.tmux.mac.conf
+
+# Change the command to call tmux.  This can be used by derivatives/wrappers like byobu.
+# tmux_command: byobu
+
+#Creates 1 tmux session with
+#	#Window 1 - Overral System Attributes | I/O Statistics | Mifare Statistics
+#		#Pane 1 - Top (Command)
+#		#Pane 2 - watch disk space
+#		#Pane 3 - Mifare daemon
+#		#Pane 4 - GPIO
+#	#Window 2 - Quiz Interface
+#	#Window 3 - Server Interface
+#		#Pane 1 - startup_website.sh --> Node script
+#		#Pane 2 - mongod
+#		#Pane 3 - mongo
+#	#Window 4 - Server Interface 2
+#		#Pane 1 - node.js file server at ~/ with http-server
+#	#Window 5 - Development Interface
+#		#Pane 1 - Git
+
+windows:
+  - sys_att:
+      layout: tiled
+      panes:
+        - cd ~/rfidquizstash; top
+        - cd ~/rfidquizstash; df -h
+  - quiz:
+      layout: tiled
+      panes:
+        - cd ~/rfidquizstash; echo BB-UART1 > /sys/devices/bone_capemgr*/slots; cp ~/rfidquizgame/mifare/app.js ~/rfidquizstash/app_mifare.js; node app_mifare.js
+        - cd ~/rfidquizstash; ~/rfidquizgame/mongodb/startup_mongo.sh
+        - cd ~/rfidquizstash; ~/rfidquizgame/mongodb/startup_mongod.sh
+        - cd ~/rfidquizstash; cd ~/rfidquizgame; git pull
+  - dev:
+      layout: tiled
+      panes:
+        - cd ~/rfidquizstash; node_modules/http-server/bin/http-server -p 8081
+        - cd ~/rfidquizstash; #setup/depreciated/git_update.sh
