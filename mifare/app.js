@@ -126,33 +126,57 @@ function readToDB(callback){
     answerInstance.answerNumber = ndef.text.decodePayload(messageRead[2].payload);
     var messageDB = new MessageDB(answerInstance);
     messageDB.save(function (err){if (err) {return console.error(err)}});
-    if (callback == undefined) { return messageDB; };
+    if (callback == undefined || typeof callback != 'function') { return messageDB; };
     callback(messageDB);
     return messageDB;
   });
 }
 
 
-function readFromDB(callback){
+function readFromDB(filterCallback, valueCallback){
+  //MESSY!
   var queryObj;
-  if (callback == undefined){
+  if (typeof valueCallback != "function") { valueCallback = function(){ return;} }
+  if (typeof filterCallback == "undefined" || filterCallback == null){
     queryObj = MessageDB.find(function (err, messageDB){
       if (err) return console.error(err);
         console.log(messageDB);
+        valueCallback(messageDB);
     })
     return;
   }
-  queryObj = MessageDB.find(callback)
+  queryObj = MessageDB.find(filterCallback)
+  valueCallback(queryObj);
 }
 
 
 
 
-var defaultTimeInterval = 150;
+var defaultTimeInterval = 500;
 
 var persistentReadfunction;
 
 var persistentReadEvent = new EventEmitter();
+
+persistentReadEvent.on("state on", function (timeInterval) {
+  if ( typeof timeInterval == 'undefined' ) { timeInterval = defaultTimeInterval; }
+  persistentReadfunction = setInterval(function(err){ console.log("WTF"+new Date().getTime()); readToDB() }, timeInterval);
+  console.log("persistentReadToDB activated");
+});
+
+persistentReadEvent.on("state off", function () {
+  clearInterval(persistentReadfunction);
+  console.log("persistentReadToDB deactivated");
+});
+
+
+
+
+
+
+/*
+
+
 
 persistentReadEvent.on("state on", function (timeInterval) {
   if ( typeof timeInterval == 'undefined' ) { timeInterval = defaultTimeInterval; }
@@ -165,10 +189,8 @@ persistentReadEvent.on("state off", function () {
   console.log("persistentReadToDB deactivated");
 });
 
+----
 
-
-
-/*
 
 function persistentReadToDB(timeInterval, stateFunction){
   if ( typeof timeInterval == 'undefined' ) { timeInterval = defaultTimeInterval; }
@@ -203,28 +225,26 @@ app.get('/', function(req, res){
   res.send('App up and running!');
 });
 
+// In case of trouble, push this to end
+app.listen(3000)
 
 
 
-
-// Not tested!!!
-
-
-
-app.get('/test/:timeInterval', function(req, res){
-  res.send("OK");
-  console.log("OK");
-  res.send(req.param(timeInterval));
-  console.log(req.param(timeInterval));
+app.get('/readDB', function(req, res){
+  // dump entire DB into html
+  readFromDB(null, function(dbObject){
+    res.send(dbObject);
+  });
 });
 
+app.get('/readCard', function(req, res){
+  console.log("Reading Card");
+  readToDB(function(card){
+    res.send(card);
+    console.log(card);
+  })
+});
 
-app.get('/readDB'){
-  // dump entire DB into html
-  res.send(readFromDB());
-}
-
-var webState = false;
 
 
 
@@ -232,19 +252,18 @@ var webState = false;
 
 if (os.hostname() != "beagleserver"){
 
-  app.get('/readCard', function(req, res){
-    console.log("Reading Card");
-    readToDB(function(card){
-      res.send(card);
-      console.log(card);
-    })
+  app.get("/writeCard/:playerName/:teamNumber/:answerNumber", function (request, response) {
+    var playerName = request.params.playerName;
+    var teamNumber = request.params.teamNumber;
+    var answerNumber = request.params.answerNumber;
+    console.log( "playerName: " + playerName + " , teamNumber: " + teamNumber + " , answerNumber: " + answerNumber );
+    writeCard(playerName, teamNumber, answerNumber)
+    response.send( "<p>Card Written with details</p>" + "<p>playerName: " + playerName + " , teamNumber: " + teamNumber + " , answerNumber: " + answerNumber + "</p>");
   });
 
-  app.get('/writeCard', function(req, res){
-    res.send(writeCard(req.params.name, req.params.teamNumber, req.params.answerNumber));
-  });
+  var webState = false;
 
-  app.get('/persistentReadToDB'){
+  app.get('/persistentReadToDB', function(req, res){
     // dump entire DB into html
     webState = !webState;
     res.send("Persistent reading of tags changed to: "+webState);
@@ -254,7 +273,7 @@ if (os.hostname() != "beagleserver"){
     }else{
       persistentReadEvent.emit("state off");
     }
-  }
+  });
 
 }else{
 
@@ -263,7 +282,4 @@ if (os.hostname() != "beagleserver"){
 
 
 
-
-
-
-app.listen(3000)
+// Not tested!!!
