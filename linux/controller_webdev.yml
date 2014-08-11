@@ -1,6 +1,6 @@
 # ~/.tmuxinator/controller.yml
 
-name: controller_mac
+name: controller_server
 root: ~/
 
 # Optional. tmux socket
@@ -35,18 +35,10 @@ root: ~/
 #		#Pane 1 - Git
 
 windows:
-  - node1:
+  - whatthenoob:
       layout: tiled
       panes:
-        - ssh root@beaglenode1
-        - ssh root@beaglenode2
-        - ssh root@beagleserver
-  - serv1:
-      layout: main-vertical
-      panes:
-        - cd ~/rfidquizstash && ~/rfidquizgame/mongodb/startup_mongo.sh
-  - dev:
-      layout: main-vertical
-      panes:
-        - cd ~/rfidquizgame && top
-        - cd ~/rfidquizgame && setup/depreciated/git_update.sh
+        - cd ~/rfidquizstash/mongo/test && mongod --dbpath=./
+        - cd ~/rfidquizstash/website/tvshow-tracker && node server.js
+        - cd ~/rfidquizstash/website/tvshow-tracker && gulp
+        - cd ~/rfidquizstash/website/tvshow-tracker

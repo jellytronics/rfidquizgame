@@ -150,6 +150,7 @@ mkdir ~/.tmuxinator
 cp ~/rfidquizgame/linux/controller_main.yml ~/.tmuxinator/controller_main.yml
 cp ~/rfidquizgame/linux/controller_node.yml ~/.tmuxinator/controller_node.yml
 cp ~/rfidquizgame/linux/controller_server.yml ~/.tmuxinator/controller_server.yml
+cp ~/rfidquizgame/linux/controller_webdev.yml ~/.tmuxinator/controller_webdev.yml
 
 echo "-->\nExit this shell session now, relogin and execute\nsource .zshrc"
 echo "also, if you are using a mac with terminal or iterm, change the startup shell to /bin/zsh!"

@@ -102,7 +102,7 @@ cd ~/rfidquizstash
 
 #Time updating
 timedatectl set-timezone Asia/Singapore
-timedatectl set-ntp 1 #sets ntp
+timedatectl set-ntp 1
 /usr/bin/ntpdate -b -s -u pool.ntp.org
 hwclock --systohc --utc
 

@@ -38,17 +38,17 @@ windows:
   - sys_att:
       layout: tiled
       panes:
-        - cd ~/rfidquizstash; top
-        - cd ~/rfidquizstash; df -h
+        - cd ~/rfidquizstash && top
+        - cd ~/rfidquizstash && df -h
   - quiz:
       layout: tiled
       panes:
-        - cd ~/rfidquizstash; echo BB-UART1 > /sys/devices/bone_capemgr*/slots; #cp ~/rfidquizgame/mifare/app.js ~/rfidquizstash/app_mifare.js; node app_mifare.js
-        - cd ~/rfidquizstash; ~/rfidquizgame/mongodb/startup_mongo.sh
-        - cd ~/rfidquizstash; ~/rfidquizgame/mongodb/startup_mongod.sh
-        - cd ~/rfidquizstash; cd ~/rfidquizgame; git pull
+        - cd ~/rfidquizstash && echo BB-UART1 > /sys/devices/bone_capemgr*/slots && #cp ~/rfidquizgame/mifare/app.js ~/rfidquizstash/app_mifare.js && node app_mifare.js
+        - cd ~/rfidquizstash && ~/rfidquizgame/mongodb/startup_mongo.sh
+        - cd ~/rfidquizstash && ~/rfidquizgame/mongodb/startup_mongod.sh
+        - cd ~/rfidquizstash && cd ~/rfidquizgame; git pull
   - dev:
       layout: tiled
       panes:
-        - cd ~/rfidquizstash; node_modules/http-server/bin/http-server -p 8081
-        - cd ~/rfidquizstash; #setup/depreciated/git_update.sh
+        - cd ~/rfidquizstash && node_modules/http-server/bin/http-server -p 8081
+        - cd ~/rfidquizstash && #setup/depreciated/git_update.sh

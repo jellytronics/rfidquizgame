@@ -151,16 +151,20 @@ function readFromDB(filterCallback, valueCallback){
 
 
 
-
+// Try to make these non hardcoded
 var defaultTimeInterval = 500;
+var defaultTerminateTime = 30;
+var maxTerminateTime = 120;
+var minTerminateTime = 1;
 
 var persistentReadfunction;
+var persistentReadfunctiontimer;
 
 var persistentReadEvent = new EventEmitter();
 
 persistentReadEvent.on("state on", function (timeInterval) {
-  if ( typeof timeInterval == 'undefined' ) { timeInterval = defaultTimeInterval; }
-  persistentReadfunction = setInterval(function(err){ console.log("WTF"+new Date().getTime()); readToDB() }, timeInterval);
+  if ( typeof timeInterval == 'undefined' || isNaN(parseInt(timeInterval))) { timeInterval = defaultTimeInterval; } else { timeInterval = parseInt(timeInterval); }
+  persistentReadfunction = setInterval(function(err){ console.log("Time: "+new Date().getTime()); readToDB() }, timeInterval);
   console.log("persistentReadToDB activated");
 });
 
@@ -169,50 +173,20 @@ persistentReadEvent.on("state off", function () {
   console.log("persistentReadToDB deactivated");
 });
 
-
-
-
-
-
-/*
-
-
-
-persistentReadEvent.on("state on", function (timeInterval) {
-  if ( typeof timeInterval == 'undefined' ) { timeInterval = defaultTimeInterval; }
-  persistentReadfunction = setInterval(function(err){ readToDB(); }, timeInterval);
-  console.log("persistentReadToDB activated");
-});
-
-persistentReadEvent.on("state off", function () {
+persistentReadEvent.on("state timed", function (timeInterval, terminateTime) {
   clearInterval(persistentReadfunction);
-  console.log("persistentReadToDB deactivated");
+  console.log("persistentReadToDB reset");
+  if ( typeof terminateTime == 'undefined' || isNaN(parseInt(terminateTime))) { terminateTime = defaultTerminateTime; } else { terminateTime = parseInt(terminateTime); }
+  if ( typeof timeInterval == 'undefined' || isNaN(parseInt(timeInterval))) { timeInterval = defaultTimeInterval; } else { timeInterval = parseInt(timeInterval); }
+  if ( terminateTime > maxTerminateTime ) { terminateTime = maxTerminateTime; }
+  if ( terminateTime < minTerminateTime ) { terminateTime = minTerminateTime; }
+  persistentReadfunction = setInterval(function(err){ console.log("Time: "+new Date().getTime()); readToDB() }, timeInterval);
+  console.log("persistentReadToDB activated for " + terminateTime + " seconds.");
+  setTimeout(function(){
+    clearInterval(persistentReadfunction);
+    console.log("persistentReadToDB deactivated");
+  }, terminateTime*1000)
 });
-
-----
-
-
-function persistentReadToDB(timeInterval, stateFunction){
-  if ( typeof timeInterval == 'undefined' ) { timeInterval = defaultTimeInterval; }
-  if ( typeof stateFunction == 'undefined' ) { console.log("Input Error"); return }
-  var noob = setInterval(function(err){ readToDB(); }, timeInterval)
-  while(stateFunction()){
-
-  }
-  if (noob == undefined) { return };
-  clearInterval(noob);
-  return;
-}
-
-*/
-
-
-
-
-
-
-
-
 
 var app = express();
 
@@ -228,8 +202,6 @@ app.get('/', function(req, res){
 // In case of trouble, push this to end
 app.listen(3000)
 
-
-
 app.get('/readDB', function(req, res){
   // dump entire DB into html
   readFromDB(null, function(dbObject){
@@ -237,20 +209,17 @@ app.get('/readDB', function(req, res){
   });
 });
 
-app.get('/readCard', function(req, res){
-  console.log("Reading Card");
-  readToDB(function(card){
-    res.send(card);
-    console.log(card);
-  })
-});
-
-
-
-
 // CILENT Side
 
 if (os.hostname() != "beagleserver"){
+
+  app.get('/readCard', function(req, res){
+    console.log("Reading Card");
+    readToDB(function(card){
+      res.send(card);
+      console.log(card);
+    })
+  });
 
   app.get("/writeCard/:playerName/:teamNumber/:answerNumber", function (request, response) {
     var playerName = request.params.playerName;
@@ -275,6 +244,15 @@ if (os.hostname() != "beagleserver"){
     }
   });
 
+  app.get('/persistentReadToDB/:terminateTime', function(req, res){
+    // dump entire DB into html
+    var terminateTime = req.params.terminateTime
+    webState = false;
+    console.log("Persistent reading of tags changed to: "+webState);
+    persistentReadEvent.emit("state timed", null, terminateTime);
+    res.send("Persistent reading of tags enabled for " + terminateTime + " seconds.");
+  });
+
 }else{
 
 }
@@ -283,3 +261,4 @@ if (os.hostname() != "beagleserver"){
 
 
 // Not tested!!!
+//echo BB-UART1 > /sys/devices/bone_capemgr*/slots

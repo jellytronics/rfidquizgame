@@ -6,8 +6,11 @@
 #pacman -S apache php php-apache mariadb openssl
 
 mkdir ~/rfidquizstash/
-mkdir ~/rfidquizstash/website/
+mkdir ~/rfidquizstash/website
 mkdir ~/rfidquizstash/website/server
+mkdir ~/rfidquizstash/mongo
+mkdir ~/rfidquizstash/mongo/test
+
 
 #Python
 if [[ $(sw_vers -productName) == *Mac* ]]
@@ -40,6 +43,10 @@ npm install -g express
 npm install -g meanio
 npm install -g daemon
 npm install -g node-schedule
+npm install -g express-generator
+npm install -g cookie-parser
+npm install -g morgan path body-parser
+sudo npm install -g gulp
 
 ##Linking
 
@@ -55,6 +62,15 @@ npm link socket.io
 npm link express
 npm link daemon
 npm link node-schedule
+npm link cookie-parser
+npm link morgan path body-parser
+
+
+## Do This at website folder not here
+npm install --save-dev gulp gulp-sass gulp-plumber
+npm install --save mongoose bcryptjs
+npm install --save async request xml2js lodash
+npm link morgan path body-parser
 
 
 
