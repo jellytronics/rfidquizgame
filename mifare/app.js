@@ -116,9 +116,9 @@ var MessageDB = mongoose.model('MessageToDB', answerSchema);
 
 function readToDB(callback){
   mifare.read(function(err, buffer) {
-    if (err){return}
+    if (err){ callback(undefined); return}
     var messageRead = ndef.decodeMessage(buffer.toJSON())
-    if (messageRead == undefined || messageRead[0] == undefined) { return; };
+    if (messageRead == undefined || messageRead[0] == undefined) { callback(undefined); return; };
     var answerInstance = {}
     answerInstance.timestamp = new Date().getTime();
     answerInstance.name = ndef.text.decodePayload(messageRead[0].payload);
