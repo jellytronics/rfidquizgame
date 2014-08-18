@@ -188,9 +188,17 @@ persistentReadEvent.on("state timed", function (timeInterval, terminateTime) {
   }, terminateTime*1000)
 });
 
+var allowCrossDomain = function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', config.allowedDomains);
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+}
+
 var app = express();
 
 // all environments
+app.use(allowCrossDomain);
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
