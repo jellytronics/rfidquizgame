@@ -4,6 +4,14 @@ var os = require('os')
 var events = require("events");
 var EventEmitter = require("events").EventEmitter;
 
+
+var io = require('socket.io-client');
+var ioSocketClientServer = io.connect('http://localhost:3001'); // change to beagleserver
+ioSocketClientServer.on('connected', function (data) {
+  console.log(data.hello);
+});
+
+
 // Events Tutorial
 // http://code.tutsplus.com/tutorials/using-nodes-event-module--net-35941
 
