@@ -6,19 +6,32 @@ var EventEmitter = require("events").EventEmitter;
 
 
 var io = require('socket.io-client');
-var ioSocketClientServer = io.connect('http://localhost:3001'); // change to beagleserver
+var ioSocketClientServer = io.connect('http://beagleserver:3001'); // change to beagleserver
 ioSocketClientServer.on('connected', function (data) {
   console.log(data.hello);
 });
 
 
-// Events Tutorial
-// http://code.tutsplus.com/tutorials/using-nodes-event-module--net-35941
+
+var nodeQuizState = {
+  quizId: undefined,
+  questionId: undefined,
+  time : undefined,
+  timer : "paused",
+  machineId : os.hostname(),
+  authorId : undefined,
+  defaultTimeInterval : 500,
+  defaultTerminateTime : 30,
+  maxTerminateTime : 120,
+  minTerminateTime : 1
+}
 
 
-// MIFARE STUFF
+// MIFARE Init and Basic Functions
 
 var ndef = require('ndef'), mifare = require('mifare-classic'), message, bytes
+
+/*
 
 function readMifare(){
   var messageRead;
@@ -30,23 +43,13 @@ function readMifare(){
   return messageRead;
 }
 
+
 function formatMifare(){
   mifare.format(function(err) {
     if (err) {
       return
     }
     console.log("card formatted")
-  })
-}
-
-
-function writeMifare(message){
-  bytes = ndef.encodeMessage(message);
-  mifare.write(bytes, function(err) {
-    if (err) {
-      return
-    }
-    console.log("data written")
   })
 }
 
@@ -70,15 +73,202 @@ function readCard(answerInstance){
   });
 }
 
-function writeCard(name, teamNumber, answerNumber){
+*/
+
+function writeMifare(message){
+  bytes = ndef.encodeMessage(message);
+  mifare.write(bytes, function(err) {
+    if (err) {
+      return
+    }
+    console.log("data written")
+  })
+}
+
+function readCard(){
+  var messageRead;
+  mifare.read(function(err, buffer) {
+    if (err){return}
+    var messageRead = ndef.decodeMessage(buffer.toJSON())
+    if (messageRead == undefined || messageRead[0] == undefined) {return undefined}
+    var cardData = {
+      quizId : nodeQuizState.quizId;
+      questionId : nodeQuizState.questionId;
+      memberName : ndef.text.decodePayload(messageRead[0].payload);
+      teamNumber : ndef.text.decodePayload(messageRead[1].payload);
+      answerNumber : ndef.text.decodePayload(messageRead[2].payload);
+    };
+    console.log(cardData);
+    return cardData;
+  });
+}
+
+function writeCard(memberName, teamNumber, answerNumber){
   message = [
-    ndef.textRecord(name),
+    ndef.textRecord(memberName),
     ndef.textRecord(teamNumber.toString()),
     ndef.textRecord(answerNumber.toString())
   ]
   writeMifare(message);
 }
 
+
+// Card and Quiz functions
+
+
+
+var persistentReadfunction;
+var persistentReadfunctiontimer;
+
+var persistentReadEvent = new EventEmitter();
+
+persistentReadEvent.on("state on", function (timeInterval) {
+  if (nodeQuizState.timer == "start") {clearInterval(persistentReadfunction);};
+  if ( typeof timeInterval == 'undefined' || isNaN(parseInt(timeInterval))) { timeInterval = nodeQuizState.defaultTimeInterval; } else { timeInterval = parseInt(timeInterval); }
+  persistentReadfunction = setInterval(function(err){
+    ioSocketClientServer.emit('setCardToDB', readCard());
+    }, timeInterval);
+  console.log("persistentReadToDB activated");
+});
+
+persistentReadEvent.on("state off", function () {
+  clearInterval(persistentReadfunction);
+  console.log("persistentReadToDB deactivated");
+});
+
+persistentReadEvent.on("state timed", function (timeInterval, terminateTime) {
+  // To Prevent Errors, remove last readfunction
+  clearInterval(persistentReadfunction);
+  if ( typeof terminateTime == 'undefined' || isNaN(parseInt(terminateTime)) || terminateTime > nodeQuizState.maxTerminateTime || terminateTime < nodeQuizState.minTerminateTime) { terminateTime = nodeQuizState.defaultTerminateTime; } else { terminateTime = parseInt(terminateTime); }
+  if ( typeof timeInterval == 'undefined' || isNaN(parseInt(timeInterval))) { timeInterval = nodeQuizState.defaultTimeInterval; } else { timeInterval = parseInt(timeInterval); }
+  persistentReadfunction = setInterval(function(err){
+    ioSocketClientServer.emit('setCardToDB', readCard());
+    }, timeInterval);
+  console.log("persistentReadToDB activated for " + terminateTime + " seconds.");
+  setTimeout(function(){
+    clearInterval(persistentReadfunction);
+    console.log("persistentReadToDB deactivated");
+  }, terminateTime*1000)
+});
+
+
+/*
+
+Nodes can only serve one Quiz at a time for now
+Will upgrade nodes to serve many quizzes at a time
+
+*/
+
+ioSocketClientServer.on('connection', function(data){
+  console.log('Connected to ' + data.hostname);
+  ioSocketClientServer.emit('helloRecieved', {hostname : os.hostname() });
+});
+
+ioSocketClientServer.on('initQuizState', function(quizState){
+  console.log(quizState);
+  if (quizState.machineId == nodeQuizState.machineId) {
+    nodeQuizState.quizId = quizState.quizId;
+    nodeQuizState.time = quizState.time;
+    nodeQuizState.timer = quizState.timer;
+    nodeQuizState.authorId = quizState.authorId;
+  }
+});
+
+
+ioSocketClientServer.on('initTimer', function(quizState){
+  console.log(quizState);
+  if (quizState.machineId == nodeQuizState.machineId && quizState.quizId == nodeQuizState.quizId && nodeQuizState.authorId == quizState.authorId){
+    nodeQuizState.questionId = quizState.questionId;
+    nodeQuizState.time = quizState.time;
+    nodeQuizState.timer = "paused";
+  }
+});
+
+ioSocketClientServer.on('pauseTimer', function(quizState){
+  console.log(quizState);
+  if (quizState.machineId == nodeQuizState.machineId && quizState.quizId == nodeQuizState.quizId && nodeQuizState.questionId == quizState.questionId && nodeQuizState.authorId == quizState.authorId){
+    nodeQuizState.time = quizState.time;
+    nodeQuizState.timer = "paused";
+    //STOP TIMER
+    persistentReadEventOld.emit("state off");
+  }
+});
+
+ioSocketClientServer.on('startTimer', function(quizState){
+  console.log(quizState);
+  if (quizState.machineId == nodeQuizState.machineId && quizState.quizId == nodeQuizState.quizId && nodeQuizState.questionId == quizState.questionId && nodeQuizState.authorId == quizState.authorId){
+    nodeQuizState.time = quizState.time;
+    nodeQuizState.timer = "start";
+    //Start TIMER
+    persistentReadEventOld.emit("state timed", null, nodeQuizState.time);
+  }
+});
+
+ioSocketClientServer.on('readCard', function(quizState){
+  console.log(quizState);
+  if (quizState.machineId == nodeQuizState.machineId){
+    //Read Card
+    ioSocketClientServer.emit('setCard', readCard());
+  }
+});
+
+ioSocketClientServer.on('writeCard', function(cardData){
+  console.log(quizState);
+  if (quizState.machineId == nodeQuizState.machineId){
+    //Read Card
+    writeCard(cardData.memberName, cardData.teamNumber, cardData.answerNumber)
+  }
+});
+
+/*
+ioSocketClientServer.on('readCardToDB', function(quizState){
+  console.log(quizState);
+  if (quizState.machineId == nodeQuizState.machineId){
+    //Read Card
+    //Start TIMER
+    ioSocketClientServer.emit('setCardToDB', readCard());
+  }
+});
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+--------------------------------------------------------------
+
+Everything from here onwards are for backwards compatiblity
+Porting Everything over to Socket.IO
+Removing express middleware, REST protocols and mongoDB instance
+
+--------------------------------------------------------------
+
+*/
+
+// MIFARE STUFF (LEGACY FUNCTIONS)
 
 
 
@@ -159,29 +349,31 @@ function readFromDB(filterCallback, valueCallback){
 
 
 
+// Events Tutorial
+// http://code.tutsplus.com/tutorials/using-nodes-event-module--net-35941
+
 // Try to make these non hardcoded
 var defaultTimeInterval = 500;
 var defaultTerminateTime = 30;
 var maxTerminateTime = 120;
 var minTerminateTime = 1;
 
-var persistentReadfunction;
 var persistentReadfunctiontimer;
 
-var persistentReadEvent = new EventEmitter();
+var persistentReadEventOld = new EventEmitter();
 
-persistentReadEvent.on("state on", function (timeInterval) {
+persistentReadEventOld.on("state on", function (timeInterval) {
   if ( typeof timeInterval == 'undefined' || isNaN(parseInt(timeInterval))) { timeInterval = defaultTimeInterval; } else { timeInterval = parseInt(timeInterval); }
   persistentReadfunction = setInterval(function(err){ console.log("Time: "+new Date().getTime()); readToDB() }, timeInterval);
   console.log("persistentReadToDB activated");
 });
 
-persistentReadEvent.on("state off", function () {
+persistentReadEventOld.on("state off", function () {
   clearInterval(persistentReadfunction);
   console.log("persistentReadToDB deactivated");
 });
 
-persistentReadEvent.on("state timed", function (timeInterval, terminateTime) {
+persistentReadEventOld.on("state timed", function (timeInterval, terminateTime) {
   clearInterval(persistentReadfunction);
   console.log("persistentReadToDB reset");
   if ( typeof terminateTime == 'undefined' || isNaN(parseInt(terminateTime))) { terminateTime = defaultTerminateTime; } else { terminateTime = parseInt(terminateTime); }
@@ -254,9 +446,9 @@ if (os.hostname() != "beagleserver"){
     res.send("Persistent reading of tags changed to: "+webState);
     console.log("Persistent reading of tags changed to: "+webState);
     if ( webState == true ){
-      persistentReadEvent.emit("state on");
+      persistentReadEventOld.emit("state on");
     }else{
-      persistentReadEvent.emit("state off");
+      persistentReadEventOld.emit("state off");
     }
   });
 
@@ -265,7 +457,7 @@ if (os.hostname() != "beagleserver"){
     var terminateTime = req.params.terminateTime
     webState = false;
     console.log("Persistent reading of tags changed to: "+webState);
-    persistentReadEvent.emit("state timed", null, terminateTime);
+    persistentReadEventOld.emit("state timed", null, terminateTime);
     res.send("Persistent reading of tags enabled for " + terminateTime + " seconds.");
   });
 
