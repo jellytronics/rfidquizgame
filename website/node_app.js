@@ -202,9 +202,10 @@ ioSocketClientServer.on('initQuizState', function(quizState){
 
 
 ioSocketClientServer.on('timerInit', function(quizState){
-  console.log('timerInit\n'+quizState);
+  console.log('timerInit');
+  console.log(quizState);
   //Temp soln for init quiz state not implemented
-  quizState.quizId = nodeQuizState.quizId;
+  nodeQuizState.quizId = quizState.quizId ;
   nodeQuizState.authorId = quizState.authorId;
 
   if (quizState.quizId == nodeQuizState.quizId && nodeQuizState.authorId == quizState.authorId){
@@ -215,7 +216,8 @@ ioSocketClientServer.on('timerInit', function(quizState){
 });
 
 ioSocketClientServer.on('timerPaused', function(quizState){
-  console.log('timerPaused\n'+quizState);
+  console.log('timerPaused');
+  console.log(quizState);
   if (quizState.quizId == nodeQuizState.quizId && nodeQuizState.questionId == quizState.questionId && nodeQuizState.authorId == quizState.authorId){
     nodeQuizState.time = quizState.time;
     nodeQuizState.timer = "paused";
@@ -225,7 +227,8 @@ ioSocketClientServer.on('timerPaused', function(quizState){
 });
 
 ioSocketClientServer.on('timerStarted', function(quizState){
-  console.log('timerStarted\n'+quizState);
+  console.log('timerStarted');
+  console.log(quizState);
   if (quizState.quizId == nodeQuizState.quizId && nodeQuizState.questionId == quizState.questionId && nodeQuizState.authorId == quizState.authorId){
     nodeQuizState.time = quizState.time;
     nodeQuizState.timer = "start";
