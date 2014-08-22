@@ -26,11 +26,12 @@ var EventEmitter = require("events").EventEmitter;
 
 
 var io = require('socket.io-client');
-var ioSocketClientServer = io.connect('http://beagleserver:3001'); // change to beagleserver
+var ioSocketClientServer = io.connect('http://192.168.2.231:3001'); // change to beagleserver
 ioSocketClientServer.on('connected', function(data){
   console.log('Connected to ' + data.hostname);
   ioSocketClientServer.emit('helloRecieved', {hostname : os.hostname() });
 });
+
 
 
 
@@ -313,7 +314,7 @@ mongoose.connect('mongodb://beagleserver/test');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback () {
-  console.log("Success");
+  console.log("Success in opening Db");
 });
 
 // Schema for Mongoose
