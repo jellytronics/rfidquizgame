@@ -28,7 +28,7 @@ fi
 
 cp -r ~/rfidquizgame/website ~/rfidquizstash
 
-cd ~/rfidquizstash/website/website
+cd ~/rfidquizstash/website
 
 ##installation
 
