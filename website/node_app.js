@@ -152,6 +152,7 @@ persistentReadEvent.on("state on", function (timeInterval) {
   if ( typeof timeInterval == 'undefined' || isNaN(parseInt(timeInterval))) { timeInterval = nodeQuizState.defaultTimeInterval; } else { timeInterval = parseInt(timeInterval); }
   persistentReadfunction = setInterval(function(err){
     ioSocketClientServer.emit('setCardToDB', readCard());
+    ioSocketClientServer.emit('helloRecieved', {hostname : os.hostname() });
     }, timeInterval);
   console.log("persistentReadToDB activated");
 });
