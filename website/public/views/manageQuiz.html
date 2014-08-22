@@ -244,8 +244,8 @@
       <p>Current Question: {{localQuizState.questionId}} | {{currentQn.content}}</p>
       <p>Time Available: {{localQuizState.time}} | Time Left : {{localQuizState.countdownTimer}} | Timer status: {{localQuizState.timer}}</p>
       <div class="btn-group">
-        <button type="button" class="btn btn-default" ng-click="nextQuestion()"><span class="glyphicon glyphicon-step-forward"></span> Next Question </button>
         <button type="button" class="btn btn-default" ng-click="previousQuestion()"><span class="glyphicon glyphicon-step-backward"></span> Previous Question </button>
+        <button type="button" class="btn btn-default" ng-click="nextQuestion()"><span class="glyphicon glyphicon-step-forward"></span> Next Question </button>
         <button type="button" class="btn btn-default" ng-click="startTimer()"><span class="glyphicon glyphicon-play"></span> Start Timer </button>
         <button type="button" class="btn btn-default" ng-click="pauseTimer()"><span class="glyphicon glyphicon-pause"></span> Pause Timer </button>
         <button type="button" class="btn btn-default" ng-click="restartTimer()"><span class="glyphicon glyphicon-repeat"></span> Restart Timer </button>

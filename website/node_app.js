@@ -200,7 +200,7 @@ ioSocketClientServer.on('initQuizState', function(quizState){
 });
 
 
-ioSocketClientServer.on('initTimer', function(quizState){
+ioSocketClientServer.on('timerInit', function(quizState){
   console.log(quizState);
   if (quizState.machineId == nodeQuizState.machineId && quizState.quizId == nodeQuizState.quizId && nodeQuizState.authorId == quizState.authorId){
     nodeQuizState.questionId = quizState.questionId;
@@ -209,7 +209,7 @@ ioSocketClientServer.on('initTimer', function(quizState){
   }
 });
 
-ioSocketClientServer.on('pauseTimer', function(quizState){
+ioSocketClientServer.on('timerPaused', function(quizState){
   console.log(quizState);
   if (quizState.machineId == nodeQuizState.machineId && quizState.quizId == nodeQuizState.quizId && nodeQuizState.questionId == quizState.questionId && nodeQuizState.authorId == quizState.authorId){
     nodeQuizState.time = quizState.time;
@@ -219,7 +219,7 @@ ioSocketClientServer.on('pauseTimer', function(quizState){
   }
 });
 
-ioSocketClientServer.on('startTimer', function(quizState){
+ioSocketClientServer.on('timerStarted', function(quizState){
   console.log(quizState);
   if (quizState.machineId == nodeQuizState.machineId && quizState.quizId == nodeQuizState.quizId && nodeQuizState.questionId == quizState.questionId && nodeQuizState.authorId == quizState.authorId){
     nodeQuizState.time = quizState.time;
