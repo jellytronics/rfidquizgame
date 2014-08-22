@@ -192,18 +192,22 @@ ioSocketClientServer.on('connected', function(data){
 
 ioSocketClientServer.on('initQuizState', function(quizState){
   console.log(quizState);
-  if (quizState.machineId == nodeQuizState.machineId) {
+  //if (quizState.machineId == nodeQuizState.machineId) {
     nodeQuizState.quizId = quizState.quizId;
     nodeQuizState.time = quizState.time;
     nodeQuizState.timer = quizState.timer;
     nodeQuizState.authorId = quizState.authorId;
-  }
+  //}
 });
 
 
 ioSocketClientServer.on('timerInit', function(quizState){
-  console.log(quizState);
-  if (quizState.machineId == nodeQuizState.machineId && quizState.quizId == nodeQuizState.quizId && nodeQuizState.authorId == quizState.authorId){
+  console.log('timerInit\n'+quizState);
+  //Temp soln for init quiz state not implemented
+  quizState.quizId = nodeQuizState.quizId;
+  nodeQuizState.authorId = quizState.authorId;
+
+  if (quizState.quizId == nodeQuizState.quizId && nodeQuizState.authorId == quizState.authorId){
     nodeQuizState.questionId = quizState.questionId;
     nodeQuizState.time = quizState.time;
     nodeQuizState.timer = "paused";
@@ -211,8 +215,8 @@ ioSocketClientServer.on('timerInit', function(quizState){
 });
 
 ioSocketClientServer.on('timerPaused', function(quizState){
-  console.log(quizState);
-  if (quizState.machineId == nodeQuizState.machineId && quizState.quizId == nodeQuizState.quizId && nodeQuizState.questionId == quizState.questionId && nodeQuizState.authorId == quizState.authorId){
+  console.log('timerPaused\n'+quizState);
+  if (quizState.quizId == nodeQuizState.quizId && nodeQuizState.questionId == quizState.questionId && nodeQuizState.authorId == quizState.authorId){
     nodeQuizState.time = quizState.time;
     nodeQuizState.timer = "paused";
     //STOP TIMER
@@ -221,8 +225,8 @@ ioSocketClientServer.on('timerPaused', function(quizState){
 });
 
 ioSocketClientServer.on('timerStarted', function(quizState){
-  console.log(quizState);
-  if (quizState.machineId == nodeQuizState.machineId && quizState.quizId == nodeQuizState.quizId && nodeQuizState.questionId == quizState.questionId && nodeQuizState.authorId == quizState.authorId){
+  console.log('timerStarted\n'+quizState);
+  if (quizState.quizId == nodeQuizState.quizId && nodeQuizState.questionId == quizState.questionId && nodeQuizState.authorId == quizState.authorId){
     nodeQuizState.time = quizState.time;
     nodeQuizState.timer = "start";
     //Start TIMER
