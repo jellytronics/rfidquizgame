@@ -3,22 +3,23 @@ Init system for NFC reading <- try to find a more permenant solution
 This is a workaround
 */
 
+var os = require('os')
 
-exec("ls /sys/devices/bone_capemgr*/slots", function (error, stdout, stderr){
-  if (error) {console.log("Error: " + error); return};
-  var destination = stdout.replace(/\n$/, '');
-  exec("echo BB-UART1 > " + destination, function(error, stdout, stderr){
-    if (error) {console.log("Error: " + error);};
-    console.log(stdout);
-    console.log(stderr);
-  })
-});
-
+if(os.hostname() != 'jellymac'){
+  child_process.exec("ls /sys/devices/bone_capemgr*/slots", function (error, stdout, stderr){
+    if (error) {console.log("Error: " + error); return};
+    var destination = stdout.replace(/\n$/, '');
+    exec("echo BB-UART1 > " + destination, function(error, stdout, stderr){
+      if (error) {console.log("Error: " + error);};
+      console.log(stdout);
+      console.log(stderr);
+    })
+  });
+}
 
 
 // Mifare Init
 var ndef = require('ndef'), mifare = require('mifare-classic'), message, bytes
-var os = require('os')
 var events = require("events");
 var EventEmitter = require("events").EventEmitter;
 
@@ -114,11 +115,11 @@ function readCard(){
     var messageRead = ndef.decodeMessage(buffer.toJSON())
     if (messageRead == undefined || messageRead[0] == undefined) {return undefined}
     var cardData = {
-      quizId : nodeQuizState.quizId;
-      questionId : nodeQuizState.questionId;
-      memberName : ndef.text.decodePayload(messageRead[0].payload);
-      teamNumber : ndef.text.decodePayload(messageRead[1].payload);
-      answerNumber : ndef.text.decodePayload(messageRead[2].payload);
+      quizId : nodeQuizState.quizId,
+      questionId : nodeQuizState.questionId,
+      memberName : ndef.text.decodePayload(messageRead[0].payload),
+      teamNumber : ndef.text.decodePayload(messageRead[1].payload),
+      answerNumber : ndef.text.decodePayload(messageRead[2].payload)
     };
     console.log(cardData);
     return cardData;
