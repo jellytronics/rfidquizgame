@@ -6,6 +6,7 @@ This is a workaround
 var os = require('os')
 
 if(os.hostname() != 'jellymac'){
+  var child_process = require('child_process');
   child_process.exec("ls /sys/devices/bone_capemgr*/slots", function (error, stdout, stderr){
     if (error) {console.log("Error: " + error); return};
     var destination = stdout.replace(/\n$/, '');
