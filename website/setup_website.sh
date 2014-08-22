@@ -26,9 +26,9 @@ fi
 ######### NODEJS PACKAGES #############
 ##https://www.npmjs.org/package
 
-cp -r ~/rfidquizgame/website ~/rfidquizstash/website
+cp -r ~/rfidquizgame/website ~/rfidquizstash
 
-cd ~/rfidquizstash/website
+cd ~/rfidquizstash/website/website
 
 ##installation
 
