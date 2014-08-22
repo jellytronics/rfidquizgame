@@ -450,8 +450,13 @@ ioSocketServerClient.on('connection', function (socket) {
     });
     console.log("Card Read Requested at " + quizState.machineId );
   });
-  socket.on('setCardToDB', function (cardData) {
+  socket.on('setCard', function (cardData) {
     // Card Data coming from Node
+    /*
+    Test Case
+    ioSocketClientServer.emit('setCard', { quizId : 'blah3', questionId : 2, memberName : "noob", teamNumber : 1, answerNumber : 2});
+
+    */
     // STEP 1: store to DB
     var newAnswer = new Answer({
       timestamp : new Date().getTime(),

@@ -144,35 +144,40 @@ function writeCard(memberName, teamNumber, answerNumber){
 
 var persistentReadfunction;
 var persistentReadfunctiontimer;
-
+var persistentReadfunctionClearer;
 var persistentReadEvent = new EventEmitter();
 
 persistentReadEvent.on("state on", function (timeInterval) {
   if (nodeQuizState.timer == "start") {clearInterval(persistentReadfunction);};
   if ( typeof timeInterval == 'undefined' || isNaN(parseInt(timeInterval))) { timeInterval = nodeQuizState.defaultTimeInterval; } else { timeInterval = parseInt(timeInterval); }
   persistentReadfunction = setInterval(function(err){
-    ioSocketClientServer.emit('setCardToDB', readCard());
+    ioSocketClientServer.emit('setCard', readCard());
     }, timeInterval);
   console.log("persistentReadToDB activated");
 });
 
 persistentReadEvent.on("state off", function () {
   clearInterval(persistentReadfunction);
+  clearInterval(persistentReadfunctionClearer);
   console.log("persistentReadToDB deactivated");
 });
+
+
+
 
 persistentReadEvent.on("state timed", function (timeInterval, terminateTime) {
   // To Prevent Errors, remove last readfunction
   clearInterval(persistentReadfunction);
-
+  clearInterval(persistentReadfunctionClearer);
   if ( typeof terminateTime == 'undefined' || isNaN(parseInt(terminateTime)) || terminateTime > nodeQuizState.maxTerminateTime || terminateTime < nodeQuizState.minTerminateTime) { terminateTime = nodeQuizState.defaultTerminateTime; } else { terminateTime = parseInt(terminateTime); }
   if ( typeof timeInterval == 'undefined' || isNaN(parseInt(timeInterval))) { timeInterval = nodeQuizState.defaultTimeInterval; } else { timeInterval = parseInt(timeInterval); }
   console.log("int " + timeInterval + " | time " + terminateTime);
   persistentReadfunction = setInterval(function(err){
-    ioSocketClientServer.emit('setCardToDB', readCard());
+    ioSocketClientServer.emit('setCard', readCard());
     }, timeInterval);
   console.log("persistentReadToDB activated for " + terminateTime + " seconds.");
-  setTimeout(function(){
+  //Check duplicate clear intervals
+  var persistentReadfunctionClearer = setTimeout(function(){
     clearInterval(persistentReadfunction);
     console.log("persistentReadToDB deactivated");
   }, terminateTime*1000)
@@ -262,7 +267,7 @@ ioSocketClientServer.on('readCardToDB', function(quizState){
   if (quizState.machineId == nodeQuizState.machineId){
     //Read Card
     //Start TIMER
-    ioSocketClientServer.emit('setCardToDB', readCard());
+    ioSocketClientServer.emit('setCard', readCard());
   }
 });
 */

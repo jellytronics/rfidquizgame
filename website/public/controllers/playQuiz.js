@@ -22,7 +22,6 @@ angular.module('MyApp')
         console.log('Connected to ' + data.hostname);
         ioSocketClientServer.emit('helloRecieved', {hostname : undefined });
       });
-      $scope.managedquizzes = Quiz.query({ author: $rootScope.currentUser._id });
       $scope.quizzes = Quiz.query();
       Quiz.get({ _id: $routeParams.id }, function(quiz) {
         $scope.quiz = quiz;
@@ -43,6 +42,20 @@ angular.module('MyApp')
         $scope.stopCountdown();
       });
 
+      var initAnswersRead = function(){
+        $scope.localQuizState.answersRead = [];
+        for(team in $scope.quiz.teams){
+          team = $scope.quiz.teams[team];
+          $scope.localQuizState.answersRead.push({
+            _id : team._id,
+            memberNames : team.memberNames,
+            teamNumber : team.teamNumber,
+            answered : false,
+            answerNumber: undefined
+          });
+        };
+      };
+
 
       $scope.testAlert = function(){
         $alert({
@@ -59,7 +72,13 @@ angular.module('MyApp')
         $scope.quiz = quizUpdate;
         //Code below needs to change due to way nextquestion and prevQn are handled.
         $scope.localQuizState.questionId = $scope.quiz.currentQn;
-        $scope.restartTimer();
+        //$scope.restartTimer();
+        $scope.currentQn = findQuestionWithId($scope.localQuizState.questionId);
+        $scope.localQuizState.timeStarted = undefined;
+        $scope.localQuizState.time = $scope.currentQn.timeAllowed;
+        $scope.localQuizState.countdownTimer = $scope.localQuizState.time;
+        $interval.cancel($scope.localQuizState.countdownTimerInterval);
+        $scope.localQuizState.timer = "paused";
       });
 
       var checkPlayable = function(){
@@ -134,9 +153,32 @@ angular.module('MyApp')
         $scope.localQuizState.timer = 'paused';
         $scope.localQuizState.countdownTimer = $scope.localQuizState.time;
         $scope.localQuizState.timeStarted = undefined;
+        initAnswersRead();
       });
 
       //To be done later
+
+      ioSocketClientServer.on('answerRead', function(cardData){
+        if ($scope.localQuizState.quizId != cardData.quizId || $scope.localQuizState.questionId != cardData.questionId){return;};
+        for(team in $scope.localQuizState.answersRead){
+          team = $scope.localQuizState.answersRead[team];
+          if(team.teamNumber == cardData.teamNumber) {team.answered = true}
+        }
+      });
+
+      ioSocketClientServer.on('dataFromDB', function(answerMatrix){
+        for (answer in answerMatrix){
+          answer = answerMatrix[answer];
+          for (team in $scope.localQuizState.answersRead){
+            team = $scope.localQuizState.answersRead[team];
+            if ($scope.localQuizState.quizId != answer.quizId || $scope.localQuizState.questionId != answer.questionId){return;};
+            if(team.teamNumber == answer.teamNumber) {
+              team.answered = true;
+              team.answerNUmber = answer.answerNumber;
+            };
+          };
+        };
+      });
 
 
 

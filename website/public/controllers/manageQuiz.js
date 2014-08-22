@@ -457,7 +457,7 @@ angular.module('MyApp')
 
 
       ioSocketClientServer.on('answerRead', function(cardData){
-        if (localQuizState.quizId != cardData.quizId || localQuizState.questionId != cardData.questionId){return;};
+        if ($scope.localQuizState.quizId != cardData.quizId || $scope.localQuizState.questionId != cardData.questionId){return;};
         for(team in $scope.localQuizState.answersRead){
           team = $scope.localQuizState.answersRead[team];
           if(team.teamNumber == cardData.teamNumber) {team.answered = true}
@@ -469,7 +469,7 @@ angular.module('MyApp')
           answer = answerMatrix[answer];
           for (team in $scope.localQuizState.answersRead){
             team = $scope.localQuizState.answersRead[team];
-            if (localQuizState.quizId != answer.quizId || localQuizState.questionId != answer.questionId){return;};
+            if ($scope.localQuizState.quizId != answer.quizId || $scope.localQuizState.questionId != answer.questionId){return;};
             if(team.teamNumber == answer.teamNumber) {
               team.answered = true;
               team.answerNUmber = answer.answerNumber;
