@@ -167,9 +167,7 @@ persistentReadEvent.on("state timed", function (timeInterval, terminateTime) {
   if ( typeof terminateTime == 'undefined' || isNaN(parseInt(terminateTime)) || terminateTime > nodeQuizState.maxTerminateTime || terminateTime < nodeQuizState.minTerminateTime) { terminateTime = nodeQuizState.defaultTerminateTime; } else { terminateTime = parseInt(terminateTime); }
   if ( typeof timeInterval == 'undefined' || isNaN(parseInt(timeInterval))) { timeInterval = nodeQuizState.defaultTimeInterval; } else { timeInterval = parseInt(timeInterval); }
   persistentReadfunction = setInterval(function(err){
-    console.log("HELP!")
     ioSocketClientServer.emit('setCardToDB', readCard());
-    ioSocketClientServer.emit('helloRecieved', {hostname : os.hostname() });
     }, timeInterval);
   console.log("persistentReadToDB activated for " + terminateTime + " seconds.");
   setTimeout(function(){
@@ -214,6 +212,7 @@ ioSocketClientServer.on('timerInit', function(quizState){
     nodeQuizState.questionId = quizState.questionId;
     nodeQuizState.time = quizState.time;
     nodeQuizState.timer = "paused";
+    persistentReadEvent.emit("state off");
   }
 });
 
@@ -224,7 +223,7 @@ ioSocketClientServer.on('timerPaused', function(quizState){
     nodeQuizState.time = quizState.time;
     nodeQuizState.timer = "paused";
     //STOP TIMER
-    persistentReadEventOld.emit("state off");
+    persistentReadEvent.emit("state off");
   }
 });
 
@@ -235,7 +234,7 @@ ioSocketClientServer.on('timerStarted', function(quizState){
     nodeQuizState.time = quizState.time;
     nodeQuizState.timer = "start";
     //Start TIMER
-    persistentReadEventOld.emit("state timed", null, nodeQuizState.time);
+    persistentReadEvent.emit("state timed", null, nodeQuizState.time);
   }
 });
 
