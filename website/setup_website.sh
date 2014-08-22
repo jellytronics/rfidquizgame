@@ -32,5 +32,5 @@ cd ~/rfidquizstash/website
 
 ##installation
 
-npm install -g gulp path express cookie-parser express-session body-parser method-override morgan bcryptjs mongoose passport passport-local async request xml2js agenda sugar nodemailer lodash passport-facebook passport-google browser-sync nanotimer mongodb mongoskin grunt grunt-cli http-server bower socket.io socket.io-client daemon node-schedule express-generator
-npm link gulp path express cookie-parser express-session body-parser method-override morgan bcryptjs mongoose passport passport-local async request xml2js agenda sugar nodemailer lodash passport-facebook passport-google browser-sync nanotimer mongodb mongoskin grunt grunt-cli http-server bower socket.io socket.io-client daemon node-schedule express-generator
+npm install -g ndef gulp path express cookie-parser express-session body-parser method-override morgan bcryptjs mongoose passport passport-local async request xml2js agenda sugar nodemailer lodash passport-facebook passport-google browser-sync nanotimer mongodb mongoskin grunt grunt-cli http-server bower socket.io socket.io-client daemon node-schedule express-generator
+npm link ndef gulp path express cookie-parser express-session body-parser method-override morgan bcryptjs mongoose passport passport-local async request xml2js agenda sugar nodemailer lodash passport-facebook passport-google browser-sync nanotimer mongodb mongoskin grunt grunt-cli http-server bower socket.io socket.io-client daemon node-schedule express-generator

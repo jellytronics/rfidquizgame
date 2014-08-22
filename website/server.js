@@ -458,6 +458,8 @@ ioSocketServerClient.on('connection', function (socket) {
 
     */
     // STEP 1: store to DB
+    console.log(cardData);
+    if (cardData == null || cardData == undefined) {return}
     var newAnswer = new Answer({
       timestamp : new Date().getTime(),
       quizId : cardData.quizId,

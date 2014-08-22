@@ -128,6 +128,24 @@ function readCard(){
   });
 }
 
+function readCardToServer(){
+  var messageRead;
+  mifare.read(function(err, buffer) {
+    if (err){return}
+    var messageRead = ndef.decodeMessage(buffer.toJSON())
+    if (messageRead == undefined || messageRead[0] == undefined) {return undefined}
+    var cardData = {
+      quizId : nodeQuizState.quizId,
+      questionId : nodeQuizState.questionId,
+      memberName : ndef.text.decodePayload(messageRead[0].payload),
+      teamNumber : ndef.text.decodePayload(messageRead[1].payload),
+      answerNumber : ndef.text.decodePayload(messageRead[2].payload)
+    };
+    console.log(cardData);
+    ioSocketClientServer.emit('setCard', cardData);
+  });
+}
+
 function writeCard(memberName, teamNumber, answerNumber){
   message = [
     ndef.textRecord(memberName),
@@ -151,7 +169,7 @@ persistentReadEvent.on("state on", function (timeInterval) {
   if (nodeQuizState.timer == "start") {clearInterval(persistentReadfunction);};
   if ( typeof timeInterval == 'undefined' || isNaN(parseInt(timeInterval))) { timeInterval = nodeQuizState.defaultTimeInterval; } else { timeInterval = parseInt(timeInterval); }
   persistentReadfunction = setInterval(function(err){
-    ioSocketClientServer.emit('setCard', readCard());
+    readCardToServer();
     }, timeInterval);
   console.log("persistentReadToDB activated");
 });
@@ -173,7 +191,7 @@ persistentReadEvent.on("state timed", function (timeInterval, terminateTime) {
   if ( typeof timeInterval == 'undefined' || isNaN(parseInt(timeInterval))) { timeInterval = nodeQuizState.defaultTimeInterval; } else { timeInterval = parseInt(timeInterval); }
   console.log("int " + timeInterval + " | time " + terminateTime);
   persistentReadfunction = setInterval(function(err){
-    ioSocketClientServer.emit('setCard', readCard());
+    readCardToServer();
     }, timeInterval);
   console.log("persistentReadToDB activated for " + terminateTime + " seconds.");
   //Check duplicate clear intervals
@@ -249,7 +267,7 @@ ioSocketClientServer.on('readCard', function(quizState){
   console.log(quizState);
   if (quizState.machineId == nodeQuizState.machineId){
     //Read Card
-    ioSocketClientServer.emit('setCard', readCard());
+    readCardToServer();
   }
 });
 
