@@ -164,8 +164,10 @@ persistentReadEvent.on("state off", function () {
 persistentReadEvent.on("state timed", function (timeInterval, terminateTime) {
   // To Prevent Errors, remove last readfunction
   clearInterval(persistentReadfunction);
+
   if ( typeof terminateTime == 'undefined' || isNaN(parseInt(terminateTime)) || terminateTime > nodeQuizState.maxTerminateTime || terminateTime < nodeQuizState.minTerminateTime) { terminateTime = nodeQuizState.defaultTerminateTime; } else { terminateTime = parseInt(terminateTime); }
   if ( typeof timeInterval == 'undefined' || isNaN(parseInt(timeInterval))) { timeInterval = nodeQuizState.defaultTimeInterval; } else { timeInterval = parseInt(timeInterval); }
+  console.log("int " + timeInterval + " | time " + terminateTime);
   persistentReadfunction = setInterval(function(err){
     ioSocketClientServer.emit('setCardToDB', readCard());
     }, timeInterval);
