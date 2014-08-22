@@ -1,0 +1,29 @@
+<!--
+  Objective of this page is to depict the quiz in progress.
+  Will do real time data analysis for PHUN!
+-->
+
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      Play Quizzes
+      <div class="pull-right">
+        <input class="search" type="text" ng-model="query._id" placeholder="Search...">
+      </div>
+    </div>
+    <div class="panel-body">
+      <div class="row quiz-list"><!--was row show-list-->
+        <div class="col-xs-4 col-md-3" ng-repeat="quiz in quizzes | filter:query | orderBy:'_id':true">
+          <!-- <a href="/quizzes/{{quiz._id}}">
+            {{""}}<img class="img-rounded" ng-src="{{quiz.poster}}" width="100%"/>
+          </a>-->
+          <div class="text-center">
+            <a href="/quizzes/{{quiz._id}}">{{quiz._id}}</a>
+            <p class="text-muted">{{quiz.questions.length}} Questions | {{quiz.status}}</p>
+            <p class="text-muted">{{quiz.description}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

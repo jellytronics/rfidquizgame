@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-heading">Add a Quiz!</div>
+    <div class="panel-body">
+      <form class="form" method="post" ng-submit="addQuiz()" name="addForm">
+        <div class="form-group" ng-class="{ 'has-success' : addForm.quizName.$valid && addForm.quizName.$dirty, 'has-error' : addForm.quizName.$invalid && addForm.quizName.$dirty }">
+          <input class="form-control" type="text" name="quizName" ng-model="quizName" placeholder="Enter quiz name" required autofocus>
+          <div class="help-block text-danger" ng-if="addForm.quizName.$dirty" ng-messages="addForm.quizName.$error">
+            <div ng-message="required">Quiz name is required.</div>
+          </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-success' : addForm.quizName.$valid && addForm.quizName.$dirty, 'has-error' : addForm.quizName.$invalid && addForm.quizName.$dirty }">
+          <input class="form-control" type="text" name="quizDescription" ng-model="quizDescription" placeholder="Enter a description for the quiz" required autofocus>
+          <div class="help-block text-danger" ng-if="addForm.quizDescription.$dirty" ng-messages="addForm.quizDescription.$error">
+            <div ng-message="required">A description is required.</div>
+          </div>
+        </div>
+        <!--<button class="btn btn-primary" type="button" ng-disabled="addForm.$invalid">Add Question</button>-->
+        <button class="btn btn-primary" type="submit" ng-disabled="addForm.$invalid">Add</button>
+      </form>
+    </div>
+  </div>
+</div>

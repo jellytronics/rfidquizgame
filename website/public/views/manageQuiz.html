@@ -1,0 +1,266 @@
+<!--
+  Objective of this page is to control a quiz.
+  It has to check the status of the user.
+  Will do real time data analysis for PHUN!
+-->
+<div class="container" ng-if="!isAdmin">
+  <div class="text-center" >
+    <a class="btn btn-block btn-primary" href="#/login">Login to edit!</a>
+  </div>
+</div>
+
+<div class="container" ng-if="isAdmin">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="media">
+        <!--div class="pull-left">
+          <img class="media-object img-rounded">
+          <div class="text-center" ng-if="isAdmin">
+            <div ng-show="!isPlayed()">
+              <button ng-click="play()" class="btn btn-block btn-success">
+                <span class="glyphicon glyphicon-plus"></span> Play
+              </button>
+            </div>
+            <div ng-show="isPlayed()">
+              <button ng-click="stopPlay()" class="btn btn-block btn-danger">
+                <span class="glyphicon glyphicon-minus"></span> Stop Playing
+              </button>
+            </div>
+          </div>
+          <div class="text-center" ng-show="!isAdmin">
+            <a class="btn btn-block btn-primary" href="#/login">Login to edit!</a>
+          </div>
+        </div>-->
+        <div class="media-body">
+          <h2 class="media-heading">
+            {{quiz._id}}
+          </h2>
+          <!-- CHANGE GLYPHICON for good measure here
+          <h4 ng-show="quiz.status === 'Not Played'">
+            {{quiz._id}} has not been played.
+          </h4>
+          <h4 ng-show="quiz.status === 'Playing'">
+            Number of questions left in {{quiz._id}} is {{quiz.questions.length - quiz.currentQn}}
+          </h4>
+          <h4 ng-show="quiz.status === 'Ended'">
+            Status: <span class="text-danger">Ended</span>
+          </h4>
+          <h4 ng-show="quiz.status === 'Paused'">
+            Status: <span class="text-danger">Paused</span>
+            Number of questions left in {{quiz.name}} is {{quiz.questions.length - quiz.currentQn}}
+          </h4>-->
+          <p>{{quiz.description}}</p>
+
+          <!-- http://codepen.io/SimeonC/pen/AJIyC DRAG AND DROP-->
+
+          <!-- TEAM MANAGEMENT -->
+          <!-- ADD Team BUTTON HERE-->
+          <!-- ADD BUTTON HERE-->
+          <!-- Register Card BUTTON HERE-->
+          <!-- team statistics for good measure here http://d3js.org/ -->
+
+          <!-- QUESTION MANAGEMENT -->
+          <!-- database for good measure here -->
+          <!-- ADD Quiz Question BUTTON HERE-->
+          <!-- ADD BUTTON HERE-->
+          <!-- SAVE CANCEL BUTTONS HERE-->
+
+          <!-- QUIZ MANAGEMENT -->
+          <!-- database for good measure here -->
+          <!-- ADD Quiz Question BUTTON HERE-->
+          <!-- ADD BUTTON HERE-->
+          <!-- NEXT PAUSE STOP EDIT_SCORES BUTTONS-->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TEAMS -->
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <span class="glyphicon glyphicon-play"></span> Teams
+      <div class="pull-right">
+        <input class="search" type="text" ng-model="teamQuery" placeholder="Search within Teams...">
+      </div>
+    </div>
+    <div class="panel-body">
+      <div ng-repeat="team in quiz.teams | filter:teamQuery | orderBy:'teamNumber' : false">
+        <ul>
+          <li>
+            <h4>Team {{team.teamNumber}} | {{team._id}} <div class="pull-right"><a ng-click="editTeam(team._id)">Edit</a> | <a class="text-danger" ng-click="deleteTeam(team._id)">Delete</a></div></h4>
+            <h4>Team members</h4>
+            <ol>
+              <li ng-repeat="membername in team.memberNames">
+                <span class="glyphicon glyphicon-user text"></span> {{membername}} <div class="pull-right"> Program Card: <a ng-click="writeCard(1, team.teamNumber ,$index)">Beaglenode 1</a> | <a ng-click="writeCard(2, team.teamNumber ,$index)">Beaglenode 2</a></div>
+              </li>
+            </ol>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="panel-body">
+      <div class="form-group">
+        <input class="form-control input-lg" type="number" name="teamNumber" ng-model="team.teamNumber" placeholder="Type Team Number Here!" required autofocus>
+        <input class="form-control input-lg" type="text" name="teamName" ng-model="team._id" placeholder="Type Teamname Here!" required autofocus>
+        <input class="form-control input-lg" type="text" name="memberName" ng-repeat="membername in team.memberNames track by $index"
+          ng-model="team.memberNames[$index]" placeholder="Type Member {{$index + 1}} Name Here!" required autofocus> <!-- Add Button Here For Car Prog at Beaglenode 1 and 2 -->
+      </div>
+      <!-- Why track by index??? http://stackoverflow.com/questions/16296670/angular-ng-repeat-error-duplicates-in-a-repeater-are-not-allowed -->
+      <!-- TEAM ADD HERE -->
+      <div class="btn-group">
+        <button type="submit" ng-click="addTeammate()" class="btn btn-default">
+          <span class="glyphicon glyphicon-user"></span> Add Teammate
+        </button>
+      </div>
+      <div class="btn-group">
+        <button type="submit" ng-click="addUpdateTeam()" class="btn btn-primary">
+          <span class="glyphicon glyphicon-plus"></span> Add/Update Team
+        </button>
+      </div>
+      <!-- TEAM EDIT HERE
+      <div class="btn-group">
+        <button type="button" class="btn btn-success">Edit Team</button>
+        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+          <span class="caret"></span>
+          <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li ng-click="addUpdateQuestion()" ng-model="selectedTeamEdit" ng-repeat="team in quiz.teams | orderBy:'teamNumber' : false" ng-click="editTeam()">{{team.teamNumber + " : " + team.name}}</li>
+        </ul>
+      </div>
+
+      <div class="btn-group">
+        <button type="button" class="btn btn-danger">Delete Team</button>
+        <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
+          <span class="caret"></span>
+          <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li ng-model="selectedTeamDelete" ng-repeat="team in quiz.teams | orderBy:'teamNumber' : false" ng-click="deleteTeam()">{{team.teamNumber + " : " + team.name}}</li>
+        </ul>
+      </div>-->
+      <div class="btn-group">
+        <button type="submit" ng-click="clearTeamForm()" class="btn btn-default">
+          <span class="glyphicon glyphicon-plus"></span> Clear Form
+        </button>
+      </div>
+      Read Card:
+      <div class="btn-group">
+        <button type="button" class="btn btn-default" ng-click="readCard(1)"> Beaglenode 1 </button>
+        <button type="button" class="btn btn-default" ng-click="readCard(2)"> Beaglenode 2 </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUESTIONS -->
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <span class="glyphicon glyphicon-play"></span> Questions
+      <div class="pull-right">
+        <input class="search" type="text" ng-model="questionQuery" placeholder="Search within Questions...">
+      </div>
+    </div>
+    <div class="panel-body">
+      <div class="question" ng-repeat="question in quiz.questions | filter:questionQuery | orderBy : '_id' : false">
+        <h4>{{question._id}}: {{question.content}} <div class="pull-right"><a ng-click="editQuestion(question._id)">Edit</a> | <a class="text-danger" ng-click="deleteQuestion(question._id)">Delete</a></div></h4>
+        <h5>Possible Answers</h5>
+        <ol>
+          <li ng-repeat="possibleAnswer in question.possibleAnswers">
+            <span class="glyphicon glyphicon-play text"></span> {{possibleAnswer}}
+          </li>
+        </ol>
+        <h5>Correct Answer : {{question.possibleAnswers[question.correctAnswer - 1]}}</h5>
+        <h5>Score: {{question.score}} | Time Allowed : {{question.timeAllowed}} seconds</h5>
+        <h5>Image Url: {{question.imageUrl}}</h5>
+      </div>
+    </div>
+    <div class="panel-body">
+      <div class="form-group">
+        <input class="form-control input-lg" type="number" name="questionNumber" ng-model="question._id" placeholder="Type Question Number Here!" required autofocus>
+        <input class="form-control input-lg" type="text" name="questionContent" ng-model="question.content" placeholder="Type Question Here!" required autofocus>
+        <input class="form-control input-lg" type="text" name="possibleAnswer" ng-repeat="possibleAnswer in question.possibleAnswers track by $index" ng-model="question.possibleAnswers[$index]" placeholder="Type Answer {{$index + 1}} Here!") required autofocus>
+        <input class="form-control input-lg" type="number" name="correctAnswer" ng-model="question.correctAnswer" placeholder="Type Index of Correct Answer Here!" required autofocus>
+        <input class="form-control input-lg" type="number" name="score" ng-model="question.score" placeholder="Type Score Here!" required autofocus>
+        <input class="form-control input-lg" type="number" name="timeAllowed" ng-model="question.timeAllowed" placeholder="Type Duration for Question (in seconds) Here!" required autofocus>
+        <input class="form-control input-lg" type="text" name="imageUrl" ng-model="question.imageUrl" placeholder="Type Image Url Here!" required autofocus>
+      </div>
+      <!-- QUESTION ADD HERE -->
+      <div class="btn-group">
+        <button type="submit" ng-click="addAnswer()" class="btn btn-default">
+          <span class="glyphicon glyphicon-plus"></span> Add Answer
+        </button>
+      </div>
+      <div class="btn-group">
+        <button ng-click="addUpdateQuestion()" class="btn btn-primary">
+          <span class="glyphicon glyphicon-plus"></span> Add/Update Question
+        </button>
+      </div>
+      <!-- QUESTION EDIT HERE
+      <div class="btn-group">
+        <button type="button" class="btn btn-success">Edit Question</button>
+        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+          <span class="caret"></span>
+          <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li ng-model="selectedQuestionEdit" ng-repeat="question in quiz.questions | orderBy:'_id' : false" ng-click="editQuestion()">{{question.Number + " : " + question.content}}</li>
+        </ul>
+      </div>
+      <div class="btn-group">
+        <button type="button" class="btn btn-danger">Delete Question</button>
+        <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
+          <span class="caret"></span>
+          <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li ng-model="selectedQuestionDelete" ng-repeat="question in quiz.questions | orderBy:'_id' : false" ng-click="deleteQuestion()">{{question.Number + " : " + question.content}}</li>
+        </ul>
+      </div>-->
+      <div class="btn-group">
+        <button type="submit" ng-click="clearQuestionForm()" class="btn btn-default">
+          <span class="glyphicon glyphicon-plus"></span> Clear Form
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUIZ UPDATE -->
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <span class="glyphicon glyphicon-play"></span> Update Quiz
+    </div>
+    <div class="panel-body">
+      <h4>Quiz Status: {{quiz.status}}</h4>
+      <div class="btn-group">
+        <button type="button" class="btn btn-default" ng-click="playQuiz()"><span class="glyphicon glyphicon-play"></span> Play </button>
+        <button type="button" class="btn btn-default" ng-click="pauseQuiz()"><span class="glyphicon glyphicon-pause"></span> Pause </button>
+        <button type="button" class="btn btn-default" ng-click="restartQuiz()"><span class="glyphicon glyphicon-fast-backward"></span> Restart </button>
+        <button type="button" class="btn btn-default" ng-click="endQuiz()"><span class="glyphicon glyphicon-stop"></span> End </button>
+      </div>
+      <h4>Question Status / Timer</h4>
+      <p>Current Question: {{localQuizState.questionId}} | {{currentQn.content}}</p>
+      <p>Time Available: {{localQuizState.time}} | Time Left : {{localQuizState.countdownTimer}} | Timer status: {{localQuizState.timer}}</p>
+      <div class="btn-group">
+        <button type="button" class="btn btn-default" ng-click="nextQuestion()"><span class="glyphicon glyphicon-step-forward"></span> Next Question </button>
+        <button type="button" class="btn btn-default" ng-click="previousQuestion()"><span class="glyphicon glyphicon-step-backward"></span> Previous Question </button>
+        <button type="button" class="btn btn-default" ng-click="startTimer()"><span class="glyphicon glyphicon-play"></span> Start Timer </button>
+        <button type="button" class="btn btn-default" ng-click="pauseTimer()"><span class="glyphicon glyphicon-pause"></span> Pause Timer </button>
+        <button type="button" class="btn btn-default" ng-click="restartTimer()"><span class="glyphicon glyphicon-repeat"></span> Restart Timer </button>
+      </div>
+      <div>
+        <h4>Answer Stats</h4>
+        <div class="question" ng-repeat="team in localQuizState.answersRead | orderBy : 'teamNumber' : false">
+          <h5>{{team.teamNumber}}: {{team._id}} <div class="pull-right"> {{team.answered}} | {{team.answerNumber}}</div></h5>
+        </div>
+      </div>
+      <h4>Update Quiz</h4>
+      <button ng-click="updateQuiz()" class="btn btn-block btn-success">
+        <span class="glyphicon glyphicon-upload"></span> Save Changes
+      </button>
+    </div>
+  </div>
+
+</div>

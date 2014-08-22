@@ -1,0 +1,44 @@
+<!--
+  Objective of this page is to depict the quiz in progress.
+  Will do real time data analysis for PHUN!
+-->
+
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="media">
+        <div class="media-body">
+          <h2 class="media-heading">
+            {{quiz._id}} | {{quiz.description}}
+          </h2>
+          <h4>Questions</h4>
+          <li ng-repeat="question in quiz.questions | orderBy:questionNumber">
+            <a href="#/question/{{quiz._id}}/{{question.questionNumber}}" class="thumb"><img ng-src="{{question.imageUrl}}"></a>
+            <a href="#/question/{{quiz._id}}/{{question.questionNumber}}">{{question.name}}</a>
+            <p>{{question.content}}</p>
+          </li>
+          <!-- team statistics for good measure here http://d3js.org/ -->
+          <!-- statistics for good measure here -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <span class="glyphicon glyphicon-play"></span> Questions
+    </div>
+    <div class="panel-body">
+      <div class="question" ng-repeat="question in quiz.questions">
+        <h4>{{question.content}}
+        <small>Season {{episode.season}}, Episode {{episode.episodeNumber}}</small>
+        </h4>
+        <p>
+          <span class="glyphicon glyphicon-calendar"></span>
+          {{episode.firstAired | date: 'short'}}
+        </p>
+        <p>{{episode.overview}}</p>
+      </div>
+    </div>
+  </div>
+</div>
