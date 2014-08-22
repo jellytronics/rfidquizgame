@@ -10,7 +10,7 @@ if(os.hostname() != 'jellymac'){
   child_process.exec("ls /sys/devices/bone_capemgr*/slots", function (error, stdout, stderr){
     if (error) {console.log("Error: " + error); return};
     var destination = stdout.replace(/\n$/, '');
-    exec("echo BB-UART1 > " + destination, function(error, stdout, stderr){
+    child_process.exec("echo BB-UART1 > " + destination, function(error, stdout, stderr){
       if (error) {console.log("Error: " + error);};
       console.log(stdout);
       console.log(stderr);
