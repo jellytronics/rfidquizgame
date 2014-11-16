@@ -23,10 +23,10 @@ angular.module('MyApp', ['ngCookies', 'ngResource', 'ngMessages', 'ngRoute', 'mg
         templateUrl: 'views/account.html',
         controller: 'AccountCtrl'
       })
-      .when('/manageCard', {
+      /*.when('/manageCard', {
         templateUrl: 'views/card.html',
         controller: 'CardCtrl'
-      })
+      })*/
       .when('/signup', {
         templateUrl: 'views/signup.html',
         controller: 'SignupCtrl'
@@ -43,12 +43,12 @@ angular.module('MyApp', ['ngCookies', 'ngResource', 'ngMessages', 'ngRoute', 'mg
         templateUrl: 'views/manageQuizSelect.html',
         controller: 'ManageQuizCtrl'
       })
-      /*.when('/api/auth/facebook', {
-        redirectTo: '/api/auth/facebook'
+      .when('/api/auth/facebook', {
+        resolve: '/api/auth/facebook'
       })
       .when('/api/auth/google', {
-        redirectTo: '/api/auth/google'
-      })*/
+        //redirectTo: '/api/auth/google'
+      })
       .otherwise({
         redirectTo: '/'
       });

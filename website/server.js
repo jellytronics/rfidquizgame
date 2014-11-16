@@ -589,6 +589,7 @@ app.get('/api/auth/facebook',
 app.get('/api/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/' }),
   function(req, res) {
+    //res.send('<script type="text/javascript">self.close()</script>');
     res.redirect('/account');
   });
 app.get('/api/auth/google',
