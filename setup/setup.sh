@@ -19,7 +19,7 @@ if [[ $(sw_vers -productName) == *Mac* ]]
 		echo "brew installed"
 	else
 
-		ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
+		ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
 	fi
 
@@ -40,7 +40,9 @@ if [[ $(sw_vers -productName) == *Mac* ]]
 	echo "Homebrew token installed"
 	echo "Installing applications on brew"
 
-	brew install coreutils subversion python3 sshfs ttytter wireshark nmap autoconf libtool tmux cowsay fortune
+	# sshfs cannot be installed on yosemite
+
+	brew install coreutils subversion python3 ttytter wireshark nmap autoconf libtool tmux cowsay fortune
 	brew install autoconf automake doxygen
 	brew install libusb libusb-compat --universal
 	brew install wget pkgconfig
@@ -68,6 +70,7 @@ if [[ $(sw_vers -productName) == *Mac* ]]
 	brew install lsusb
 	brew install node
 	brew install mongodb
+	brew install tree
 
 	#Install Scripts To be Updated
 	~/rfidquizgame/website/mongo_db_mac.sh
