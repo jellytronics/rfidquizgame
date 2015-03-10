@@ -19,14 +19,12 @@ fi
 
 chsh -s /usr/bin/zsh
 
-if cat ~/rfidquizstash/linux/zsh/oh-my-zsh/templates/zshrc.zsh-template 2>/dev/null | grep "arch"
+if ls ~/.oh-my-zsh 2>/dev/null | grep "custom"
 	then
-	cp ~/.zshrc ~/.zshrc.backup
-	cp ~/rfidquizgame/linux/zshrc.config ~/.zshrc
 	echo "oh-my-zsh is installed"
 else
 	echo "installing oh-my-zsh"
-	git clone https://github.com/robbyrussell/oh-my-zsh.git ~/rfidquizstash/linux/zsh/oh-my-zsh
+	curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
 	cp ~/.zshrc ~/.zshrc.backup
 
 	## This method works in all cases, but I want my zsh to be configured in my way, as such we use the method below
