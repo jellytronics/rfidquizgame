@@ -3,6 +3,8 @@
 
 ## Information
 
+### Depreciated.
+
 This project is created as a scalable, networked based quiz game where RFID cards are used to answer questions posted on a locally hosted website.
 
 ## Technical Information
