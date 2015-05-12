@@ -1,0 +1,16 @@
+cd ~/rfidquizgame
+git pull
+cp website/node_app.js ../rfidquizstash/website/node_app.js
+cd ~/rfidquizstash/website
+node ~/rfidquizstash/website/node_app.js
+
+
+
+
+cp ~/rfidquizgame/website/public/views/playQuiz.html ~/rfidquizstash/website/public/views/playQuiz.html
+cp ~/rfidquizgame/website/public/controllers/playQuiz.js ~/rfidquizstash/website/playQuiz.js
+cp ~/rfidquizgame/website/public/views/manageQuiz.html ~/rfidquizstash/website/public/views/manageQuiz.html
+cp ~/rfidquizgame/website/public/controllers/manageQuiz.js ~/rfidquizstash/website/manageQuiz.js
+cp ~/rfidquizgame/website/server.js ~/rfidquizstash/website/server.js
+
+gcc -g -std=c99 -Wall nfc-mfmydmove.c -I ../ ../utils/mifare.o -lnfc -o noooooooob
